@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.wearwave.mapper.FindMapper">
+	<select id="findIdbyPhone" parameterType="com.springboot.wearwave.model.User_info" 
+				resultType="String">
+	 select user_id from user_info where name = #{name} and phone = #{phone}
+	</select>
+	
+	<select id="findIdbyEmail" parameterType="com.springboot.wearwave.model.User_info" 
+				resultType="String">
+	 select user_id from user_info where name = #{name} and email = #{email}
+	</select>
+	
+	<select id="findPwdbyPhone" parameterType="com.springboot.wearwave.model.User_info" resultType="int">
+	 select count(*) from user_info where user_id = #{user_id} and name = #{name} and phone = #{phone}
+	</select>
+	
+	<select id="findPwdbyEmail" parameterType="com.springboot.wearwave.model.User_info" resultType="int">
+	select count(*) from user_info where user_id = #{user_id} and name = #{name} and email = #{email}
+	</select>
+	
+	<update id="updatePwd" parameterType="com.springboot.wearwave.model.User_info">
+	update user_info set user_pwd = #{user_pwd} where user_id = #{user_id}
+	</update>
+	
+</mapper>
