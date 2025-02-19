@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+.notice-container {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    width: 96%; /* padding을 제외하고 100% 너비 */
+    box-sizing: border-box; /* padding과 border를 포함한 너비 계산 */
+
+}
+
+.notice-main {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+    display: inline-block;
+}
+
+.notice-item {
+    border-bottom: 1px solid #ddd;
+    width: 1000px;
+    padding: 10px 0;
+}
+
+.notice-title {
+		margin-top: 10px;
+	margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.notice-content {
+    font-size: 16px;
+    color: #555;
+    display: none;
+    padding-top: 10px;
+    white-space: pre-wrap;
+    border-top: 1px solid #ddd;
+   
+    
+}
+
+.notice-date {
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+
+}
+
+.notice-item.active .notice-content {
+    display: block;
+}
+
+.notice-header {
+    display: flex;
+    justify-content: space-between; /* 좌우 정렬 */
+    align-items: center; /* 세로 정렬 */
+    margin-bottom: 20px;
+}
+
+.notice-main {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.write-btn {
+    padding: 8px 12px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.write-btn:hover {
+    background-color: #0056b3;
+}
+
+
+

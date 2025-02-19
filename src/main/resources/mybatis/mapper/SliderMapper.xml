@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.wearwave.mapper.SliderMapper">
+	<select id="getSliderImageList" resultType="com.springboot.wearwave.model.Slider_images">
+	select * from slider_images order by display_order
+	</select>
+	
+	<insert id="putSliderImage" parameterType="com.springboot.wearwave.model.Slider_images">
+	insert into slider_images values(#{num}, #{title},#{image_url},#{display_order})
+	</insert>
+	
+	<select id="getMaxOrder" resultType="Integer">
+	select max(display_order) from slider_images
+	</select>
+	
+	<select id="getMaxNum" resultType="Integer">
+	select max(num) from slider_images
+	</select>
+	
+	<delete id="deleteslider" parameterType="Integer">
+		delete from slider_images where display_order = #{display_order}
+	</delete>
+	
+	<update id="updatedisplayorder" parameterType="Integer">
+		update slider_images set display_order = display_order - 1 where display_order > #{display_order}
+	</update>
+	
+	<update id="updatenum" parameterType="Integer">
+		update slider_images set num = num - 1 where num > #{num}
+	</update>
+	
+	<update id="changeOrders" parameterType="com.springboot.wearwave.model.SlideOrders">
+		update slider_images
+		<choose>
+			<when test="old_order lt new_order">
+				set display_order = display_order - 1 
+				where display_order <![CDATA[<]]>= #{new_order} and display_order >= #{old_order}
+			</when>
+			<when test="old_order gt new_order">
+				set display_order = display_order + 1
+				where #{new_order} <![CDATA[<]]>= display_order and display_order <![CDATA[<]]>= #{old_order}
+			</when>
+		</choose>
+	</update>
+	<update id="changeItself" parameterType="com.springboot.wearwave.model.SlideOrders">
+		update slider_images set display_order = #{new_order} where num = #{num}
+	</update>
+</mapper>
