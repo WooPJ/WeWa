@@ -66,7 +66,7 @@
 }
 
 #member-table th {
-    background-color: skyblue;
+    background-color: #779bb5;
     color: white;
 }
 
@@ -77,18 +77,6 @@
 /* 등급 색상 스타일 */
 .member-grade {
     font-weight: bold;
-}
-
-.member-grade:contains("어드민") {
-    color: red;
-}
-
-.member-grade:contains("손님") {
-    color: blue;
-}
-
-.member-grade:contains("사업자") {
-    color: green;
 }
 
 /* 마지막 줄 구분 */

@@ -25,14 +25,14 @@
                 <li><a href="/mypage/returns.html" onclick="showContent('returns')">취소/반품 내역</a></li>
             </c:when>
 	        <c:when test="${sessionScope.loginUser != null && sessionScope.loginUser.grade == 0}">	
-	            <li><a href="" onclick="">슬라이더 이미지 관리</a></li>
-	            <li><a href="" onclick="">등록된 상품 관리</a></li>
+	            <li><a href="/slider/sliderimg.html" onclick="showContent('sliderimage')">슬라이더 이미지 관리</a></li>
+	            <li><a href="/items/itemlist.html" onclick="showContent('itemlist')">등록된 상품 관리</a></li>
 	            <li><a href="/member/memberlist.html" onclick="showContent('memberlist')">회원 목록</a></li>
 	        </c:when>
 
 	        <c:when test="${sessionScope.loginUser != null && sessionScope.loginUser.grade == 2}">
-	            <li><a href="" onclick="">상품 등록</a></li>
-	            <li><a href="" onclick="">등록한 상품 관리</a></li>
+	            <li><a href="/items/additems.html" onclick="showContent('additems')">상품 등록</a></li>
+	            <li><a href="/items/myitemlist.html" onclick="showContent('myItemlist')">등록한 상품 관리</a></li>
 	            <li><a href="" onclick="">취소/반품 신청 목록</a></li>
 	        </c:when>
 	    </c:choose>

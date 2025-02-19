@@ -1,0 +1,31 @@
+@charset "UTF-8";
+#upload-container {
+    width: 50%;
+    margin: 50px auto;
+    margin-left:240px;
+    padding: 40px;
+    padding-right: 60px;
+    background: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+#upload-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+#upload-container button {
+    padding: 10px 20px;
+    background-color: #005bb5;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#upload-container button:hover {
+    background-color: #007bb5;
+}
