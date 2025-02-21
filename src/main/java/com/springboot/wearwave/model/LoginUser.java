@@ -13,4 +13,5 @@ public class LoginUser {
 	@NotEmpty(message="비밀번호를 입력하세요.")
 	private String password;
 	private Integer grade;
+	private String name;
 }

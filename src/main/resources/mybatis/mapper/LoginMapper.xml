@@ -5,7 +5,7 @@
 	
 	<select id="getUser" parameterType="com.springboot.wearwave.model.LoginUser" 
 			resultType="com.springboot.wearwave.model.LoginUser">
-	select user_id "id", user_pwd "password", grade from user_info
+	select user_id "id", user_pwd "password", grade, name from user_info
 	where user_id = #{id} and user_pwd = #{password}
 	</select>
 </mapper>

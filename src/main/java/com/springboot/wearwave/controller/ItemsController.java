@@ -72,7 +72,7 @@ public class ItemsController {
 		items.setImagename("/imgs/item/"+ loginUser.getId() + "/"+fileName);
 		int maxNum = this.itemsService.getMaxNum() + 1;
 	
-		items.setNum(maxNum); items.setUser_id(loginUser.getId());
+		items.setNum(maxNum); items.setUser_id(loginUser.getName());
 		this.itemsService.putItems(items);
 		 for (String color : colors) {
 		        if (color != null && !color.trim().isEmpty()) {

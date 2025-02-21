@@ -21,70 +21,17 @@
 				<c:otherwise>
 <jsp:include page="main_slider.jsp"/>				
 <div class="product-container">
+ <c:forEach var="item" items="${Items}">
     <div class="product">
     	<a href="">
-        <img src="../imgs/item/1.png" width="250" height="300"/>
-        <div class="product-name">포멜카멜레</div>
-        <div class="product-description">포멀 에스닉 퍼 울 Brown 5cm</div>
-        <div class="product-price">48,300원</div>
+        <img src="${item.imagename} " width="250" height="300"/>
+        <div class="product-name">${item.user_id}</div>
+        <div class="product-description">${item.item_title}</div>
+        <div class="product-price">${item.price}원</div>
    		 </a>
     </div>
-    <div class="product">
-    	<a href="">
-        <img src="../imgs/item/2.png" width="250" height="300"/>
-        <div class="product-name">티뷰</div>
-        <div class="product-description">레이어드랩셔츠원피스_V54-VOP003</div>
-        <div class="product-price">33,000원</div>
-        </a>
-    </div>
-    <div class="product">
-    	<a href="">
-        <img src="../imgs/item/3.png" width="250" height="300"/>
-        <div class="product-name">티뷰</div>
-        <div class="product-description">와이드핀턱랩슬랙스_V4A-CPT026</div>
-        <div class="product-price">19,800원</div>
-        </a>
-    </div>
-     <div class="product">
-    	 <a href="">
-        <img src="../imgs/item/4.png" width="250" height="300"/>
-        <div class="product-name">프리즘웍스</div>
-        <div class="product-description">ALTAVIA DOWN PARKA_BLACK</div>
-        <div class="product-price">245,100원</div>
-        </a>
-    </div>
-    <div class="product">
-    	<a href="">
-        <img src="../imgs/item/1.png" width="250" height="300"/>
-        <div class="product-name">포멜카멜레</div>
-        <div class="product-description">포멀 에스닉 퍼 울 Brown 5cm</div>
-        <div class="product-price">48,300원</div>
-   		 </a>
-    </div>
-    <div class="product">
-    	<a href="">
-        <img src="../imgs/item/2.png" width="250" height="300"/>
-        <div class="product-name">티뷰</div>
-        <div class="product-description">레이어드랩셔츠원피스_V54-VOP003</div>
-        <div class="product-price">33,000원</div>
-        </a>
-    </div>
-    <div class="product">
-    	<a href="">
-        <img src="../imgs/item/3.png" width="250" height="300"/>
-        <div class="product-name">티뷰</div>
-        <div class="product-description">와이드핀턱랩슬랙스_V4A-CPT026</div>
-        <div class="product-price">19,800원</div>
-        </a>
-    </div>
-     <div class="product">
-    	 <a href="">
-        <img src="../imgs/item/4.png" width="250" height="300"/>
-        <div class="product-name">프리즘웍스</div>
-        <div class="product-description">ALTAVIA DOWN PARKA_BLACK</div>
-        <div class="product-price">245,100원</div>
-        </a>
-    </div>
+ </c:forEach>
+ </div>
 </c:otherwise></c:choose></td></tr>
 </table>
 
