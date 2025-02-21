@@ -21,12 +21,19 @@
         <label for="item_title">상품명:</label>
         <form:input path="item_title" placeholder="상품명을 입력하세요" required="true"/>
 		<label for="title">카테고리</label>
-        <form:select path="item_id">
-        <form:option value="1">상의</form:option>
-        <form:option value="2">하의</form:option>
-        <form:option value="3">아우터</form:option>
-        <form:option value="4">신발</form:option>
-		</form:select>
+		<select id="categorySelect" onchange="updateSubcategories()">
+		    <option disabled selected>카테고리를 선택하세요</option>
+		    <option data-category="top">상의</option>
+		    <option data-category="bottom">하의</option>
+		    <option data-category="outer">아우터</option>
+		    <option data-category="shoes">신발</option>
+		</select>
+		
+		<label for="title">세부 카테고리</label>
+		<select id="subcategorySelect" name="subcategory">
+		    <!-- 세부 카테고리는 JavaScript로 동적으로 채워짐 -->
+		</select>
+		
         <label for="file">이미지 선택:</label>
         <input type="file" name="file" accept="image/*"  required />
         <label for="price">가격:</label>
@@ -61,7 +68,67 @@ function codeCheck(){
 	var url="/items/codecheck.html?item_code="+document.itemFrm.item_code.value;
 	window.open(url, "__blank__","width=450,height=200,top=200,left=300");
 }
+window.onload = function() {
+    updateSubcategories(); // 페이지 로드 시 기본적으로 하위 카테고리를 업데이트합니다.
+};
 
+function updateSubcategories() {
+    var categorySelect = document.getElementById("categorySelect");
+    var subcategorySelect = document.getElementById("subcategorySelect");
+
+    // 선택된 카테고리의 data-category 값을 가져옵니다.
+    var selectedCategory = categorySelect.options[categorySelect.selectedIndex].getAttribute("data-category");
+    console.log("선택된 카테고리:", selectedCategory);
+    // 카테고리별 세부 옵션 목록
+    var subcategories = {
+        "top": [
+            { value: "1", text: "니트" },
+            { value: "2", text: "맨투맨" },
+            { value: "3", text: "후드" },
+            { value: "4", text: "셔츠" },
+            { value: "5", text: "긴소매" },
+            { value: "6", text: "반소매" }
+        ],
+        "bottom": [
+            { value: "11", text: "데님" },
+            { value: "12", text: "트레이닝" },
+            { value: "13", text: "조거" },
+            { value: "14", text: "슬랙스" },
+            { value: "15", text: "숏팬츠" }
+        ],
+        "outer": [
+            { value: "21", text: "패딩" },
+            { value: "22", text: "후드 집업" },
+            { value: "23", text: "카디건" },
+            { value: "24", text: "무스탕" },
+            { value: "25", text: "코트" },
+            { value: "26", text: "트레이닝" }
+        ],
+        "shoes": [
+            { value: "31", text: "스니커즈" },
+            { value: "32", text: "부츠" },
+            { value: "33", text: "구두" },
+            { value: "34", text: "샌들" },
+            { value: "35", text: "스포츠" }
+        ]
+    };
+    // 기본 선택지 추가
+    var defaultOption = document.createElement("option");
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    defaultOption.text = "세부 카테고리를 선택하세요";
+    subcategorySelect.appendChild(defaultOption);
+
+    // 새로운 옵션 추가
+    if (selectedCategory && subcategories[selectedCategory]) {
+        subcategories[selectedCategory].forEach(function(sub) {
+            var option = document.createElement("option");
+            option.value = sub.value;  // 하위 옵션의 value 설정 (숫자)
+            option.text = sub.text;    // 화면에 표시될 텍스트 설정 (한글)
+            subcategorySelect.appendChild(option);
+        });
+    }
+}
 function addField(fieldName) {
     var container = document.getElementById(fieldName + '-container');
     

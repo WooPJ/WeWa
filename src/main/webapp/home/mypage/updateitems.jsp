@@ -20,11 +20,6 @@
         <label for="item_title">상품명:</label>
         <form:input path="item_title" value="${Items.item_title}" placeholder="상품명을 입력하세요" required="true"/>
       
-        <label for="item_id">카테고리</label>
-		<input type="text" value="${items.item_id == 1 ? '상의' : items.item_id == 2 ? 
-		'하의' : items.item_id == 3 ? '아우터' : items.item_id == 4 ? '신발' : ''}" readonly=""/>
-		<form:hidden path="item_id"/>
-      
         <label for="file">이미지 선택:</label>
         <input type="file" name="file" accept="image/*" />
 

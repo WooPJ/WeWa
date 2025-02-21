@@ -18,8 +18,8 @@
 			<div class="product-details">
 				<h1>상품 상세 정보</h1>
 				<c:set var="item_code" value="${param.item_code}" />
-				<img class="product-image" src="../imgs/item/${item.item_code}.png"
-					width="400" height="450" alt="${productName}" />
+				<img class="product-image" src="${item.imagename}"
+					width="400" height="450"/>
 				<div class="product-name">${item.item_title}</div>
 				<div class="product-description">${item.content}</div>
 				<div class="product-price">

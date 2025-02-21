@@ -28,7 +28,7 @@
 	        </a>   
 	         <a href="/like/likelist.html" class="like">
 	            <img alt="찜 목록" src="../imgs/icon/like.png" >
-	        </a>   
+	        </a> 
 	         <a href="/cart/cart.html" class="cart">
 	            <img alt="장바구니 목록" src="../imgs/icon/cart.png">
 	        </a>   

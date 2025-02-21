@@ -147,42 +147,74 @@ public class ItemsController {
 	}
 	
 	@PostMapping(value="/items/updateItemDo.html")
-	public ModelAndView updateDo(Items_tbl items, HttpSession session, Integer item_id) {
-		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
-		MultipartFile multiFile = items.getFile();
-		if(! multiFile.getOriginalFilename().equals("")) {
-			String fileName = null; String path = null; OutputStream os = null;
-			fileName = multiFile.getOriginalFilename();
-			ServletContext ctx = session.getServletContext();
-			String userFolder = ctx.getRealPath("/imgs/item/"+loginUser.getId()+"/");
-			path = userFolder + fileName;
-			try {
-				os = new FileOutputStream(path);//upload 폴더에 파일 생성
-				BufferedInputStream bis = 
-					new BufferedInputStream(multiFile.getInputStream());//선택한 파일을 연다.
-				byte[] buffer = new byte[8156];//8K 크기로 배열 생성(한번에 8K씩 복사가 진행)
-				int read = 0;//실제로 읽은 바이트 수
-				while((read = bis.read(buffer)) > 0) {//원본 파일에서 읽은 바이트 수가 0이상인 동안 반복
-					os.write(buffer, 0, read);//원본파일에서 읽은 데이터를 upload폴더의 파일에 출력
-				}
-			}catch(Exception e) {
-				System.out.println("변경된 이미지 업로드 중 문제발생!");
-			}finally {
-				try {
-					if(os != null) os.close();
-				}catch(Exception e) {}
-			}//업로드 종료
-			items.setImagename("/imgs/item/"+ loginUser.getId() + "/"+fileName);//Imagebbs의 파일이름을 새 파일이름으로 설정
-		}
-		//this.imageDao.updateImageBBS(imagebbs);//DB에서 이미지 게시글을 수정한다.
-		this.itemsService.updateItem(items);
-		 if (loginUser.getGrade() == 0) {     
-	            return new ModelAndView("redirect:/items/itemlist.html");
-	        } else {
-	            return new ModelAndView("redirect:/items/myitemlist.html");
+	public ModelAndView updateDo(Items_tbl items, HttpSession session,  @RequestParam(value="color[]", required=false) List<String> colors,
+            @RequestParam(value="size[]", required=false) List<String> sizes,
+            @RequestParam(value="quantity[]", required=false) List<Integer> quantities) {
+	    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+	    MultipartFile multiFile = items.getFile();
+
+	    if (multiFile != null && !multiFile.getOriginalFilename().equals("")) {
+	        String fileName = multiFile.getOriginalFilename();
+	        ServletContext ctx = session.getServletContext();
+	        String userFolder = ctx.getRealPath("/imgs/item/" + loginUser.getId() + "/");
+	        String path = userFolder + fileName;
+	        OutputStream os = null;
+
+	        try {
+	            os = new FileOutputStream(path);
+	            BufferedInputStream bis = new BufferedInputStream(multiFile.getInputStream());
+	            byte[] buffer = new byte[8156];
+	            int read;
+	            while ((read = bis.read(buffer)) > 0) {
+	                os.write(buffer, 0, read);
+	            }
+	            items.setImagename("/imgs/item/" + loginUser.getId() + "/" + fileName);
+	        } catch (Exception e) {
+	            System.out.println("변경된 이미지 업로드 중 문제 발생!");
+	        } finally {
+	            try {
+	                if (os != null) os.close();
+	            } catch (Exception ignored) {}
 	        }
+	    } else {
+	        // 기존 값 유지 (현재 DB에 있는 값으로 설정)
+	        Items_tbl existingItem = itemsService.getMyItem(items.getItem_code());
+	        if (existingItem != null) {
+	            items.setImagename(existingItem.getImagename());
+	        }
+	    }
+
+	    this.itemsService.updateItem(items);
+	    itemsService.deleteItem_size(items.getItem_code());
+	    itemsService.deleteItem_color(items.getItem_code());
+	    
+	    for (String color : colors) {
+	        if (color != null && !color.trim().isEmpty()) {
+	            Item_color colorData = new Item_color();
+	            colorData.setItem_code(items.getItem_code());
+	            colorData.setItem_color(color);
+	            this.itemsService.putColor(colorData);
+	        }
+	    }
+
+	    // 사이즈 및 갯수 정보 저장
+	    for (int i = 0; i < sizes.size(); i++) {
+	        if (sizes.get(i) != null && !sizes.get(i).trim().isEmpty() && quantities.get(i) > 0) {
+	            Item_size sizeData = new Item_size();
+	            sizeData.setItem_code(items.getItem_code());
+	            sizeData.setItem_size(sizes.get(i));
+	            sizeData.setQuantity(quantities.get(i));
+	            this.itemsService.putSize(sizeData);
+	        }
+	    }
+	    
+	    if (loginUser.getGrade() == 0) {
+	        return new ModelAndView("redirect:/items/itemlist.html");
+	    } else {
+	        return new ModelAndView("redirect:/items/myitemlist.html");
+	    }
 	}
-	
+
 	@GetMapping(value = "/items/codecheck.html")
 	public ModelAndView idcheck(String item_code) {
 		ModelAndView mav = new ModelAndView("mypage/codeCheckResult");

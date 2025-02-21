@@ -7,10 +7,6 @@
 	update items_tbl set item_title=#{item_title}, price=#{price}, content=#{content}, imagename=#{imagename} where item_code = #{item_code}
 	</update>
 	
-	<update id="updateItemSize" parameterType="com.springboot.wearwave.model.Item_size">
-	update item_size set quantity=#{quantity} where item_code=#{item_code} and item_size=#{item_size}
-	</update>
-	
 	<delete id="deleteItem" parameterType="String">
 	delete from items_tbl where item_code = #{item_code}
 	</delete>
