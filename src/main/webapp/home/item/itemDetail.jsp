@@ -100,7 +100,7 @@
 							</button>
 						</c:when>
 						<c:when
-							test="${sessionScope.loginUser != null && sessionScope.loginUser.grade == 1}">
+							test="${sessionScope.loginUser != null && sessionScope.loginUser.grade != 0}">
 							<!-- 장바구니 담기 버튼 -->
 							<form action="../item/cart.html" method="post" onsubmit="return validateForm()">
 							    <input type="hidden" name="item_code" value="${item.item_code}" />

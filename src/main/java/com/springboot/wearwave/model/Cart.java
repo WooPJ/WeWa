@@ -9,4 +9,6 @@ public class Cart {
 	private String user_id;
 	private String item_code;
 	private Integer quantity;
+	private String item_color;
+	private String item_size;
 }
