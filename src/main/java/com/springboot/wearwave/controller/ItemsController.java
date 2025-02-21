@@ -72,7 +72,7 @@ public class ItemsController {
 		items.setImagename("/imgs/item/"+ loginUser.getId() + "/"+fileName);
 		int maxNum = this.itemsService.getMaxNum() + 1;
 	
-		items.setNum(maxNum); items.setUser_id(loginUser.getName());
+		items.setNum(maxNum); items.setUser_id(loginUser.getId());
 		this.itemsService.putItems(items);
 		 for (String color : colors) {
 		        if (color != null && !color.trim().isEmpty()) {
@@ -122,8 +122,9 @@ public class ItemsController {
 		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
 		this.itemsService.deleteItem_size(item_code);
 		this.itemsService.deleteItem_color(item_code);
-		this.itemsService.updateNum(num);
 		this.itemsService.deleteItem(item_code);
+		this.itemsService.updateNum(num);
+		
 		 if (loginUser.getGrade() == 0) {     
 	            return new ModelAndView("redirect:/items/itemlist.html");
 	        } else {
@@ -171,11 +172,10 @@ public class ItemsController {
 					if(os != null) os.close();
 				}catch(Exception e) {}
 			}//업로드 종료
-			items.setImagename(fileName);//Imagebbs의 파일이름을 새 파일이름으로 설정
+			items.setImagename("/imgs/item/"+ loginUser.getId() + "/"+fileName);//Imagebbs의 파일이름을 새 파일이름으로 설정
 		}
 		//this.imageDao.updateImageBBS(imagebbs);//DB에서 이미지 게시글을 수정한다.
 		this.itemsService.updateItem(items);
-		
 		 if (loginUser.getGrade() == 0) {     
 	            return new ModelAndView("redirect:/items/itemlist.html");
 	        } else {

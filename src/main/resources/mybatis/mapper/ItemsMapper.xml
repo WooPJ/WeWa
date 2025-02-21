@@ -4,7 +4,7 @@
 <mapper namespace="com.springboot.wearwave.mapper.ItemsMapper">
 
 	<update id="updateItem" parameterType="com.springboot.wearwave.model.Items_tbl">
-	update items_tbl set item_title=#{item_title}, price=#{price}, content=#{content} where item_code = #{item_code}
+	update items_tbl set item_title=#{item_title}, price=#{price}, content=#{content}, imagename=#{imagename} where item_code = #{item_code}
 	</update>
 	
 	<update id="updateItemSize" parameterType="com.springboot.wearwave.model.Item_size">

@@ -152,7 +152,7 @@ public class LoginController {
 	@GetMapping(value="/login/logout.html")
 	public ModelAndView logout(HttpSession session) {
 		session.invalidate();
-		ModelAndView mav = new ModelAndView("index");
+		ModelAndView mav = new ModelAndView("redirect:/home/index.html");
 		return mav;
 	}
 	

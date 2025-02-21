@@ -11,7 +11,6 @@ import com.springboot.wearwave.model.Items_tbl;
 @Mapper
 public interface ItemsMapper {
 	void updateItem(Items_tbl item);
-	void updateItemSize(Item_size size);
 	void deleteItem(String code);
 	Integer getMaxNum();
 	Items_tbl getMyItem(String item_code);

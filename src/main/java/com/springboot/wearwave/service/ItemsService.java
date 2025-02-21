@@ -21,10 +21,6 @@ public class ItemsService {
 		this.itemsMapper.updateItem(item);
 	}
 	
-	public void updateItemSize(Item_size size) {
-		this.itemsMapper.updateItemSize(size);
-	}
-	
 	public void deleteItem(String code) {
 		this.itemsMapper.deleteItem(code);
 	}
@@ -48,7 +44,9 @@ public class ItemsService {
 	}
 	
 	public void updateNum(Integer num) {
-		this.itemsMapper.updateNum(num);
+		 if (num != null) {
+		        this.itemsMapper.updateNum(num);
+		    }
 	}
 	
 	public List<Items_tbl> getItemList(){
