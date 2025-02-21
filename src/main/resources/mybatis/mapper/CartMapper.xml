@@ -7,9 +7,6 @@
 		INSERT INTO cart_tbl (user_id, item_code, quantity, item_color, item_size)
 		VALUES (#{user_id}, #{item_code}, #{quantity}, #{item_color}, #{item_size})
 	</insert>
-	<select id="getUserCart" parameterType="String" resultType="com.springboot.wearwave.model.Cart">
-		select user_id, item_code, quantity,item_color, item_size from cart_tbl where user_id = #{user_id} 
-	</select>
 	<select id="checkCartExists" parameterType="com.springboot.wearwave.model.Cart" resultType="Integer">
 		SELECT COUNT(*) FROM cart_tbl
 		WHERE user_id = #{user_id}
@@ -26,4 +23,25 @@
 		AND item_color = #{item_color}
 		AND item_size = #{item_size}
 	</update>
+
+<!-- 	<select id="getUserCart" parameterType="String"
+		resultType="com.springboot.wearwave.model.Cart">
+		select user_id, item_code, quantity,item_color, item_size
+		from cart_tbl where user_id = #{user_id}
+	</select> -->
+	    <!-- 장바구니 목록 조회 (JOIN 추가) -->
+    <select id="getUserCart" parameterType="String" resultType="com.springboot.wearwave.model.Cart">
+        SELECT 
+            c.user_id, 
+            c.item_code, 
+            i.item_title, 
+            i.price, 
+            c.quantity, 
+            c.item_color, 
+            c.item_size
+        FROM cart_tbl c
+        JOIN items_tbl i 
+        ON c.item_code = i.item_code
+        WHERE c.user_id = #{user_id}
+    </select>
 </mapper>

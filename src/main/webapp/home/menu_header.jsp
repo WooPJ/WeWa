@@ -28,11 +28,21 @@
 	        </a>   
 	         <a href="/like/likelist.html" class="like">
 	            <img alt="찜 목록" src="../imgs/icon/like.png" >
-	        </a>   
-	         <a href="/cart/cart.html" class="cart">
-	            <img alt="장바구니 목록" src="../imgs/icon/cart.png">
-	        </a>   
-        </div>
+	        </a>
+				<c:choose>
+					<c:when test="${sessionScope.loginUser == null}">
+						<a href="javascript:void(0);" class="cart"
+							onclick="confirmLogin()"> <img alt="장바구니 목록"
+							src="../imgs/icon/cart.png">
+						</a>
+					</c:when>
+					<c:otherwise>
+						<a href="/cart/cart.html" class="cart"> <img alt="장바구니 목록"
+							src="../imgs/icon/cart.png">
+						</a>
+					</c:otherwise>
+				</c:choose>
+			</div>
     </div>
 	<div class="sub-header">
 	<button class="top-bar-button" onclick="toggleSidebar()">☰</button>
@@ -42,7 +52,7 @@
 				<a href="/login/selectentry.html" class="sign up">회원가입</a> 
 			</c:when>
 			<c:otherwise>
-				${ sessionScope.loginUser.id }고객님
+				<h4><font color="#FF1493">${ sessionScope.loginUser.id }고객님</font></h4>
 				<a href="/login/logout.html" class="logout">로그아웃</a> 
 			</c:otherwise>
 		</c:choose> 
@@ -102,50 +112,59 @@
 </header>
 
 <script type="text/javascript">
-
-let isSidebarOpen = false;
-let isTopBarOpen = false;
-
-function toggleSidebar() {
-    const sidebar = document.querySelector(".sidebar");
-    const topBarButton = document.querySelector(".top-bar-button");
-
-    if (isSidebarOpen) {
-        sidebar.classList.remove("open");
-        topBarButton.classList.remove("open");
-        isSidebarOpen = false;
-        isTopBarOpen = false;
-    } else {
-        sidebar.classList.add("open");
-        topBarButton.classList.add("open");
-        isSidebarOpen = true;
-        isTopBarOpen = true;
-    }
-}
-
-document.querySelectorAll(".menu-item").forEach(menuItem => {
-    const submenu = menuItem.querySelector(".submenu");
-
-    if (submenu) {
-        menuItem.addEventListener("mouseenter", () => {
-            submenu.style.display = "block";
-        });
-
-        menuItem.addEventListener("mouseleave", () => {
-            setTimeout(() => {
-                submenu.style.display = "none";
-            }, 300); // 0.3초 후 사라지게 설정
-        });
-
-        submenu.addEventListener("mouseenter", () => {
-            submenu.style.display = "block"; // 서브메뉴에 마우스를 올려도 유지됨
-        });
-
-        submenu.addEventListener("mouseleave", () => {
-            submenu.style.display = "none"; // 서브메뉴에서 벗어나면 닫힘
-        });
-    }
-});
+		
+		let isSidebarOpen = false;
+		let isTopBarOpen = false;
+		
+		function toggleSidebar() {
+		    const sidebar = document.querySelector(".sidebar");
+		    const topBarButton = document.querySelector(".top-bar-button");
+		
+		    if (isSidebarOpen) {
+		        sidebar.classList.remove("open");
+		        topBarButton.classList.remove("open");
+		        isSidebarOpen = false;
+		        isTopBarOpen = false;
+		    } else {
+		        sidebar.classList.add("open");
+		        topBarButton.classList.add("open");
+		        isSidebarOpen = true;
+		        isTopBarOpen = true;
+		    }
+		}
+		
+		document.querySelectorAll(".menu-item").forEach(menuItem => {
+		    const submenu = menuItem.querySelector(".submenu");
+		
+		    if (submenu) {
+		        menuItem.addEventListener("mouseenter", () => {
+		            submenu.style.display = "block";
+		        });
+		
+		        menuItem.addEventListener("mouseleave", () => {
+		            setTimeout(() => {
+		                submenu.style.display = "none";
+		            }, 300); // 0.3초 후 사라지게 설정
+		        });
+		
+		        submenu.addEventListener("mouseenter", () => {
+		            submenu.style.display = "block"; // 서브메뉴에 마우스를 올려도 유지됨
+		        });
+		
+		        submenu.addEventListener("mouseleave", () => {
+		            submenu.style.display = "none"; // 서브메뉴에서 벗어나면 닫힘
+		        });
+		    }
+		});
+		function confirmLogin() {
+		    if (confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?")) {
+		        // '확인' 클릭 시 로그인 페이지로 이동
+		        window.location.href = "/login/login.html";
+		    } else {
+		        // '취소' 클릭 시 홈으로 이동
+		        window.location.href = "/home/index.html";
+		    }
+		}
 </script>
 </body>
 </html>

@@ -11,4 +11,7 @@ public class Cart {
 	private Integer quantity;
 	private String item_color;
 	private String item_size;
+	
+	private String item_title;
+	private Integer price;
 }

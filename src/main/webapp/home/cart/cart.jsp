@@ -60,19 +60,35 @@
 </style>
 </head>
 <body>
+<br/><br/><br/><br/>
 <div class="cart-container">
     <h2>${sessionScope.loginUser.id}님의 장바구니 목록</h2>
 <table>
     <tr>
         <th>상품명</th>
+        <th>상품 코드</th>
+        <th>가격</th>
         <th>수량</th>
         <th>색상</th>
-        <th>사이즈</th>  
+        <th>사이즈</th>
+        <th>수정/삭제</th>
     </tr>
     <c:forEach var="cart" items="${cartList}">
         <tr>
+            <td>${cart.item_title}</td>
             <td>${cart.item_code}</td>
+            <td><fmt:formatNumber value="${cart.price}" groupingUsed="true"/>원</td>
             <td>${cart.quantity}</td>
+            <td>${cart.item_color}</td>
+            <td>${cart.item_size}</td>
+            <td>
+            	<form action="">
+            		<input type="submit" value="수정" name="BTN"/>
+            	</form><br/>
+            	<form action="">
+            		<input type="submit" value="삭제" name="BTN"/>
+            	</form>
+            </td>
         </tr>
     </c:forEach>
 </table>
