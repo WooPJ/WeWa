@@ -23,7 +23,7 @@
 <div class="product-container">
  <c:forEach var="item" items="${Items}">
     <div class="product">
-    	<a href="">
+    	<a href="/item/itemDetail.html?item_code=${item.item_code }">
         <img src="${item.imagename} " width="250" height="300"/>
         <div class="product-name">${item.user_id}</div>
         <div class="product-description">${item.item_title}</div>
