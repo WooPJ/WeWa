@@ -5,7 +5,18 @@
 	
 	<select id="getUser" parameterType="com.springboot.wearwave.model.LoginUser" 
 			resultType="com.springboot.wearwave.model.LoginUser">
-	select user_id "id", user_pwd "password", grade, name from user_info
+	select user_id "id", user_pwd "password", grade from user_info
 	where user_id = #{id} and user_pwd = #{password}
 	</select>
+
+	<insert id="putCustomerUser" parameterType="com.springboot.wearwave.model.User">
+		insert into user_info values(#{user_id},#{user_pwd},
+		#{name},#{addr},#{email},#{phone},1)
+	</insert>
+
+	<insert id="putBusinessUser"
+		parameterType="com.springboot.wearwave.model.User">
+		insert into user_info values(#{user_id},#{user_pwd},
+		#{name},#{addr},#{email},#{phone},2)
+	</insert>
 </mapper>

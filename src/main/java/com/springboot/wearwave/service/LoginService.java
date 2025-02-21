@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.springboot.wearwave.mapper.LoginMapper;
 import com.springboot.wearwave.model.LoginUser;
+import com.springboot.wearwave.model.User;
 
 @Service
 public class LoginService {
@@ -13,6 +14,14 @@ public class LoginService {
 	
 	public LoginUser getUser(LoginUser loginUser) {
 		return this.loginMapper.getUser(loginUser);
+	}
+	
+	public void putCustomerUser(User user) {
+		this.loginMapper.putCustomerUser(user);
+	}
+	
+	public void putBusinessUser(User user) {
+		this.loginMapper.putBusinessUser(user);
 	}
 }
 

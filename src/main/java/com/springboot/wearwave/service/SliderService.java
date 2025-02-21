@@ -5,11 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.springboot.wearwave.mapper.FindMapper;
 import com.springboot.wearwave.mapper.SliderMapper;
 import com.springboot.wearwave.model.SlideOrders;
 import com.springboot.wearwave.model.Slider_images;
-import com.springboot.wearwave.model.User_info;
 
 @Service
 public class SliderService {

@@ -3,10 +3,10 @@ package com.springboot.wearwave.model;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
-public class Item_size {
+@Getter
+public class Cart {
+	private String user_id;
 	private String item_code;
-	private String item_size;
-	private Integer quantity;//갯수
+	private Integer quantity;
 }

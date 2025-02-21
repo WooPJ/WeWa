@@ -42,6 +42,7 @@
 				<a href="/login/selectentry.html" class="sign up">회원가입</a> 
 			</c:when>
 			<c:otherwise>
+				<h3>${ sessionScope.loginUser.id }고객님</h3>
 				<a href="/login/logout.html" class="logout">로그아웃</a> 
 			</c:otherwise>
 		</c:choose> 

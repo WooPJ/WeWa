@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.springboot.wearwave.model.LoginUser;
+import com.springboot.wearwave.model.User;
 import com.springboot.wearwave.model.User_info;
 import com.springboot.wearwave.service.FindService;
 import com.springboot.wearwave.service.LoginService;
@@ -112,14 +113,16 @@ public class LoginController {
 	}
 	
 	@GetMapping("/login/userentry.html") //손님  회원가입 이동
-	public ModelAndView userentry() {
+	public ModelAndView userentry(Model model) {
 	    ModelAndView mav = new ModelAndView("login/userentry"); 
+	    model.addAttribute("user", new User());
 	    return mav;
 	}
 	
 	@GetMapping("/login/businessentry.html") //사업자 회원가입 이동
-	public ModelAndView businessentry() {
+	public ModelAndView businessentry(Model model) {
 	    ModelAndView mav = new ModelAndView("login/businessentry"); 
+	    model.addAttribute("user", new User());
 	    return mav;
 	}
 	
