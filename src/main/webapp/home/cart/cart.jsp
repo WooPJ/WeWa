@@ -64,8 +64,10 @@
     <h2>${sessionScope.loginUser.id}님의 장바구니 목록</h2>
 <table>
     <tr>
-        <th>상품 코드</th>
+        <th>상품명</th>
         <th>수량</th>
+        <th>색상</th>
+        <th>사이즈</th>  
     </tr>
     <c:forEach var="cart" items="${cartList}">
         <tr>

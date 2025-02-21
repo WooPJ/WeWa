@@ -9,14 +9,6 @@ import com.springboot.wearwave.mapper.CartMapper;
 import com.springboot.wearwave.model.Cart;
 import com.springboot.wearwave.model.Item;
 
-/*
- * @Service public class CartService {
- * 
- * @Autowired private CartMapper cartMapper;
- * 
- * public void putCart(Cart cart) { this.cartMapper.putCart(cart); } public
- * List<Item> getUserCart(String user_id){ return this.getUserCart(user_id); } }
- */
 @Service
 public class CartService {
     @Autowired
@@ -37,5 +29,5 @@ public class CartService {
 
     public List<Cart> getUserCart(String user_id) {
         return this.cartMapper.getUserCart(user_id);
-    }
+    }//cart리스트 불러오는 메서드
 }
