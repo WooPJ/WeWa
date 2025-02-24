@@ -12,10 +12,10 @@ header {
 }
 
 .sub-header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;  /* 수직 정렬을 중앙으로 맞추기 */
-    gap: 10px;            /* 요소 간 간격 */
+    display: flex; /* Flexbox 사용 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    align-items: center; /* 수직 정렬을 중앙으로 맞추기 */
+    gap: 10px; /* 요소 간 간격 */
     margin-top: 20px;
     margin-right: 80px;
     margin-left: 50px;
@@ -25,7 +25,6 @@ header {
     background-color: powderblue;
     background-size: contain;
 }
-
 
 .header-container {
     display: flex;
@@ -172,9 +171,17 @@ header {
     color: inherit;
 }
 
+.sub-header h3 {
+    margin: 0; /* 기본 여백 제거 */
+    font-size: 18px; /* 글자 크기 조정 (필요시) */
+}
+
 .sub-header a {
-    text-decoration: none;
-    color: initial;
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 세로 중앙 정렬 */
+    text-decoration: none; /* 밑줄 제거 */
+    color: initial; /* 기본 색상 */
+    font-size: 16px; /* 글자 크기 조정 (필요시) */
 }
 
 /* 반응형 디자인: 화면 크기에 맞는 스타일 */

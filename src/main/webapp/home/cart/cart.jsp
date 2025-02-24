@@ -7,6 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>장바구니</title>
+</head>
+<body>
+<br/><br/><br/><br/><br/><br/><br/>
+카트 목록
 <link rel="stylesheet" type="text/css" href="../css/cartStyle.css">
 <style>
     body {

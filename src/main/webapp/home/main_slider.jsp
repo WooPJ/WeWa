@@ -32,8 +32,8 @@
 var slideIndex = 1;
 showSlides(slideIndex);
 
-setInterval(function() {
-  plusSlides(1);
+setInterval(function() { // 자동 슬라이드 변경 (5초 간격)
+  plusSlides(1); // 1번 슬라이드로 이동
 }, 5000);
 
 function plusSlides(n) {
@@ -62,4 +62,4 @@ function showSlides(n) {
 </script>
 
 </body>
-</html>
+</html> 

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+		pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -15,7 +15,7 @@
 	
 	
 	<div class="container">
-	    						<!-- 첫 번째 상품 정보 -->
+	    <!-- 첫 번째 상품 정보 -->
 		<div class="product-wrapper first">
 			<div class="product-details">
 				<h1>상품 상세 정보</h1>
@@ -44,8 +44,7 @@
 		</div>
 
 
-										<!-- 구매 옵션 div -->
-
+		<!-- 구매 옵션 div -->
 		<div class="product-wrapper second">
 			<div class="product-details">
 				<h1>구매 옵션</h1>

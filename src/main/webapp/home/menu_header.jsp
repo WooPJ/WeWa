@@ -26,7 +26,7 @@
 	         <a href="/mypage/notice.html" class="mypage">
 	            <img alt="마이페이지" src="../imgs/icon/mypage.png" >
 	        </a>   
-	         <a href="/like/likelist.html" class="like">
+	         <a href="/heart/heartlist.html" class=heart>
 	            <img alt="찜 목록" src="../imgs/icon/like.png" >
 	        </a>
 				<c:choose>
@@ -52,7 +52,7 @@
 				<a href="/login/selectentry.html" class="sign up">회원가입</a> 
 			</c:when>
 			<c:otherwise>
-				<font color="#FF1493">${ sessionScope.loginUser.id }고객님</font>
+				<font style="font-weight: bold" color="#FF1493">${ sessionScope.loginUser.id }고객님</font>
 				<a href="/login/logout.html" class="logout">로그아웃</a> 
 			</c:otherwise>
 		</c:choose> 
@@ -112,7 +112,6 @@
 </header>
 
 <script type="text/javascript">
-		
 		let isSidebarOpen = false;
 		let isTopBarOpen = false;
 		

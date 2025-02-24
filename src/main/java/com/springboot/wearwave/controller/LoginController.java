@@ -128,6 +128,7 @@ public class LoginController {
 	
 	@GetMapping("/login/login.html") //로그인 화면 이동
 	public ModelAndView login(HttpServletRequest request) {
+		System.out.println("로그인 컨트롤러 OK");
 	    ModelAndView mav = new ModelAndView("login/login"); 
 	    request.setAttribute("loginUser",new LoginUser());
 	    return mav;

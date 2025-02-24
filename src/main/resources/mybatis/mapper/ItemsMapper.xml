@@ -31,6 +31,7 @@
 	select item_color from item_color where item_code = #{item_code}
 	</select>
 	
+	<!-- 모든 상품 가져오기 -->
 	<select id="getItemList" resultType="com.springboot.wearwave.model.Items_tbl">
 	select item_id, item_code, item_title, price, content, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, user_id
 	from items_tbl order by num
