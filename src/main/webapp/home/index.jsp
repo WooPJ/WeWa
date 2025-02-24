@@ -20,9 +20,9 @@
 					<jsp:include page="${ BODY }"/>
 				</c:when>
 				<c:otherwise>
-<jsp:include page="main_slider.jsp"/>	
-
-<c:forEach items="${itemList}" var="item">
+<jsp:include page="main_slider.jsp"/>				
+<div class="product-container">
+ <c:forEach var="item" items="${itemList}">
     <div class="product">
         <a href="/item/itemDetail.html?item_id=${item.item_code}">
             <div class="image-container">

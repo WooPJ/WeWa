@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.springboot.wearwave.model.Item_color;
 import com.springboot.wearwave.model.Item_size;
 import com.springboot.wearwave.model.Items_tbl;
+import com.springboot.wearwave.model.StartEnd;
 
 @Mapper
 public interface ItemsMapper {
@@ -26,6 +27,8 @@ public interface ItemsMapper {
 	void deleteItem_size(String code);
 	void deleteItem_color(String code);
 	List<Items_tbl> userIdbyItemList(String user_id);
+	List<Items_tbl> getItemMenu(StartEnd se);
+	List<Items_tbl> getCategory(Integer num);
 }
 
 

@@ -47,8 +47,10 @@
 </head>
 <body>
 	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+	
+	
 	<div class="container">
-		<!-- 첫 번째 상품 정보 -->
+	    						<!-- 첫 번째 상품 정보 -->
 		<div class="product-wrapper first">
 			<div class="product-details">
 				<h1>상품 상세 정보</h1>
@@ -62,8 +64,7 @@
 				</div>
 				<!-- 좋아요 버튼 -->
 				<form:form action="/item/like.html" method="post">
-					<button type="submit"
-						style="background: none; border: none; padding: 0; cursor: pointer;">
+					<button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512"
 							class="heart-icon">
 		                    <path
@@ -71,10 +72,15 @@
 		                </svg>
 					</button>
 				</form:form>
+				<div class="product-review">
+					<a href="/item/review.html?item_code=${item.item_code}">리뷰 보러가기</a>
+				</div>
 			</div>
 		</div>
 
-		<!-- 구매 옵션 div -->
+
+										<!-- 구매 옵션 div -->
+
 		<div class="product-wrapper second">
 			<div class="product-details">
 				<h1>구매 옵션</h1>
@@ -224,7 +230,7 @@
 		    }
 		}
 	    function redirectToLogin(page) { 
-	        if (confirm("로그인 후 담을 수 있습니다. 로그인 페이지로 이동하시겠습니까?")) {
+	        if (confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?")) {
 	            window.location.href = "/login/login.html"; // 로그인 페이지로 이동
 	        }
 	    }

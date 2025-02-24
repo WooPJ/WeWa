@@ -26,7 +26,7 @@
 	         <a href="/mypage/notice.html" class="mypage">
 	            <img alt="마이페이지" src="../imgs/icon/mypage.png" >
 	        </a>   
-	         <a href="/like/heartlist.html" class=heart>
+	         <a href="/heart/heartlist.html" class=heart>
 	            <img alt="찜 목록" src="../imgs/icon/like.png" >
 	        </a>
 				<c:choose>

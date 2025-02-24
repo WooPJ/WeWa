@@ -1,21 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<<<<<<< HEAD
-=======
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
->>>>>>> origin/master
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>장바구니</title>
-<<<<<<< HEAD
 </head>
 <body>
 <br/><br/><br/><br/><br/><br/><br/>
 카트 목록
-=======
 <link rel="stylesheet" type="text/css" href="../css/cartStyle.css">
 <style>
     body {
@@ -93,7 +88,7 @@
             <td>
             	<form action="">
             		<input type="submit" value="수정" name="BTN"/>
-            	</form><br/>
+            	</form>
             	<form action="">
             		<input type="submit" value="삭제" name="BTN"/>
             	</form>
@@ -108,6 +103,5 @@
     </form>
     <button type="button" class="cart-button" onclick="history.back();">뒤로 가기</button>
 </div>
->>>>>>> origin/master
 </body>
 </html>
