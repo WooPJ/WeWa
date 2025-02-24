@@ -22,7 +22,7 @@
 				<c:otherwise>
 <jsp:include page="main_slider.jsp"/>				
 <div class="product-container">
- <c:forEach var="item" items="${Items}">
+ <c:forEach var="item" items="${itemList}">
     <div class="product">
     	<a href="/item/itemDetail.html?item_code=${item.item_code }">
         <img src="${item.imagename} " width="250" height="300"/>

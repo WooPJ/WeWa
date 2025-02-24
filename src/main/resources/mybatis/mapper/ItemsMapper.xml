@@ -32,9 +32,20 @@
 	</select>
 	
 	<select id="getItemList" resultType="com.springboot.wearwave.model.Items_tbl">
-	select item_code, item_title, price, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, user_id
+	select item_id, item_code, item_title, price, content, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, user_id
 	from items_tbl order by num
 	</select>
+	
+	<select id="getItemMenu" parameterType="com.springboot.wearwave.model.StartEnd" resultType="com.springboot.wearwave.model.Items_tbl">
+	select item_code, item_title, price, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, user_id
+	from items_tbl where item_id > #{start} and item_id <![CDATA[<]]> #{end} order by num
+	</select>
+	
+	<select id="getCategory" parameterType="Integer" resultType="com.springboot.wearwave.model.Items_tbl">
+	select item_code, item_title, price, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, user_id
+	from items_tbl where item_id = #{num} order by num
+	</select>
+	
 	
 	<select id="getMyItemList" parameterType="String" resultType="com.springboot.wearwave.model.Items_tbl">
 	select item_code, item_title, price, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, num

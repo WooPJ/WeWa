@@ -1,8 +1,8 @@
-.category-container {
-    display: flex;
+.category-container{
+	display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin-top: 20vh;
+    margin-top: 140px;
     margin-left: 80px;
     margin-right: 80px;
     font-size: 20px;
@@ -23,17 +23,16 @@
 .product-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; /* 상품들을 왼쪽 정렬 */
-    margin-top: 50px;
+    justify-content: flex-start;
     margin-left: 80px;
     margin-right: 80px;
-    gap: 30px; /* 간격을 적당하게 조정 */
+    gap: 25px; /* 간격을 적당하게 조정 */
+    padding-bottom: 40px; /* 여백 추가 */
 }
 
 /* 개별 상품 스타일 */
 .product {
-    display: block;  /* 상품을 블록으로 만들어 한 줄에 여러 개가 배치되도록 */
-    width: calc(25% - 30px);  /* 최대 4개 아이템 가로 배치 */
+    width: calc(25% - 25px); /* 4개의 아이템이 가로로 배치되도록 */
     text-align: center;
     padding: 15px;
     border: 1px solid #ddd;
@@ -41,14 +40,13 @@
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     background-color: white;
     transition: transform 0.3s ease; /* hover 시 효과 */
+    margin-bottom: 25px; /* 아래 여백 추가 */
 }
 
-/* hover 효과 */
 .product:hover {
-    transform: translateY(-10px); /* hover 시 살짝 떠오르는 느낌 */
+    transform: translateY(-10px); /* hover 효과로 살짝 떠오르는 느낌 */
 }
 
-/* 이미지 스타일 */
 .product img {
     width: 100%;
     border-radius: 10px;
@@ -83,6 +81,30 @@
 /* 반응형 디자인: 화면 크기가 작은 경우 스타일 */
 @media (max-width: 1024px) {
     .product {
-        width: calc(33.33% - 30px); /* 3개 아이템 가로 배치 */
+        width: calc(33.33% - 20px); /* 3개 아이템 가로 배치 */
+    }
+}
+
+@media (max-width: 768px) {
+    .product-container {
+        margin-left: 20px;
+        margin-right: 20px;
+        gap: 20px;
+    }
+
+    .product {
+        width: calc(50% - 20px); /* 2개 아이템 가로 배치 */
+    }
+}
+
+@media (max-width: 480px) {
+    .product-container {
+        margin-left: 10px;
+        margin-right: 10px;
+        gap: 15px;
+    }
+
+    .product {
+        width: 100%; /* 모바일에서는 하나씩 세로로 표시 */
     }
 }

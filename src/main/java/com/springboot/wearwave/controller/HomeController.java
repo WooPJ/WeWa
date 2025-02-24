@@ -22,9 +22,9 @@ public class HomeController {
 	public ModelAndView home() {
 		ModelAndView mav = new ModelAndView("index");
 		List<Slider_images> sliderlist = this.sliderService.getSliderImageList();
-		List<Items_tbl> Items = this.itemsService.getItemList();
+		List<Items_tbl> itemList = this.itemsService.getItemList();
 		mav.addObject("sliderList",sliderlist);
-		mav.addObject("Items", Items);
+		mav.addObject("itemList", itemList);
 		return mav;
 	}
 }

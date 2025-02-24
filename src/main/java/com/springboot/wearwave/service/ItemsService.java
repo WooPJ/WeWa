@@ -9,6 +9,7 @@ import com.springboot.wearwave.mapper.ItemsMapper;
 import com.springboot.wearwave.model.Item_color;
 import com.springboot.wearwave.model.Item_size;
 import com.springboot.wearwave.model.Items_tbl;
+import com.springboot.wearwave.model.StartEnd;
 
 import jakarta.transaction.Transactional;
 
@@ -101,5 +102,13 @@ public class ItemsService {
 	
 	public List<Items_tbl> userIdbyItemList(String user_id){
 		return this.itemsMapper.userIdbyItemList(user_id);
+	}
+	
+	public List<Items_tbl> getItemMenu(StartEnd se){
+		return this.itemsMapper.getItemMenu(se);
+	}
+	
+	public List<Items_tbl> getCategory(Integer num){
+		return this.itemsMapper.getCategory(num);
 	}
 }

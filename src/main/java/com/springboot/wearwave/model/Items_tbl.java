@@ -11,7 +11,7 @@ import lombok.Setter;
 public class Items_tbl {
 	private String item_code;
 	private String item_title;
-	private Integer item_id; //상품 카테고리 아이디 ex) 1: 상의, 2: 하의, 3: 아우터, 4: 신발
+	private Integer item_id;
 	private Integer price;
 	private String reg_date;
 	private String imagename;

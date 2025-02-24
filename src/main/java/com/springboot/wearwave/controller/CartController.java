@@ -9,20 +9,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.springboot.wearwave.model.Cart;
-import com.springboot.wearwave.model.Item;
 import com.springboot.wearwave.model.LoginUser;
 import com.springboot.wearwave.service.CartService;
-import com.springboot.wearwave.service.ItemService;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 
 @Controller
 public class CartController {
 	@Autowired
 	private CartService cartService;
-	@Autowired
-	private ItemService itemService;
+	
 	@PostMapping(value = "/item/cart.html")
 	public ModelAndView cart(HttpSession session, String item_code, String selectedSize, String selectedQuantity,
 			String selectedColor ,Cart cart) {
