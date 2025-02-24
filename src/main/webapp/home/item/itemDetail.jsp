@@ -38,7 +38,7 @@
 					</button>
 				</form:form>
 				<div class="product-review">
-					<a href="/item/review.html">리뷰 보러가기</a>
+					<a href="/item/review.html?item_code=${item.item_code}">리뷰 보러가기</a>
 				</div>
 			</div>
 		</div>
