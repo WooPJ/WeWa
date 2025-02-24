@@ -32,7 +32,18 @@
  <c:forEach var="item" items="${Items}">
     <div class="product">
     	<a href="/item/itemDetail.html?item_code=${item.item_code }">
-        <img src="${item.imagename} " width="250" height="300"/>
+        <div class="image-container">
+                <img src="../imgs/item/${item.imagename}" alt="${item.item_title}"/>
+                <div class="heart-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512" class="heart-icon"
+                         data-item-id="${item.item_code}">
+                        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4
+                                c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4
+                                268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8
+                                c0 41.5 17.2 81.2 47.6 109.5z"/>
+                    </svg>
+                </div>
+            </div>    
         <div class="product-name">${item.user_id}</div>
         <div class="product-description">${item.item_title}</div>
         <%-- <div class="product-price">${item.price}원</div> --%>
