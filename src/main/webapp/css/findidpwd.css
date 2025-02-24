@@ -1,0 +1,141 @@
+@charset "UTF-8";
+/* 전체 페이지 스타일 */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+}
+
+/* wrapper 스타일 */
+.wrapper {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+/* 아이디 찾기 박스 스타일 */
+.wrap {
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+/* 로고 스타일 */
+.logo img {
+    display: block;
+    margin: auto;
+    padding: 20px;
+    width: 120px;
+    height: auto;
+}
+
+/* 입력폼 스타일 */
+.find_wrap {
+    margin-top: 20px;
+}
+
+.input_box {
+    margin-bottom: 15px;
+}
+
+.input_field {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* 버튼 스타일 */
+.button_wrap {
+    text-align: center;
+}
+
+.submit_button {
+    width: 100%;
+    padding: 10px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit_button:hover {
+    background-color: skyblue;
+}
+
+/* 링크 스타일 */
+.links_wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.sub {
+    color: black;
+    text-decoration: none;
+    font-size: 13px;
+    margin: 0 10px;
+}
+
+.separator {
+    font-size: 6px;
+    color: gray;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .wrap {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .logo img {
+        width: 100px;
+    }
+
+    .input_field {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .submit_button {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .wrap {
+        max-width: 90%;
+        padding: 10px;
+    }
+
+    .logo img {
+        width: 80px;
+    }
+
+    .input_field {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .submit_button {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .sub {
+        font-size: 12px;
+    }
+}

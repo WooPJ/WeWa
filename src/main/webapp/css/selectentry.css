@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+body, html {
+    height: 100%;  /* 높이를 100%로 설정하여 화면에 꽉 차게 */
+    margin: 0;
+    display: flex;
+    flex-direction: column;  /* 로고와 버튼을 세로로 배치 */
+    justify-content: center;  /* 세로로 중앙 정렬 */
+    align-items: center;      /* 가로로 중앙 정렬 */
+    background-color: #f4f4f4;
+}
+
+.logo img {
+    display: block;
+    padding: 50px;
+    max-width: 100%;  /* 화면 크기에 맞게 로고 크기 조정 */
+    height: auto;
+}
+
+/* 버튼을 포함하는 div의 스타일 */
+.selectentry-btn {
+    display: flex;
+    justify-content: space-between;  /* 버튼들 간의 간격을 고르게 배치 */
+    gap: 30px;  /* 버튼 간 간격 조정 */
+    flex-wrap: wrap;  /* 화면 크기 작을 때 버튼이 자동으로 줄바꿈 */
+    justify-content: center;  /* 버튼을 화면 중앙에 배치 */
+    margin-top: 30px;
+}
+
+button {
+    width: 250px;  /* 기본 버튼 크기 설정 */
+    height: 250px;
+    border-radius: 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 30px;  /* 기본 폰트 크기 설정 */
+    cursor: pointer;  /* 버튼 클릭 시 포인터가 나타나도록 */
+    transition: all 0.3s ease;  /* 버튼에 부드러운 전환 효과 추가 */
+    margin: 10px;  /* 버튼 간 간격 추가 */
+}
+
+button.user {
+    background-color: #4CAF50;  /* 손님 버튼의 색상 */
+    color: white;
+}
+
+button.business {
+    background-color: #2196F3;  /* 사업자 버튼의 색상 */
+    color: white;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    button {
+        width: 200px;  /* 작은 화면에서 버튼 크기 감소 */
+        height: 200px;
+        font-size: 24px;  /* 버튼 폰트 크기 감소 */
+    }
+
+    .selectentry-btn {
+        gap: 20px;  /* 작은 화면에서 버튼 간격 좁힘 */
+    }
+
+    .logo img {
+        padding: 30px;  /* 작은 화면에서 로고 패딩 감소 */
+    }
+}
+
+@media (max-width: 480px) {
+    button {
+        width: 180px;  /* 모바일 화면에서 버튼 크기 더 작게 */
+        height: 180px;
+        font-size: 20px;  /* 모바일에서 버튼 폰트 크기 더 작게 */
+    }
+
+    .selectentry-btn {
+        gap: 15px;  /* 모바일에서 버튼 간격 더 좁게 */
+    }
+
+    .logo img {
+        padding: 20px;  /* 모바일에서 로고 패딩 더 적게 */
+    }
+}

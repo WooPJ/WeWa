@@ -1,0 +1,151 @@
+/* 상품 목록 컨테이너 */
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 50px;
+    margin-left: 80px;
+    margin-right: 80px;
+    gap: 30px; /* 간격을 적당하게 조정 */
+}
+
+/* 개별 상품 스타일 */
+.product {
+	/*position: relative;*/
+	display: inline-block;
+	width: 100%;  /* 필요한 너비에 맞게 조정 */
+    height: 100%;
+	
+    width: calc(25% - 40px); /* 4개의 아이템이 가로로 배치되도록 */
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    transition: transform 0.3s ease; /* hover 시 효과 */
+}
+
+.product:hover {
+    transform: translateY(-10px); /* hover 효과로 살짝 떠오르는 느낌 */
+}
+
+.product img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover; /* 이미지 비율에 맞춰 잘리거나 확대되지 않도록 */
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+}
+
+.heart-container {
+	z-index: 10;
+    position: absolute;
+    top: 88%;
+    right: 3%;
+    cursor: pointer;
+}
+
+.heart-icon {
+    width: 40px;  
+    height: 40px;
+    cursor: pointer;
+    fill: white;
+    transition: fill 0.3s ease;
+    stroke: black;         /* 검은색 테두리 */
+    stroke-width: 30px;     /* 테두리 두께 */
+}
+
+.heart-icon.filled {
+    fill: red;
+}
+
+
+/* 상품 이름과 설명 */
+.gproduct-name, .product-description {
+    max-width: 100%;         /* 부모 요소 너비 초과 방지 */
+    overflow: hidden;        /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis; /* 넘치는 부분 ... 처리 */
+    white-space: nowrap;     /* 한 줄로 표시 */
+    font-size: 16px;
+    color: gray;
+    padding: 5px;
+   
+/*   
+    word-wrap: break-word; 긴 단어 자동 줄바꿈
+    overflow-wrap: break-word; 최신 브라우저 대응
+    white-space: normal; 줄바꿈 허용
+*/
+}
+
+/* 가격 스타일 */
+.product-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d9534f;
+}
+
+/* 상품 링크 */
+.product a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 반응형 디자인: 화면 크기가 작은 경우 스타일 */
+@media (max-width: 1500px) {
+    .heart-container {
+	    top: 85% !important;
+	}
+}
+@media (max-width: 1300px) {
+	.heart-icon {
+	    width: 30px; height: 30px;
+	}
+}
+
+@media (max-width: 1024px) {
+    .product {
+        width: calc(33.33% - 20px); /* 3개 아이템 가로 배치 */
+    }
+    .heart-container {
+	    top: 85% !important;
+	}
+	.heart-icon {
+	    width: 30px; height: 30px;
+	}
+}
+
+@media (max-width: 768px) {
+    .product-container {
+        margin-left: 20px;
+        margin-right: 20px;
+        gap: 20px;
+    }
+    .product {
+        width: calc(50% - 20px); /* 2개 아이템 가로 배치 */
+    }
+    
+    .heart-container {
+	    top: 87% !important;
+	}
+}
+
+@media (max-width: 480px) {
+    .product-container {
+        margin-left: 10px;
+        margin-right: 10px;
+        gap: 15px;
+    }
+    .product {
+        width: 100%; /* 모바일에서는 하나씩 세로로 표시 */
+    }
+}

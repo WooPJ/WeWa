@@ -1,0 +1,235 @@
+@charset "UTF-8";
+
+/* Header 스타일 */
+header {
+    padding: 10px 20px;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+.sub-header {
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    gap: 10px; /* 요소 간 간격 */
+    margin-top: 20px;
+    margin-right: 80px;
+    margin-left: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    background-color: powderblue;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 95%;
+}
+
+.logo {
+    margin-left: 50px;
+    margin-right: 20px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex-grow: 1;
+    max-width: 500px;
+}
+
+.icon-container {
+    display: flex;
+    gap: 15px;
+}
+
+.icon-container a img {
+    width: 50px;
+    height: 50px;
+}
+
+.search-container input[type="text"] {
+    width: 100%;
+    max-width: 500px;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 30px;
+    padding: 0 40px 0 20px;
+    border: 1px solid #ddd;
+}
+
+#search {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    background-image: url("../imgs/icon/search.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: white;
+    right: 15px;
+    top: 15%;
+    border: none;
+    cursor: pointer;
+}
+
+.top-bar-button {
+    font-size: 25px;
+    position: absolute;
+    margin-left: 50px;
+    left: 20px;
+    top: 85px;
+    z-index: 100;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: black;
+    transition: left 0.4s ease;
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+    background-color: snow;
+    border-left: 2px solid rgb(237, 208, 77);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: -350px;
+    transition: 0.4s ease;
+    color: snow;
+    height: 100%;
+    z-index: 99;
+    width: 300px;
+    padding-top: 78px;
+}
+
+.sidebar.open {
+    left: 0px;
+}
+
+.top-bar-button.open {
+    left: 200px;
+}
+
+.sidebar a {
+    color: black;
+    padding: 15px;
+    text-decoration: none;
+    display: flex;
+}
+
+.sidebar a:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.menu-item {
+    position: relative;
+}
+
+.submenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 200px;
+    background-color: snow;
+    padding: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.menu-item:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sidebar .submenu {
+    visibility: hidden;
+    opacity: 0;
+    padding-right: 20px;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar .menu-item.open .submenu {
+    visibility: visible;
+    opacity: 1;
+    left: 0;
+}
+
+/* 링크 스타일 */
+.sub-header a:visited {
+    color: inherit;
+}
+
+.sub-header h3 {
+    margin: 0; /* 기본 여백 제거 */
+    font-size: 18px; /* 글자 크기 조정 (필요시) */
+}
+
+.sub-header a {
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 세로 중앙 정렬 */
+    text-decoration: none; /* 밑줄 제거 */
+    color: initial; /* 기본 색상 */
+    font-size: 16px; /* 글자 크기 조정 (필요시) */
+}
+
+/* 반응형 디자인: 화면 크기에 맞는 스타일 */
+@media (max-width: 1024px) {
+    .search-container input[type="text"] {
+        max-width: 350px;
+    }
+
+    .header-container {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .sub-header {
+        margin-right: 20px;
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .logo {
+        margin-left: 20px;
+    }
+}
+
+/* 모바일 환경 (768px 이하) */
+@media (max-width: 768px) {
+    header {
+        padding: 10px 15px;
+    }
+
+    .sub-header {
+        flex-direction: column;
+        align-items: center;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .search-container {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .sidebar {
+        width: 250px;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+}
