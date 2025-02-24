@@ -62,7 +62,7 @@ public class MenuController {
 	}
 	
 	@GetMapping(value="/menu/topcategoryList.html") 
-	public ModelAndView category(@RequestParam("item_id") int itemId) {
+	public ModelAndView topcategory(@RequestParam("item_id") int itemId) {
 		ModelAndView mav = new ModelAndView("index");
 		List<Items_tbl> Items = this.itemsService.getCategory(itemId);
 		mav.addObject("Items", Items);
@@ -70,4 +70,31 @@ public class MenuController {
 		return mav;
 	}
 	
+
+	@GetMapping(value="/menu/bottomcategoryList.html") 
+	public ModelAndView bottomcategory(@RequestParam("item_id") int itemId) {
+		ModelAndView mav = new ModelAndView("index");
+		List<Items_tbl> Items = this.itemsService.getCategory(itemId);
+		mav.addObject("Items", Items);
+		mav.addObject("BODY","item/bottom.jsp");
+		return mav;
+	}
+	
+	@GetMapping(value="/menu/outercategoryList.html") 
+	public ModelAndView outercategory(@RequestParam("item_id") int itemId) {
+		ModelAndView mav = new ModelAndView("index");
+		List<Items_tbl> Items = this.itemsService.getCategory(itemId);
+		mav.addObject("Items", Items);
+		mav.addObject("BODY","item/outer.jsp");
+		return mav;
+	}
+	
+	@GetMapping(value="/menu/shoescategoryList.html") 
+	public ModelAndView shoescategory(@RequestParam("item_id") int itemId) {
+		ModelAndView mav = new ModelAndView("index");
+		List<Items_tbl> Items = this.itemsService.getCategory(itemId);
+		mav.addObject("Items", Items);
+		mav.addObject("BODY","item/shoes.jsp");
+		return mav;
+	}
 }

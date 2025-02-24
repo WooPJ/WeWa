@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.springboot.wearwave.model.Items_tbl;
@@ -25,6 +26,16 @@ public class HomeController {
 		List<Items_tbl> itemList = this.itemsService.getItemList();
 		mav.addObject("sliderList",sliderlist);
 		mav.addObject("itemList", itemList);
+		return mav;
+	}
+	
+	@PostMapping(value="/home/search.html")
+	public ModelAndView search(String NAME) {
+		List<Items_tbl> itemList = this.itemsService.getItemByName(NAME);
+		ModelAndView mav = new ModelAndView("index");
+		mav.addObject("Items", itemList);
+		mav.addObject("BODY","item/itemsByNameList.jsp");
+		mav.addObject("NAME", NAME);
 		return mav;
 	}
 }

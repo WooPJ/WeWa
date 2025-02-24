@@ -111,4 +111,8 @@ public class ItemsService {
 	public List<Items_tbl> getCategory(Integer num){
 		return this.itemsMapper.getCategory(num);
 	}
+	
+	public List<Items_tbl> getItemByName(String name){
+		return this.itemsMapper.getItemByName(name);
+	}
 }

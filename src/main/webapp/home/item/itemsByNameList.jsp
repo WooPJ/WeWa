@@ -1,24 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>   
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>하의 목록</title>
-<link rel="stylesheet" type="text/css" href="../css/items.css">
+
+<title>상의 목록</title>
 </head>
 <body>
 <div class="category-container">
-    <div class="category-links">
-	<a href="/menu/bottom.html">전체</a>
-	<a href="/menu/bottomcategoryList.html?item_id=11">데님</a>
-	<a href="/menu/bottomcategoryList.html?item_id=12">트레이닝</a>
-	<a href="/menu/bottomcategoryList.html?item_id=13">조거</a>
-	<a href="/menu/bottomcategoryList.html?item_id=14">슬랙스</a>
-	<a href="/menu/bottomcategoryList.html?item_id=15">숏팬츠</a>
-</div>
-<div class="sort-container">
+    <div class="sort-container">
         <label for="sort">정렬:</label>
         <select id="sort" onchange="sortProducts()">
             <option value="default">기본순</option>
@@ -37,12 +30,12 @@
         <div class="product-name">${item.user_id}</div>
         <div class="product-description">${item.item_title}</div>
         <%-- <div class="product-price">${item.price}원</div> --%>
-        <div class="product-price"><fmt:formatNumber value="${item.price}" groupingUsed="true"/>원</div>
+         <div class="product-price"><fmt:formatNumber value="${item.price}" groupingUsed="true"/>원</div>
    		 </a>
     </div>
  </c:forEach>
  </div>
-  <script>
+ <script>
 function sortProducts() {
     let sortType = document.getElementById("sort").value;
     let productsContainer = document.querySelector(".product-container");

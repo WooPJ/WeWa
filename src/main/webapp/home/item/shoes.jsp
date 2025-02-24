@@ -8,6 +8,26 @@
 <title>신발 목록</title>
 </head>
 <body>
+<div class="category-container">
+    <div class="category-links">
+	<a href="/menu/shoes.html">전체</a>
+	<a href="/menu/shoescategoryList.html?item_id=31">스니커즈</a>
+	<a href="/menu/shoescategoryList.html?item_id=32">부츠</a>
+	<a href="/menu/shoescategoryList.html?item_id=33">구두</a>
+	<a href="/menu/shoescategoryList.html?item_id=34">샌들</a>
+	<a href="/menu/shoescategoryList.html?item_id=35">스포츠</a>
+</div>
+<div class="sort-container">
+        <label for="sort">정렬:</label>
+        <select id="sort" onchange="sortProducts()">
+            <option value="default">기본순</option>
+            <option value="price-asc">가격 낮은 순</option>
+            <option value="price-desc">가격 높은 순</option>
+            <option value="name-asc">이름 오름차순</option>
+            <option value="name-desc">이름 내림차순</option>
+        </select>
+    </div>
+</div>
 <div class="product-container">
  <c:forEach var="item" items="${Items}">
     <div class="product">
@@ -21,5 +41,28 @@
     </div>
  </c:forEach>
  </div>
+  <script>
+function sortProducts() {
+    let sortType = document.getElementById("sort").value;
+    let productsContainer = document.querySelector(".product-container");
+    let products = Array.from(productsContainer.getElementsByClassName("product"));
+
+    products.sort((a, b) => {
+        let priceA = parseInt(a.querySelector(".product-price").textContent.replace(/[^0-9]/g, ""));
+        let priceB = parseInt(b.querySelector(".product-price").textContent.replace(/[^0-9]/g, ""));
+        let nameA = a.querySelector(".product-name").textContent.trim();
+        let nameB = b.querySelector(".product-name").textContent.trim();
+
+        if (sortType === "price-asc") return priceA - priceB;
+        if (sortType === "price-desc") return priceB - priceA;
+        if (sortType === "name-asc") return nameA.localeCompare(nameB, "ko");
+        if (sortType === "name-desc") return nameB.localeCompare(nameA, "ko");
+        return 0;
+    });
+
+    productsContainer.innerHTML = "";
+    products.forEach(product => productsContainer.appendChild(product));
+}
+</script>
 </body>
 </html>

@@ -80,4 +80,8 @@
 	<select id="userIdbyItemList" parameterType="String" resultType="com.springboot.wearwave.model.Items_tbl">
 	select item_code, item_title, price, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, user_id from items_tbl where user_id = #{user_id}
 	</select>
+	
+	<select id="getItemByName" parameterType="String" resultType="com.springboot.wearwave.model.Items_tbl">
+	select * from items_tbl where item_title like '%' || #{name} || '%' or user_id like '%' || #{name} || '%' 
+	</select>
 </mapper>

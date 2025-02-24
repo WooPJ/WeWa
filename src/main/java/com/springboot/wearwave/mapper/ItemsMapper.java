@@ -29,27 +29,5 @@ public interface ItemsMapper {
 	List<Items_tbl> userIdbyItemList(String user_id);
 	List<Items_tbl> getItemMenu(StartEnd se);
 	List<Items_tbl> getCategory(Integer num);
+	List<Items_tbl> getItemByName(String name);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

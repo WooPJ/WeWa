@@ -15,8 +15,8 @@
         <a href="/home/index.html" class="logo">
             <img alt="로고" src="../imgs/icon/logo.png" width="200" height="50">
         </a>   
-        <form action="" method="post" class="search-container">
-            <input type="text" name="item" placeholder="검색어를 입력해주세요.">
+        <form action="/home/search.html" method="post" class="search-container">
+            <input type="text" name="NAME" placeholder="검색어를 입력해주세요.">
             <button type="submit" id="search"></button>
         </form>
          <div class="icon-container">
@@ -65,46 +65,46 @@
         <a class="word">상의</a>
         <div class="submenu">
               <a class="word" href="/menu/top.html">전체</a>
-              <a class="word" href="">니트</a>
-              <a class="word" href="">맨투맨</a>
-              <a class="word" href="">후드</a>
-              <a class="word" href="">셔츠</a>
-              <a class="word" href="">긴소매</a>
-              <a class="word" href="">반소매</a>
+              <a class="word" href="/menu/topcategoryList.html?item_id=1">니트</a>
+              <a class="word" href="/menu/topcategoryList.html?item_id=2">맨투맨</a>
+              <a class="word" href="/menu/topcategoryList.html?item_id=3">후드</a>
+              <a class="word" href="/menu/topcategoryList.html?item_id=4">셔츠</a>
+              <a class="word" href="/menu/topcategoryList.html?item_id=5">긴소매</a>
+              <a class="word" href="/menu/topcategoryList.html?item_id=6">반소매</a>
         </div> 
     </div>
      <div class="menu-item">
         <a class="word">하의</a>
          <div class="submenu">
               <a class="word" href="/menu/bottom.html">전체</a>
-              <a class="word" href="">데님</a>
-              <a class="word" href="">트레이닝</a>
-              <a class="word" href="">조거</a>
-              <a class="word" href="">슬랙스</a>
-              <a class="word" href="">숏 팬츠</a>
+              <a class="word" href="/menu/bottomcategoryList.html?item_id=11">데님</a>
+              <a class="word" href="/menu/bottomcategoryList.html?item_id=12">트레이닝</a>
+              <a class="word" href="/menu/bottomcategoryList.html?item_id=13">조거</a>
+              <a class="word" href="/menu/bottomcategoryList.html?item_id=14">슬랙스</a>
+              <a class="word" href="/menu/bottomcategoryList.html?item_id=15">숏 팬츠</a>
         </div>
     </div>
      <div class="menu-item">
         <a class="word">아우터</a>
         <div class="submenu">
               <a class="word" href="/menu/outer.html">전체</a>
-              <a class="word" href="">패딩</a>
-              <a class="word" href="">후드 집업</a>
-              <a class="word" href="">카디건</a>
-              <a class="word" href="">무스탕</a>
-              <a class="word" href="">코트</a>
-              <a class="word" href="">트레이닝</a>
+              <a class="word" href="/menu/outercategoryList.html?item_id=21">패딩</a>
+              <a class="word" href="/menu/outercategoryList.html?item_id=22">후드 집업</a>
+              <a class="word" href="/menu/outercategoryList.html?item_id=23">카디건</a>
+              <a class="word" href="/menu/outercategoryList.html?item_id=24">무스탕</a>
+              <a class="word" href="/menu/outercategoryList.html?item_id=25">코트</a>
+              <a class="word" href="/menu/outercategoryList.html?item_id=26">트레이닝</a>
         </div>
     </div>
      <div class="menu-item">
          <a class="word">신발</a>
         <div class="submenu">
               <a class="word" href="/menu/shoes.html">전체</a>
-              <a class="word" href="">스니커즈</a>
-              <a class="word" href="">부츠</a>
-              <a class="word" href="">구두</a>
-              <a class="word" href="">샌들</a>
-              <a class="word" href="">스포츠</a>
+              <a class="word" href="/menu/shoescategoryList.html?item_id=31">스니커즈</a>
+              <a class="word" href="/menu/shoescategoryList.html?item_id=32">부츠</a>
+              <a class="word" href="/menu/shoescategoryList.html?item_id=33">구두</a>
+              <a class="word" href="/menu/shoescategoryList.html?item_id=34">샌들</a>
+              <a class="word" href="/menu/shoescategoryList.html?item_id=35">스포츠</a>
         </div>
     </div>
 </div>
