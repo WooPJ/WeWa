@@ -24,7 +24,7 @@
 <div class="product-container">
  <c:forEach var="item" items="${itemList}">
     <div class="product">
-        <a href="/item/itemDetail.html?item_id=${item.item_code}">
+        <a href="/item/itemDetail.html?item_code=${item.item_code}">
             <div class="image-container">
                 <img src="../imgs/item/${item.imagename}" alt="${item.item_title}"/>
                 <div class="heart-container">
@@ -73,7 +73,7 @@
             } else {
                 this.classList.toggle('filled');
                 const isFilled = this.classList.contains('filled');
-                const inData = { itemId: itemId, status: isFilled };
+                const inData = { itemCode: itemId, status: isFilled };
                 let param = new URLSearchParams(inData).toString();
                 fetch("/heart/toggle.html?" + param);
             }

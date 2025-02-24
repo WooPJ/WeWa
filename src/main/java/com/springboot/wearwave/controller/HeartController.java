@@ -1,7 +1,6 @@
 package com.springboot.wearwave.controller;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -24,7 +23,6 @@ public class HeartController {
 	private HeartService heartService;
 	
 	
-	
 	@GetMapping(value="/heart/heartlist.html") //찜 목록 이동
 	public ModelAndView likelist() {
 		ModelAndView mav = new ModelAndView("index");
@@ -34,7 +32,7 @@ public class HeartController {
 	
 	@GetMapping(value = "/heart/toggle.html") // 좋아요버튼 누른 경우
 	public ModelAndView heartToggle(
-			@RequestParam("itemId") String item_code, 
+			@RequestParam("itemCode") String item_code, 
 			@RequestParam("status") boolean isFilled, 
 			HttpSession session) {
 		LoginUser user = (LoginUser)session.getAttribute("loginUser");
@@ -58,18 +56,12 @@ public class HeartController {
 				heartList = new ArrayList<Heart>();
 			}
 			heartList.add(heart);
-			
 			session.setAttribute("heartList", heartList);
-			
-			System.out.println("찜 추가의 상품id : " + item_code);
-			
+			System.out.println("찜 추가의 상품 code : " + item_code);
 			this.heartService.updateTrue(heart);
 			
-			
-			
-			
 		} else {
-		    System.out.println("찜 삭제의 상품id : " + item_code);
+		    System.out.println("찜 삭제의 상품 code : " + item_code);
 
 		    // 세션에서 heartList 가져오기
 		    ArrayList<Heart> heartList = (ArrayList<Heart>) session.getAttribute("heartList");
