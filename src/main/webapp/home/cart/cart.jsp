@@ -84,7 +84,7 @@
             <td>
             	<form action="">
             		<input type="submit" value="수정" name="BTN"/>
-            	</form><br/>
+            	</form>
             	<form action="">
             		<input type="submit" value="삭제" name="BTN"/>
             	</form>
