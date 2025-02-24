@@ -13,8 +13,8 @@ header {
 
 .sub-header {
     display: flex; /* Flexbox 사용 */
-    align-items: center; /* 세로 중앙 정렬 */
     justify-content: flex-end; /* 오른쪽 정렬 */
+    align-items: center; /* 수직 정렬을 중앙으로 맞추기 */
     gap: 10px; /* 요소 간 간격 */
     margin-top: 20px;
     margin-right: 80px;
@@ -23,6 +23,7 @@ header {
     padding-bottom: 10px;
     padding-right: 10px;
     background-color: powderblue;
+    background-size: contain;
 }
 
 .header-container {

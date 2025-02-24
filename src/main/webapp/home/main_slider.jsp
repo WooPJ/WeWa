@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,22 +11,11 @@
 <body>
 
 <div class="slideshow-container">
-
-  <div class="mySlides fade">
-    <div class="numbertext">1 / 3</div>
-    <a href=""><img src="../imgs/slider/image1.jpg" style="width:100%"></a>
-  </div>
-
-  <div class="mySlides fade">
-    <div class="numbertext">2 / 3</div>
-    <a href=""> <img src="../imgs/slider/image2.jpg" style="width:100%"></a>
-  </div>
-
-  <div class="mySlides fade">
-    <div class="numbertext">3 / 3</div>
-    <a href=""> <img src="../imgs/slider/image3.jpg" style="width:100%"></a>
-
-  </div>
+  <c:forEach var="slide" items="${sliderList}">
+    <div class="mySlides fade">
+      <a href=""><img src="${slide.image_url}" style="width:100%"></a>
+    </div>
+  </c:forEach>
 
   <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
   <a class="next" onclick="plusSlides(1)">&#10095;</a>
@@ -32,26 +23,23 @@
 <br>
 
 <div style="text-align:center">
-  <span class="dot" onclick="currentSlide(1)"></span> 
-  <span class="dot" onclick="currentSlide(2)"></span> 
-  <span class="dot" onclick="currentSlide(3)"></span> 
+  <c:forEach var="slide" items="${sliderList}" varStatus="status">
+    <span class="dot" onclick="currentSlide(${status.index + 1})"></span>
+  </c:forEach>
 </div> 
 
 <script>
 var slideIndex = 1;
 showSlides(slideIndex);
 
-// 자동 슬라이드 변경 (5초 간격)
-setInterval(function() {
+setInterval(function() { // 자동 슬라이드 변경 (5초 간격)
   plusSlides(1); // 1번 슬라이드로 이동
-}, 5000); // 5000ms = 5초
+}, 5000);
 
-// Next/previous controls
 function plusSlides(n) {
   showSlides(slideIndex += n);
 }
 
-// Thumbnail image controls
 function currentSlide(n) {
   showSlides(slideIndex = n);
 }
@@ -72,5 +60,6 @@ function showSlides(n) {
   dots[slideIndex-1].className += " active";
 } 
 </script>
+
 </body>
 </html> 

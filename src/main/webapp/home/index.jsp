@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,10 +39,15 @@
             </div>    
             <div class="product-name">${item.item_title}</div>
             <div class="product-description">${item.content}</div>
-            <div class="product-price">${item.price}원</div>
+            <div class="product-price"><fmt:formatNumber value="${item.price}" groupingUsed="true"/>원</div>
         </a>
     </div>
 </c:forEach>				
+            </c:otherwise>
+        </c:choose>
+    </td></tr>
+</table>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Font Awesome for heart icon -->
 
 <script type="text/javascript">
     function redirectToLogin() {
@@ -62,12 +68,10 @@
 
         heart.addEventListener('click', function (event) {
             event.preventDefault();
-
             if (${sessionScope.loginUser == null}) {
                 redirectToLogin();
             } else {
                 this.classList.toggle('filled');
-
                 const isFilled = this.classList.contains('filled');
                 const inData = { itemId: itemId, status: isFilled };
                 let param = new URLSearchParams(inData).toString();
@@ -76,14 +80,5 @@
         });
     });
 </script>
-
-
-            </c:otherwise>
-        </c:choose>
-    </td></tr>
-</table>
-<script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Font Awesome for heart icon -->
-
-
 </body>
 </html>

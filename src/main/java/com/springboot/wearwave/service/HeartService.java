@@ -20,7 +20,7 @@ public class HeartService {
 
 	
 	public Item getItemById(String item_code) {
-        return itemMapper.getItemById(item_code);
+        return itemMapper.getItemCodePage(item_code);
     }
 	public List<Heart> getHeartList() {
 		return this.heartMapper.getHeartList();
