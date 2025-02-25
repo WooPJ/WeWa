@@ -3,28 +3,29 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springboot.wearwave.mapper.HeartMapper">
 
-	<select id="getHeartInfo" parameterType="com.springboot.wearwave.model.Heart" resultType="com.springboot.wearwave.model.Heart">
-		select heart.*, i.item_id, i.item_title, i.content ,i.price , i.imagename
-		from heart INNER JOIN items_tbl i
-		on heart.item_code = #{item_code} and i.item_code = #{i_item_code};
+
+	<!-- 특정유저가 해당상품을 찜했는지 유무검사 -->
+	<select id="isHearted" parameterType="com.springboot.wearwave.model.Heart" resultType="int">
+    	SELECT COUNT(*) FROM heart WHERE user_id = #{user_id} AND item_code = #{item_code}
 	</select>
-	<select id="getHeartList" resultType="com.springboot.wearwave.model.Heart">
-		select user_id, item_code from heart
+	
+	<select id="getUserHeartList" parameterType="string" resultType="com.springboot.wearwave.model.Heart">
+    	SELECT * FROM heart WHERE user_id = #{user_id} AND status = 1
 	</select>
-	<update id="updateTrue" parameterType="com.springboot.wearwave.model.Heart">
-		update heart set status = 1 where user_id =#{user_id} and item_code =#{item_code}
-	</update>
+	<select id="getHeartListByUser" parameterType="String" resultType="com.springboot.wearwave.model.Heart">
+		SELECT h.*, i.item_title, i.price, i.imagename, i.content
+	    FROM heart h JOIN items_tbl i 
+	    ON h.item_code = i.item_code
+   		WHERE h.user_id = #{user_id} AND h.status = 1
+	</select>
+	
+	<insert id="insertHeart" parameterType="com.springboot.wearwave.model.Heart">
+		insert into heart values(#{user_id}, #{item_code}, 1)	
+	</insert>
 	<update id="updateFalse" parameterType="com.springboot.wearwave.model.Heart">
 		update heart set status = 0 where user_id =#{user_id} and item_code =#{item_code}
 	</update>
-	
-	
-	
-	<!-- 굳이 insert, delete 안써도 될듯? 하트누른사람 계정마다 테이블이 존재한다면 이건데, 걍 status false를 기본값으로 두고 업데이트하면 될듯 -->
-	<insert id="insertHeart" parameterType="com.springboot.wearwave.model.Heart">
-		insert into heart values(#{user_id}, #{item_code})	
-	</insert>
 	<delete id="deleteHeart" parameterType="com.springboot.wearwave.model.Heart">
-		delete from heart where user_id= #{user_id} and item_code= #{item_code}
+		delete from heart where user_id= #{user_id} and item_code= #{item_code} and status = 0
 	</delete>
 </mapper>
