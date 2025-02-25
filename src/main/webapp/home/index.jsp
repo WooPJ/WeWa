@@ -81,6 +81,15 @@
         });
     });
     
+    // 뒤로가기 클릭시 새로고침(하트표시 반영)
+    window.onpageshow = function(event){   // onpageshow는 page 호출되면 캐시든 아니든 무조건 호출됨
+        if (event.persisted || (window.performance && window.performance.navigation.type == 2)){
+            // 사파리 or 안드로이드에서 뒤로가기로 넘어온 경우 캐시를 이용해 화면을 보여주는데, 이때 사파리의 경우 event.persisted 가 ture임 
+            // 그외 브라우저(크롬 등)에서는 || 뒤에 있는 조건으로 뒤로가기 체크가 가능함
+            window.location.reload(); 
+        }
+    };
+
 </script>
 </body>
 </html>
