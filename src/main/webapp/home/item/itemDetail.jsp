@@ -14,7 +14,7 @@
 	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 	
 	
-	<div class="container">
+	<div class="container" id="item-detail-container">
 	    <!-- 첫 번째 상품 정보 -->
 		<div class="product-wrapper first">
 			<div class="product-details">
@@ -128,16 +128,7 @@
 		</div>
 	</div>
 	<script>
-	//찜하트 ----------
-	document.addEventListener("DOMContentLoaded", function () {	
-		console.log(heartIcons);
-		//heartIcons.replaceWith(heartIcons.cloneNode(true));
-		heartIcons.forEach(icon => {
-			const i = icon.cloneNode(true);
-			console.log(i);
-		});
-		
-		console.log(heartIcons);
+		//찜하트기능 ----------
 		const heartIcon = document.querySelector('.heart-icon');
         const itemId = heartIcon.getAttribute("data-item-code");
         
@@ -147,8 +138,9 @@
                redirectToLogin();
                
             } else {
-                let test = this.classList.toggle('filled'); //빈칸일때 누르면 false
-                if(test == false) {
+                let test = this.classList.toggle('filled'); //빈칸일때 누르면 true
+                console.log(test);
+                if(test) {
                 	this.classList.add('filled'); 
                 	console.log("하트채움");
                 } else {
@@ -161,8 +153,7 @@
                 let param = new URLSearchParams(inData).toString();
                 fetch("/heart/toggle.html?" + param);
             }
-        });
-	}); // ---끝 document.addEventListener
+        }); //찜하트기능 끝 ----------
 		
 	
 		function validateForm() {

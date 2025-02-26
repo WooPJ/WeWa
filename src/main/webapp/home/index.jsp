@@ -57,31 +57,40 @@
     	}
     }
 
-    const heartIcons = document.querySelectorAll('.heart-icon');
-    heartIcons.forEach(heart => {
-        const itemId = heart.getAttribute("data-item-code");
+	document.addEventListener("DOMContentLoaded", function () {	
+	    
+	    const heartIcons = document.querySelectorAll('.heart-icon');
+	    heartIcons.forEach(heart => {
+	        const itemId = heart.getAttribute("data-item-code");
+	
+	        // 찜한 상품인지 확인
+	        <c:forEach items="${sessionScope.heartList}" var="heart">
+	            if ("${heart.item_code}" == itemId) {
+	                heart.classList.add('filled'); // 하트 채우기
+	            }
+	        </c:forEach>
+	
+		    if (document.querySelector('#item-detail-container')) {
+		        console.log("🚀 현재 페이지는 itemDetail.jsp입니다. index.jsp의 heartIcon 스크립트 실행 안함");
+		        return; // 실행 중단
+		    } else { //itemDetail.jsp가 아니면
+		    	
+		        heart.addEventListener('click', function (event) {
+		            event.preventDefault();
+		            if (${sessionScope.loginUser == null}) {
+		               redirectToLogin();		               
+		            } else {
+		                this.classList.toggle('filled');
+		                const isFilled = this.classList.contains('filled');
+		                const inData = { itemCode: itemId, status: isFilled };
+		                let param = new URLSearchParams(inData).toString();
+		                fetch("/heart/toggle.html?" + param); //컨트롤러 매핑
+		            }
+		        });
+		    }
+	    });
+	});
 
-        // 찜한 상품인지 확인
-        <c:forEach items="${sessionScope.heartList}" var="heart">
-            if ("${heart.item_code}" == itemId) {
-                heart.classList.add('filled'); // 하트 채우기
-            }
-        </c:forEach>
-
-        heart.addEventListener('click', function (event) {
-            event.preventDefault();
-            if (${sessionScope.loginUser == null}) {
-               // redirectToLogin();
-            } else {
-                this.classList.toggle('filled');
-                const isFilled = this.classList.contains('filled');
-                const inData = { itemCode: itemId, status: isFilled };
-                let param = new URLSearchParams(inData).toString();
-                fetch("/heart/toggle.html?" + param);
-            }
-        });
-    });
-    
     // 뒤로가기 클릭시 새로고침(하트표시 반영)
     window.onpageshow = function(event){   // onpageshow는 page 호출되면 캐시든 아니든 무조건 호출됨
         if (event.persisted || (window.performance && window.performance.navigation.type == 2)){

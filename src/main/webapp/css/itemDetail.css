@@ -21,7 +21,8 @@
         }
 
 		.product-details {
-		    display: flex;
+/* 		    display: flex; */
+			position: relative;
 		    flex-direction: column;
 		    align-items: center;
 		    text-align: center;
@@ -150,12 +151,11 @@
 		    width: 25px;
 		    height: 25px;
 		}
-
 		.heart-container {
 			z-index: 10;
+			width: 50px;
 		    position: absolute;
-		    top: 88%;
-		    left: 3%;
+		    left: 80%;
 		    cursor: pointer;
 		}
         .heart-icon {
