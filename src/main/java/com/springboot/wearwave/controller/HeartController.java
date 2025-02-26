@@ -1,6 +1,7 @@
 package com.springboot.wearwave.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.springboot.wearwave.model.Heart;
-import com.springboot.wearwave.model.Item;
 import com.springboot.wearwave.model.LoginUser;
 import com.springboot.wearwave.service.HeartService;
 
@@ -24,9 +24,18 @@ public class HeartController {
 	
 	
 	@GetMapping(value="/heart/heartlist.html") //찜 목록 이동
-	public ModelAndView likelist() {
+	public ModelAndView heartList(HttpSession session) {
+		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
 		ModelAndView mav = new ModelAndView("index");
-		mav.addObject("BODY","heart/heartlist.jsp");
+		if (loginUser == null) {
+			return mav.addObject("BODY", "heart/heartList.jsp"); // 로그인 안 했을때
+		}
+		
+		List<Heart> heartList = (ArrayList<Heart>)session.getAttribute("heartList");
+		heartList = this.heartService.getHeartListByUser(loginUser.getId());
+		
+		session.setAttribute("heartList", heartList);
+		mav.addObject("BODY","heart/heartList.jsp");
 		return mav;
 	}
 	
@@ -59,7 +68,7 @@ public class HeartController {
 			session.setAttribute("heartList", heartList);
 			System.out.println("찜 추가의 상품 code : " + item_code);
 			
-		} else {
+		} else { //false 찜하기 삭제
 		    System.out.println("찜 삭제의 상품 code : " + item_code);
 
 		    // 세션에서 heartList 가져오기

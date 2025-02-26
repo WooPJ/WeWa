@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+/* heartList 전용 스타일 (5개씩 배치) */
+.heart-list-container .product {
+    width: calc(20% - 30px) !important; /* 가로 배치 */ 
+}

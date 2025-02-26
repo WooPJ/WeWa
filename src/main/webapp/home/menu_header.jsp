@@ -11,7 +11,7 @@
 <body>
 <header>
     <div class="header-container">
-      	
+    
         <a href="/home/index.html" class="logo">
             <img alt="로고" src="../imgs/icon/logo.png" width="200" height="50">
         </a>   
