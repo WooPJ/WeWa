@@ -151,7 +151,13 @@
 		    height: 25px;
 		}
 
-
+		.heart-container {
+			z-index: 10;
+		    position: absolute;
+		    top: 88%;
+		    left: 3%;
+		    cursor: pointer;
+		}
         .heart-icon {
             z-index: 10;
             width: 40px;

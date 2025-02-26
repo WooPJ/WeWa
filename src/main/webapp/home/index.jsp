@@ -27,6 +27,7 @@
         <a href="/item/itemDetail.html?item_code=${item.item_code}">
             <div class="image-container">
                 <img src="../imgs/item/${item.imagename}" alt="${item.item_title}"/>
+                <!-- 찜하트 -->
                 <div class="heart-container">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512" class="heart-icon"
                          data-item-code="${item.item_code}">
@@ -51,13 +52,13 @@
 
 <script type="text/javascript">
     function redirectToLogin() {
-        alert("로그인 후 찜 기능을 사용할 수 있습니다.");
-        window.location.href = "/login/login.html";
+    	if(confirm("로그인 후 찜 기능을 사용할 수 있습니다. \n로그인 하시겠습니까?")) {
+	        window.location.href = "/login/login.html";
+    	}
     }
 
     const heartIcons = document.querySelectorAll('.heart-icon');
     heartIcons.forEach(heart => {
-    	
         const itemId = heart.getAttribute("data-item-code");
 
         // 찜한 상품인지 확인
@@ -70,7 +71,7 @@
         heart.addEventListener('click', function (event) {
             event.preventDefault();
             if (${sessionScope.loginUser == null}) {
-                redirectToLogin();
+               // redirectToLogin();
             } else {
                 this.classList.toggle('filled');
                 const isFilled = this.classList.contains('filled');

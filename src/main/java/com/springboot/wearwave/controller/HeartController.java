@@ -42,7 +42,7 @@ public class HeartController {
 		heart.setUser_id(user.getId()); //하트누른 계정설정
 		heart.setItem_code(item_code); // 현재 로그인한 사용자 ID
 		
-		System.out.println("하트컨트롤러에 도달함");
+		System.out.println("---시작! 하트컨트롤러에 도달함");
 		System.out.println(isFilled);
 		
 		if(isFilled) { //true 찜하기 추가
