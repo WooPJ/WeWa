@@ -9,10 +9,12 @@ import com.springboot.wearwave.model.Heart;
 @Mapper
 public interface HeartMapper {
 	
-	List<Heart> getHeartList();
-	void insertHeart(Heart heart);
-	void deleteHeart(Heart heart);
+	int isHearted(Heart heart);
 	
-	void updateTrue(Heart heart);
+	List<Heart> getUserHeartList(String user_id);
+	List<Heart> getHeartListByUser(String user_id);
+	
+	void insertHeart(Heart heart);
 	void updateFalse(Heart heart);
+	void deleteHeart(Heart heart);
 }

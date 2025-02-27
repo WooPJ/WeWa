@@ -14,7 +14,7 @@
 	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 	
 	
-	<div class="container">
+	<div class="container" id="item-detail-container">
 	    <!-- 첫 번째 상품 정보 -->
 		<div class="product-wrapper first">
 			<div class="product-details">
@@ -27,16 +27,16 @@
 				<div class="product-price">
 					<fmt:formatNumber value="${item.price}" type="number" groupingUsed="true" />원
 				</div>
-				<!-- 좋아요 버튼 -->
-				<form:form action="/item/like.html" method="post">
-					<button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512"
-							class="heart-icon">
-		                    <path
-								d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
-		                </svg>
-					</button>
-				</form:form>
+				<!-- 찜하트 -->
+				<div class="heart-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512" class="heart-icon"
+                         data-item-code="${item.item_code}">
+                        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4
+                                c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4
+                                268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8
+                                c0 41.5 17.2 81.2 47.6 109.5z"/>
+                    </svg>
+                </div>
 				<div class="product-review">
 					<a href="/item/review.html?item_code=${item.item_code}">리뷰 보러가기</a>
 				</div>
@@ -128,6 +128,34 @@
 		</div>
 	</div>
 	<script>
+		//찜하트기능 ----------
+		const heartIcon = document.querySelector('.heart-icon');
+        const itemId = heartIcon.getAttribute("data-item-code");
+        
+        heartIcon.addEventListener('click', function (event) {
+            //event.preventDefault();
+            if (${sessionScope.loginUser == null}) {
+               redirectToLogin();
+               
+            } else {
+                let test = this.classList.toggle('filled'); //빈칸일때 누르면 true
+                console.log(test);
+                if(test) {
+                	this.classList.add('filled'); 
+                	console.log("하트채움");
+                } else {
+                	this.classList.remove('filled');
+                	console.log("하트비움");
+                }
+                const isFilled = this.classList.contains('filled');
+                console.log("isFilled? = " + isFilled);
+                const inData = { itemCode: itemId, status: isFilled };
+                let param = new URLSearchParams(inData).toString();
+                fetch("/heart/toggle.html?" + param);
+            }
+        }); //찜하트기능 끝 ----------
+		
+	
 		function validateForm() {
 	        var selectedSize = document.getElementById('selectedSize').value;
 	        var selectedColor = document.getElementById('selectedColor').value;
@@ -198,14 +226,6 @@
 	            window.location.href = "/login/login.html"; // 로그인 페이지로 이동
 	        }
 	    }
-        // 하트 아이콘 클릭 시 /item/like.html로 이동
-        document.querySelectorAll('.heart-icon').forEach(heartIcon => {
-            heartIcon.addEventListener('click', function(event) {
-                event.preventDefault();
-                this.classList.toggle('filled');
-                this.closest('form').submit();
-            });
-        });
     </script>
 </body>
 </html>

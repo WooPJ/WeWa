@@ -1,5 +1,7 @@
 package com.springboot.wearwave.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,10 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.springboot.wearwave.model.Heart;
 import com.springboot.wearwave.model.LoginUser;
 import com.springboot.wearwave.model.User;
 import com.springboot.wearwave.model.User_info;
 import com.springboot.wearwave.service.FindService;
+import com.springboot.wearwave.service.HeartService;
 import com.springboot.wearwave.service.LoginService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +28,10 @@ public class LoginController {
 	private LoginService loginService;
 	@Autowired
 	private FindService findService;
+	@Autowired
+	private HeartService heartService;
+	
+	
 	@GetMapping("/login/selectentry.html") //회원가입 선택 이동
 	public ModelAndView selectentry() {
 	    ModelAndView mav = new ModelAndView("login/selectentry"); 
@@ -137,7 +145,7 @@ public class LoginController {
 	@PostMapping(value = "/login/loginDo.html") //로그인 클릭
 	public ModelAndView loginDo(@Valid LoginUser loginUser, BindingResult br, HttpSession session) {
 	    ModelAndView mav = new ModelAndView("login/login");
-	    if (br.hasErrors()) {
+	    if (br.hasErrors()) {	
 	        mav.getModel().putAll(br.getModel());
 	        return mav;
 	    }
@@ -148,6 +156,11 @@ public class LoginController {
 	        mav.addObject("errorMessage", "아이디 또는 비밀번호가 올바르지 않습니다.");
 	    } else { // 로그인 성공
 	        session.setAttribute("loginUser", user);
+	        
+	        // 로그인한 사용자의 찜 목록을 DB에서 가져와서 세션에 저장
+            List<Heart> heartList = heartService.getUserHeartList(user.getId());
+            session.setAttribute("heartList", heartList);
+	        
 	        mav.setViewName("redirect:/home/index.html"); // 로그인 성공 시 홈으로 이동
 	    }
 	    return mav;

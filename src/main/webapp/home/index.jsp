@@ -27,9 +27,10 @@
         <a href="/item/itemDetail.html?item_code=${item.item_code}">
             <div class="image-container">
                 <img src="../imgs/item/${item.imagename}" alt="${item.item_title}"/>
+                <!-- 찜하트 -->
                 <div class="heart-container">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512" class="heart-icon"
-                         data-item-id="${item.item_code}">
+                         data-item-code="${item.item_code}">
                         <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4
                                 c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4
                                 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8
@@ -51,34 +52,54 @@
 
 <script type="text/javascript">
     function redirectToLogin() {
-        alert("로그인 후 찜 기능을 사용할 수 있습니다.");
-        window.location.href = "/login/login.html";
+    	if(confirm("로그인 후 찜 기능을 사용할 수 있습니다. \n로그인 하시겠습니까?")) {
+	        window.location.href = "/login/login.html";
+    	}
     }
 
-    const heartIcons = document.querySelectorAll('.heart-icon');
-    heartIcons.forEach(heart => {
-        const itemId = heart.getAttribute("data-item-id");
+	document.addEventListener("DOMContentLoaded", function () {	
+	    
+	    const heartIcons = document.querySelectorAll('.heart-icon');
+	    heartIcons.forEach(heart => {
+	        const itemId = heart.getAttribute("data-item-code");
+	
+	        // 찜한 상품인지 확인
+	        <c:forEach items="${sessionScope.heartList}" var="heart">
+	            if ("${heart.item_code}" == itemId) {
+	                heart.classList.add('filled'); // 하트 채우기
+	            }
+	        </c:forEach>
+	
+		    if (document.querySelector('#item-detail-container')) {
+		        console.log("🚀 현재 페이지는 itemDetail.jsp입니다. index.jsp의 heartIcon 스크립트 실행 안함");
+		        return; // 실행 중단
+		    } else { //itemDetail.jsp가 아니면
+		    	
+		        heart.addEventListener('click', function (event) {
+		            event.preventDefault();
+		            if (${sessionScope.loginUser == null}) {
+		               redirectToLogin();		               
+		            } else {
+		                this.classList.toggle('filled');
+		                const isFilled = this.classList.contains('filled');
+		                const inData = { itemCode: itemId, status: isFilled };
+		                let param = new URLSearchParams(inData).toString();
+		                fetch("/heart/toggle.html?" + param); //컨트롤러 매핑
+		            }
+		        });
+		    }
+	    });
+	});
 
-        // 찜한 상품인지 확인
-        <c:forEach items="${heartList}" var="heart">
-            if ("${heart.item_code}" === itemId) {
-                heart.classList.add('filled'); // 하트 채우기
-            }
-        </c:forEach>
+    // 뒤로가기 클릭시 새로고침(하트표시 반영)
+    window.onpageshow = function(event){   // onpageshow는 page 호출되면 캐시든 아니든 무조건 호출됨
+        if (event.persisted || (window.performance && window.performance.navigation.type == 2)){
+            // 사파리 or 안드로이드에서 뒤로가기로 넘어온 경우 캐시를 이용해 화면을 보여주는데, 이때 사파리의 경우 event.persisted 가 ture임 
+            // 그외 브라우저(크롬 등)에서는 || 뒤에 있는 조건으로 뒤로가기 체크가 가능함
+            window.location.reload(); 
+        }
+    };
 
-        heart.addEventListener('click', function (event) {
-            event.preventDefault();
-            if (${sessionScope.loginUser == null}) {
-                redirectToLogin();
-            } else {
-                this.classList.toggle('filled');
-                const isFilled = this.classList.contains('filled');
-                const inData = { itemCode: itemId, status: isFilled };
-                let param = new URLSearchParams(inData).toString();
-                fetch("/heart/toggle.html?" + param);
-            }
-        });
-    });
 </script>
 </body>
 </html>

@@ -17,24 +17,30 @@ public class HeartService {
 	@Autowired
 	private ItemMapper itemMapper;
 	
+	
+	public List<Heart> getUserHeartList(String user_id) {
+		return this.heartMapper.getUserHeartList(user_id);
+	}
+	
+	public int isHearted(Heart heart) {
+		return this.heartMapper.isHearted(heart);
+	}
 
+	public List<Heart> getHeartListByUser(String user_id) {
+		return this.heartMapper.getHeartListByUser(user_id);
+	}
 	
 	public Item getItemById(String item_code) {
         return itemMapper.getItemCodePage(item_code);
     }
-	public List<Heart> getHeartList() {
-		return this.heartMapper.getHeartList();
-	}
+	
 	public void insertHeart(Heart heart) {
 		this.heartMapper.insertHeart(heart);
 	}
-	public void deleteHeart(Heart heart) {
-		this.heartMapper.deleteHeart(heart);
-	}
-	public void updateTrue(Heart heart) {
-		this.heartMapper.updateTrue(heart);
-	}
 	public void updateFalse(Heart heart) {
 		this.heartMapper.updateFalse(heart);
+	}
+	public void deleteHeart(Heart heart) {
+		this.heartMapper.deleteHeart(heart);
 	}
 }
