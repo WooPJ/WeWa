@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>WearWave</title>
-<link rel="stylesheet" type="text/css" href="../css/items.css">
+<link rel="stylesheet" type="text/css" href="/css/items.css">
 </head>
 <body>
 <jsp:include page="menu_header.jsp"/>

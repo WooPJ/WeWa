@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>슬라이드</title>
-    <link rel="stylesheet" type="text/css" href="../css/slider.css">
+    <link rel="stylesheet" type="text/css" href="/css/slider.css">
 </head>
 <body>
 

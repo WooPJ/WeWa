@@ -38,7 +38,7 @@
 					</button>
 				</form:form>
 				<div class="product-review">
-					<a href="/item/review.html?item_code=${item.item_code}">리뷰 보러가기</a>
+					<button class="goReview" onclick="goToReview('${item.item_code}')">리뷰 보러가기</button>
 				</div>
 			</div>
 		</div>
@@ -116,7 +116,7 @@
 							    <input type="hidden" name="user_id" value="${sessionScop.loginUser.id}">
 								<button type="submit" class="purchase-button">
 									<img alt="Cart" src="../imgs/icon/cart.png" width="30"height="30">
-									장바구니 담으러 가기
+									장바구니 담기
 								</button>
 							</form>
 						</c:when>
@@ -128,6 +128,11 @@
 		</div>
 	</div>
 	<script>
+		//리뷰 작성 및 보러가는 버튼 기능 함수
+		function goToReview(itemCode) {
+		    window.location.href = `/item/review.html?item_code=${item_code}`;
+		}	
+		//사이즈, 색상, 수량 미선택 시, 띄우는 메시지 함수
 		function validateForm() {
 	        var selectedSize = document.getElementById('selectedSize').value;
 	        var selectedColor = document.getElementById('selectedColor').value;
