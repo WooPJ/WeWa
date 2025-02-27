@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>WearWave</title>
-<link rel="stylesheet" type="text/css" href="../css/items.css">
+<link rel="stylesheet" type="text/css" href="/css/items.css">
 </head>
 <body>
 <jsp:include page="menu_header.jsp"/>
@@ -27,7 +27,6 @@
         <a href="/item/itemDetail.html?item_code=${item.item_code}">
             <div class="image-container">
                 <img src="${item.imagename}" alt="${item.item_title}"/>
-                <!-- 찜하트 -->
                 <div class="heart-container">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512" class="heart-icon"
                          data-item-code="${item.item_code}">
