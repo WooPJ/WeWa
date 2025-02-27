@@ -42,6 +42,7 @@ public class ItemsController {
 	@PostMapping(value="/items/addItems.html") 
 	@Transactional
 	public ModelAndView inputItems(@ModelAttribute("Items") Items_tbl items, @RequestParam("color[]") List<String> colors,
+			 @RequestParam("item_id") Integer item_id,
 			 @RequestParam("size[]") List<String> sizes,@RequestParam("quantity[]") List<Integer> quantities, HttpSession session) {
 		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
 		MultipartFile multipart = items.getFile();//선택한 파일을 불러온다.
@@ -71,7 +72,7 @@ public class ItemsController {
 		}
 		items.setImagename("/imgs/item/"+ loginUser.getId() + "/"+fileName);
 		int maxNum = this.itemsService.getMaxNum() + 1;
-	
+		items.setItem_id(item_id);
 		items.setNum(maxNum); items.setUser_id(loginUser.getId());
 		this.itemsService.putItems(items);
 		 for (String color : colors) {

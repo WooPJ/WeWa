@@ -26,7 +26,7 @@
     <div class="product">
         <a href="/item/itemDetail.html?item_code=${item.item_code}">
             <div class="image-container">
-                <img src="../imgs/item/${item.imagename}" alt="${item.item_title}"/>
+                <img src="${item.imagename}" alt="${item.item_title}"/>
                 <!-- 찜하트 -->
                 <div class="heart-container">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512" class="heart-icon"

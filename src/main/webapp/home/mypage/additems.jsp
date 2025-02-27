@@ -30,12 +30,12 @@
 		</select>
 		
 		<label for="title">세부 카테고리</label>
-		<select id="subcategorySelect" name="subcategory">
+		<select id="subcategorySelect" name="subcategory" onchange="setItemId()">
 		    <!-- 세부 카테고리는 JavaScript로 동적으로 채워짐 -->
 		</select>
-		
+		<form:input type="hidden" id="item_id" name="item_id" path="item_id" value=""/>
         <label for="file">이미지 선택:</label>
-        <input type="file" name="image" accept="image/*"  required />
+        <input type="file" name=file accept="image/*"  required />
         <label for="price">가격:</label>
         <form:input path="price" placeholder="가격을 입력하세요" required="true"/>
         <label for="color">색상:</label>
@@ -82,34 +82,34 @@ function updateSubcategories() {
     // 카테고리별 세부 옵션 목록
     var subcategories = {
         "top": [
-            { value: "1", text: "니트" },
-            { value: "2", text: "맨투맨" },
-            { value: "3", text: "후드" },
-            { value: "4", text: "셔츠" },
-            { value: "5", text: "긴소매" },
-            { value: "6", text: "반소매" }
+            { value: 1, text: "니트" },
+            { value: 2, text: "맨투맨" },
+            { value: 3, text: "후드" },
+            { value: 4, text: "셔츠" },
+            { value: 5, text: "긴소매" },
+            { value: 6, text: "반소매" }
         ],
         "bottom": [
-            { value: "11", text: "데님" },
-            { value: "12", text: "트레이닝" },
-            { value: "13", text: "조거" },
-            { value: "14", text: "슬랙스" },
-            { value: "15", text: "숏팬츠" }
+            { value: 11, text: "데님" },
+            { value: 12, text: "트레이닝" },
+            { value: 13, text: "조거" },
+            { value: 14, text: "슬랙스" },
+            { value: 15, text: "숏팬츠" }
         ],
         "outer": [
-            { value: "21", text: "패딩" },
-            { value: "22", text: "후드 집업" },
-            { value: "23", text: "카디건" },
-            { value: "24", text: "무스탕" },
-            { value: "25", text: "코트" },
-            { value: "26", text: "트레이닝" }
+            { value: 21, text: "패딩" },
+            { value: 22, text: "후드 집업" },
+            { value: 23, text: "카디건" },
+            { value: 24, text: "무스탕" },
+            { value: 25, text: "코트" },
+            { value: 26, text: "트레이닝" }
         ],
         "shoes": [
-            { value: "31", text: "스니커즈" },
-            { value: "32", text: "부츠" },
-            { value: "33", text: "구두" },
-            { value: "34", text: "샌들" },
-            { value: "35", text: "스포츠" }
+            { value: 31, text: "스니커즈" },
+            { value: 32, text: "부츠" },
+            { value: 33, text: "구두" },
+            { value: 34, text: "샌들" },
+            { value: 35, text: "스포츠" }
         ]
     };
     // 기본 선택지 추가
@@ -128,6 +128,14 @@ function updateSubcategories() {
             subcategorySelect.appendChild(option);
         });
     }
+}
+function setItemId() {
+    var subcategorySelect = document.getElementById("subcategorySelect");
+    var selectedSubcategory = subcategorySelect.options[subcategorySelect.selectedIndex];
+    var itemId = selectedSubcategory ? selectedSubcategory.value : '';  // 선택된 서브 카테고리 값
+
+    // item_id hidden input에 값 설정
+    document.getElementById("item_id").value = itemId;
 }
 function addField(fieldName) {
     var container = document.getElementById(fieldName + '-container');
