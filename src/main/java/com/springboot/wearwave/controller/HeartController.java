@@ -28,14 +28,14 @@ public class HeartController {
 		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
 		ModelAndView mav = new ModelAndView("index");
 		if (loginUser == null) {
-			return mav.addObject("BODY", "heart/heartList.jsp"); // 로그인 안 했을때
+			return mav.addObject("BODY", "heart/heartlist.jsp"); // 로그인 안 했을때
 		}
 		
 		List<Heart> heartList = (ArrayList<Heart>)session.getAttribute("heartList");
 		heartList = this.heartService.getHeartListByUser(loginUser.getId());
 		
 		session.setAttribute("heartList", heartList);
-		mav.addObject("BODY","heart/heartList.jsp");
+		mav.addObject("BODY","heart/heartlist.jsp");
 		return mav;
 	}
 	
