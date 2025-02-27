@@ -4,7 +4,7 @@
 /* 고객센터 FAQ 영역 스타일 */
 .faq-container {
     margin-top: 20px;
-    padding: 20px;
+    padding: 10px;
     border-radius: 5px;
     background-color: #ffffff;
     width: 100%; /* padding을 제외하고 100% 너비 */
@@ -23,7 +23,7 @@
 .faq-item {
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
-      width: 1000px;
+      width: 950px;
 }
 
 

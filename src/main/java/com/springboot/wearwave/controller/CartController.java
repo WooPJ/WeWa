@@ -31,6 +31,7 @@ public class CartController {
 	    cart.setQuantity(Integer.parseInt(selectedQuantity));
 	    cart.setItem_color(selectedColor);
 	    cart.setItem_size(selectedSize);
+	    
 	    // 장바구니에 추가 (중복 체크 포함)
 	    this.cartService.putCart(cart);
 	    mav.addObject("BODY", "cart/addCartResult.jsp");
@@ -81,7 +82,7 @@ public class CartController {
 		if (user == null) {
 			return new ModelAndView("redirect:../login/login.html");
 		}
-
+		
 		String userId = user.getId();
 		List<Cart> cartList = cartService.getUserCart(userId); // 장바구니 목록 조회
 		mav.addObject("cartList", cartList);

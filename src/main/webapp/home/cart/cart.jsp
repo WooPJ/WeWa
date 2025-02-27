@@ -82,7 +82,8 @@
             <td>${cart.item_title}</td>
             <td>${cart.item_code}</td>
             <td><fmt:formatNumber value="${cart.price}" groupingUsed="true"/>원</td>
-            <td>${cart.quantity}</td>
+           <td><input type="number" name="NUM" 
+							min="0" value="${cart.quantity}" class="num"></td>
             <td>${cart.item_color}</td>
             <td>${cart.item_size}</td>
             <td>
@@ -94,6 +95,7 @@
             	</form>
             </td>
         </tr>
+         <c:set var="totalPrice" value="${totalPrice + (cart.price * cart.quantity)}" />
     </c:forEach>
 </table>
     <p>총 계 : <fmt:formatNumber value="${totalPrice}" groupingUsed="true"/>원</p>

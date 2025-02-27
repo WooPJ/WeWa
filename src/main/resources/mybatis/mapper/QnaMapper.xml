@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.wearwave.mapper.QnaMapper">
+	<select id="getQnaList" resultType="com.springboot.wearwave.model.Qna_bbs">
+	select seqno, writer, title, item_code, content, to_char(w_date,'YYYY/MM/DD HH24:MI:SS') AS w_date , imagename
+	from qna_bbs order by seqno desc
+	</select>
+	
+	<select id="getUserQnaList"  parameterType="String" resultType="com.springboot.wearwave.model.Qna_bbs">
+	select seqno, writer, title, item_code, content, to_char(w_date,'YYYY/MM/DD HH24:MI:SS') AS w_date , imagename
+	from qna_bbs where writer = #{writer} order by seqno desc
+	</select>
+	
+	<select id="getSellerQnaList" parameterType="String" resultType="com.springboot.wearwave.model.Qna_bbs">
+    SELECT seqno, writer, title, item_code, content, 
+           TO_CHAR(w_date, 'YYYY/MM/DD HH24:MI:SS') AS w_date, imagename
+    FROM qna_bbs 
+    WHERE writer = #{writer} 
+       OR item_code IN (SELECT item_code FROM items_tbl WHERE user_id = #{writer})
+    ORDER BY seqno desc
+	</select>
+
+	<insert id="putQna" parameterType="com.springboot.wearwave.model.Qna_bbs">
+	insert into qna_bbs values(#{seqno},#{writer},#{title},#{item_code},#{content},sysdate,#{imagename})
+	</insert>
+	
+	<select id="getMaxNum" resultType="Integer">
+	select max(seqno) from qna_bbs
+	</select>
+	
+	<update id="updateQna" parameterType="com.springboot.wearwave.model.Qna_bbs">
+		update qna_bbs set title=#{title}, content=#{content}, item_code=#{item_code}, imagename=#{imagename} where seqno=#{seqno}
+	</update>
+	
+	<delete id="deleteQna" parameterType="Integer">
+		delete from qna_bbs where seqno = #{seqno}
+	</delete>
+	
+	<update id="updateseqno" parameterType="Integer">
+		update qna_bbs set seqno = seqno - 1 where seqno > #{seqno}
+	</update>
+	
+	<select id="getQnaDetail" parameterType="Integer" resultType="com.springboot.wearwave.model.Qna_bbs">
+	select *
+	from qna_bbs where seqno = #{seqno}
+	</select>
+	
+	<select id="getItemTitleByCode" resultType="String" parameterType="String">
+	select item_title from items_tbl where item_code = #{item_code}
+	</select>
+	
+	<select id="getCommentsByQnaSeqno" resultType="com.springboot.wearwave.model.Qna_comment" parameterType="Integer">
+        SELECT comment_no, qna_seqno, parent_id, writer, content, to_char(w_date,'YYYY/MM/DD HH24:MI:SS') AS w_date 
+        FROM qna_comment WHERE qna_seqno = #{qna_seqno} AND parent_id = 0 ORDER BY parent_id , w_date ASC
+    </select>
+
+    <!-- 댓글 추가 -->
+    <insert id="addComment" parameterType="com.springboot.wearwave.model.Qna_comment">
+        INSERT INTO qna_comment (comment_no, qna_seqno, parent_id, writer, content, w_date)
+        VALUES (#{comment_no}, #{qna_seqno}, #{parent_id}, #{writer}, #{content}, sysdate)
+    </insert>
+
+    <!-- 댓글 삭제 -->
+    <delete id="deleteComment" parameterType="Integer">
+        DELETE FROM qna_comment WHERE comment_no = #{comment_no}
+    </delete>
+    
+    <select id="getMaxSeq" resultType="Integer">
+	select max(comment_no) from qna_comment
+	</select>
+	
+	<select id="getComment" resultType="com.springboot.wearwave.model.Qna_comment" parameterType="Integer">
+        SELECT * from qna_comment where comment_no = #{comment_no}
+    </select>
+	
+	<update id="updateComment" parameterType="com.springboot.wearwave.model.Qna_comment">
+		update qna_comment set content = #{content} where comment_no = #{comment_no}
+	</update>
+	
+</mapper>

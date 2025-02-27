@@ -12,9 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.springboot.wearwave.model.Faq_bbs;
 import com.springboot.wearwave.model.LoginUser;
 import com.springboot.wearwave.model.Notice;
+import com.springboot.wearwave.model.Qna_bbs;
 import com.springboot.wearwave.model.User_info;
 import com.springboot.wearwave.service.FaqService;
 import com.springboot.wearwave.service.NoticeService;
+import com.springboot.wearwave.service.QnaService;
 import com.springboot.wearwave.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -28,6 +30,8 @@ public class MypageController {
 	private FaqService faqService;
 	@Autowired
 	private NoticeService noticeService;
+	@Autowired
+	private QnaService qnaService;
 	
 	@GetMapping(value="/mypage/profile.html") //마이페이지 > 내정보 이동
 	public ModelAndView mypage(HttpSession session) {
@@ -80,11 +84,24 @@ public class MypageController {
 	        return mav;
 	    }
 	 
-	 @GetMapping(value="/mypage/product-inquiry.html") //마이페이지 > 문의사항 이동
-	    public ModelAndView productinquiry() {
+	 @GetMapping(value="/mypage/qnalist.html") //마이페이지 > 문의사항 이동
+	    public ModelAndView productinquiry(HttpSession session) {
+		 	LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
 	        ModelAndView mav = new ModelAndView("index");
+	        if (loginUser.getGrade() == 0) {
+	        	List<Qna_bbs> qnas = this.qnaService.getQnaList();
+	        	mav.addObject("qnas", qnas);
+	        }
+	        if (loginUser.getGrade() == 1) {
+	        	List<Qna_bbs> qnas = this.qnaService.getUserQnaList(loginUser.getId());
+	        	mav.addObject("qnas", qnas);
+	        }
+	        if (loginUser.getGrade() == 2) {
+	        	List<Qna_bbs> qnas = this.qnaService.getSellerQnaList(loginUser.getId());
+	        	mav.addObject("qnas", qnas);
+	        }
 	        mav.addObject("BODY", "mypage/mypage.jsp");
-	        mav.addObject("CONTENT", "product-inquiry.jsp");
+	        mav.addObject("CONTENT", "qnalist.jsp");
 	        return mav;
 	    }
 	 

@@ -34,7 +34,9 @@ public class NoticeService {
 	}
 	
 	public Integer getMaxNum() {
-		return this.noticeMapper.getMaxNum();
+		Integer max = this.noticeMapper.getMaxNum();
+		if(max == null) return 0;
+		else return max;
 	}
 	
 	public void putNotice(Notice notice) {

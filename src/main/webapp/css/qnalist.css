@@ -1,0 +1,113 @@
+/* 전체 컨테이너 스타일 */
+.qna-container {
+    width: 950px;
+    margin: 50px auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 헤더 스타일 */
+.qna-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+}
+.write-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.write-btn:hover {
+    background-color: #0056b3;
+}
+
+/* 테이블 스타일 (메인 페이지와 충돌 방지) */
+.qna-table {
+    margin-top: 20px;
+}
+.qna-table table {
+    width: 100%;
+    table-layout: fixed; /* 테이블 크기 고정 */
+    border-collapse: collapse;
+    background: white;
+}
+.qna-table th, .qna-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;  /* 셀 안의 내용이 넘치지 않도록 */
+    text-overflow: ellipsis; /* 내용이 넘치면 '...'으로 표시 */
+}
+
+/* 각 열의 너비 설정 (순서대로 15%, 40%, 20%, 25%) */
+.qna-table th:nth-child(1), .qna-table td:nth-child(1) {
+    width: 15%;
+}
+.qna-table th:nth-child(2), .qna-table td:nth-child(2) {
+    width: 40%;
+}
+.qna-table th:nth-child(3), .qna-table td:nth-child(3) {
+    width: 20%;
+}
+.qna-table th:nth-child(4), .qna-table td:nth-child(4) {
+    width: 25%;
+}
+
+/* 제목 칸의 스타일 */
+.qna-table th {
+    background-color: #007bff;
+    color: white;
+}
+.qna-table tr:hover {
+    background-color: #f1f1f1;
+}
+.qna-title a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+.qna-title a:hover {
+    color: #007bff;
+}
+
+/* 작성자 및 날짜 스타일 */
+.qna-writer {
+    color: #555;
+    font-weight: bold;
+}
+.qna-date {
+    color: #888;
+    font-size: 14px;
+}
+
+/* 버튼 스타일 */
+.qna-user-buttons {
+    display: flex;
+    margin-top: 5px;
+}
+.qna-user-buttons button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.qna-user-buttons button:hover {
+    background-color: #218838;
+}
+.qna-user-buttons button:last-child {
+    background-color: #dc3545;
+}
+.qna-user-buttons button:last-child:hover {
+    background-color: #c82333;
+}

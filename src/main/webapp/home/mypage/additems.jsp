@@ -35,7 +35,7 @@
 		</select>
 		
         <label for="file">이미지 선택:</label>
-        <input type="file" name="file" accept="image/*"  required />
+        <input type="file" name="image" accept="image/*"  required />
         <label for="price">가격:</label>
         <form:input path="price" placeholder="가격을 입력하세요" required="true"/>
         <label for="color">색상:</label>

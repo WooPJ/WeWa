@@ -5,7 +5,7 @@
     padding: 20px;
     border-radius: 5px;
     background-color: #ffffff;
-    width: 96%; /* padding을 제외하고 100% 너비 */
+    width: 100%; /* padding을 제외하고 100% 너비 */
     box-sizing: border-box; /* padding과 border를 포함한 너비 계산 */
 
 }
@@ -21,7 +21,7 @@
 
 .notice-item {
     border-bottom: 1px solid #ddd;
-    width: 1000px;
+    width: 950px;
     padding: 10px 0;
 }
 

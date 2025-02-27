@@ -15,9 +15,9 @@
 	    <ul>
 	        <c:choose>
 	            <c:when test="${sessionScope.loginUser == null}">
-	                <li><a href="javascript:void(0);" onclick="redirectToLogin('profile')">내 정보</a></li>
-	                <li><a href="javascript:void(0);" onclick="redirectToLogin('orders')">주문 내역</a></li>
-	                <li><a href="javascript:void(0);" onclick="redirectToLogin('returns')">취소/반품 내역</a></li>
+	                <li><a href="javascript:void(0);" onclick="redirectToLoginpage('profile')">내 정보</a></li>
+	                <li><a href="javascript:void(0);" onclick="redirectToLoginpage('orders')">주문 내역</a></li>
+	                <li><a href="javascript:void(0);" onclick="redirectToLoginpage('returns')">취소/반품 내역</a></li>
 	            </c:when>
 	            <c:when test="${sessionScope.loginUser != null && sessionScope.loginUser.grade == 1}">
 	                <li><a href="/mypage/profile.html" onclick="showContent('profile')">내 정보</a></li>
@@ -37,7 +37,14 @@
 		        </c:when>
 		    </c:choose>
 	        <li><a href="/mypage/support.html" onclick="showContent('support')">고객센터</a></li>
-	        <li><a href="/mypage/product-inquiry.html" onclick="showContent('product-inquiry')">상품 문의 내역</a></li>
+	        <c:choose>
+	        <c:when test="${sessionScope.loginUser == null}">
+	        <li><a href="javascript:void(0);" onclick="redirectToLoginpage('qnalist')">문의 내역</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li><a href="/mypage/qnalist.html" onclick="showContent('qnalist')">문의 내역</a></li>
+	        </c:otherwise>
+	        </c:choose>
 	        <li><a href="/mypage/notice.html" class="active-menu" onclick="showContent('notice	')">공지사항</a></li>
 	    </ul>
 		</nav>
@@ -75,8 +82,8 @@
     window.onload = function() {
         showContent('notice');  
     };
-    function redirectToLogin(page) {
-        alert("로그인 후 마이페이지를 이용할 수 있습니다.");
+    function redirectToLoginpage(page) {
+        alert("로그인 후 이용할 수 있습니다.");
         window.location.href = "/login/login.html"; // 로그인 페이지로 이동
     }
     </script>
