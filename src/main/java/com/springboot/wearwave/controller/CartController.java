@@ -56,19 +56,30 @@ public class CartController {
 	// 장바구니에 추가
 	@PostMapping(value = "/item/cart.html")
 	public ModelAndView addCart(HttpSession session, String item_code, String selectedSize, String selectedQuantity,
-			String selectedColor ,Cart cart) {
+	        String selectedColor, Cart cart) throws java.sql.SQLIntegrityConstraintViolationException {
 	    ModelAndView mav = new ModelAndView("index");
 	    LoginUser user = (LoginUser) session.getAttribute("loginUser");
 	    String userId = user.getId();
+
 	    // Cart 객체 설정
 	    cart.setUser_id(userId);
 	    cart.setItem_code(item_code);
 	    cart.setQuantity(Integer.parseInt(selectedQuantity));
 	    cart.setItem_color(selectedColor);
 	    cart.setItem_size(selectedSize);
-	    // 장바구니에 추가 (중복 체크 포함)
-	    this.cartService.putCart(cart);
-	    System.out.println("장바구니에 담기");
+
+	    try {
+	        // 장바구니에 추가 (중복 체크 포함)
+	        this.cartService.putCart(cart);
+	        System.out.println("장바구니에 담기 성공: " + cart.toString());
+	    } catch (org.springframework.dao.DuplicateKeyException e) {
+	        System.err.println("장바구니 추가 실패 - 중복된 데이터: " + e.getMessage());
+	        mav.addObject("errorMessage", "이미 장바구니에 담긴 상품입니다.");
+	    } catch (Exception e) {
+	        System.err.println("장바구니 추가 실패 - 기타 오류: " + e.getMessage());
+	        mav.addObject("errorMessage", "장바구니 추가 중 오류가 발생했습니다.");
+	    }
+
 	    mav.addObject("BODY", "cart/addCartResult.jsp");
 	    return mav;
 	}

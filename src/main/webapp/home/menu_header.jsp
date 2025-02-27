@@ -52,11 +52,8 @@
 				<a href="/login/selectentry.html" class="sign up">회원가입</a> 
 			</c:when>
 			<c:otherwise>
-<<<<<<< HEAD
-				<font style="font-weight: bold" color="#FF1493">${ sessionScope.loginUser.id }고객님</font>
-=======
+
 				<font color="#FF1493" style="bold"><b>${ sessionScope.loginUser.id }고객님</b></font>
->>>>>>> master
 				<a href="/login/logout.html" class="logout">로그아웃</a> 
 			</c:otherwise>
 		</c:choose> 
