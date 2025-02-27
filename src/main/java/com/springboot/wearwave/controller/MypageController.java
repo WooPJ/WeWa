@@ -52,14 +52,7 @@ public class MypageController {
 		mav.addObject(userInfo);
 		return mav;
 	}
-	
-	 @GetMapping(value="/mypage/orders.html") //마이페이지 > 주문정보 이동
-	    public ModelAndView orders() {
-	        ModelAndView mav = new ModelAndView("index");
-	        mav.addObject("BODY", "mypage/mypage.jsp");
-	        mav.addObject("CONTENT", "orders.jsp");
-	        return mav;
-	    }
+
 	 
 	 @GetMapping(value="/mypage/returns.html") //마이페이지 > 환불 이동
 	    public ModelAndView returns() {
