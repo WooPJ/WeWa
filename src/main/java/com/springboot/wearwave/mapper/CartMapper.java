@@ -14,6 +14,6 @@ public interface CartMapper {
     Integer checkCartExists(Cart cart);
     List<Cart> getUserCart(String user_id);
     void deleteCart(Cart cart);    // 삭제 메서드
-    void updateCartItemStatusToOrdered(String userId);
+    void updateCartItemStatusToOrdered(Cart cart);
 }
 

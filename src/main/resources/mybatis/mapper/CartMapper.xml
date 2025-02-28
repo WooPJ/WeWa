@@ -16,10 +16,12 @@
 	</delete>
 
 	<!-- 주문 후 장바구니 상태를 업데이트 -->
-	<update id="updateCartItemStatusToOrdered" parameterType="String">
+	<update id="updateCartItemStatusToOrdered" parameterType="com.springboot.wearwave.model.Cart">
 		UPDATE cart_tbl
 		SET status = 1  <!-- 상태를 주문된 상태로 변경 -->
 		WHERE user_id = #{user_id} AND status = 0  <!-- 주문되지 않은 상태인 항목들만 업데이트 -->
+		AND item_code = #{item_code} AND item_color = #{item_color} 
+		AND item_size= #{item_size}
 	</update>
 	
 	<!-- 새 아이템 장바구니에 추가 -->
@@ -29,13 +31,15 @@
 	</insert>
 
 	<!-- 장바구니 상품 중복 체크 -->
+<!-- 장바구니 상품 중복 체크 (주문되지 않은 상품만 조회) -->
 	<select id="checkCartExists" parameterType="com.springboot.wearwave.model.Cart" resultType="Integer">
-		SELECT COUNT(*)
-		FROM cart_tbl
-		WHERE user_id = #{user_id}
-		AND item_code = #{item_code}
-		AND item_color = #{item_color}
-		AND item_size = #{item_size}
+	    SELECT COUNT(*)
+	    FROM cart_tbl
+	    WHERE user_id = #{user_id}
+	    AND item_code = #{item_code}
+	    AND item_color = #{item_color}
+	    AND item_size = #{item_size}
+	    AND status = 0  <!-- 주문되지 않은 상품만 체크 -->
 	</select>
 
 	<!-- 장바구니 상품 중복 체크 후 수량만 업데이트 -->

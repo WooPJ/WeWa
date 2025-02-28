@@ -1,5 +1,7 @@
 package com.springboot.wearwave.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.springboot.wearwave.model.Cart;
 import com.springboot.wearwave.model.LoginUser;
 import com.springboot.wearwave.model.Order;
 import com.springboot.wearwave.service.CartService;
@@ -24,10 +27,16 @@ public class OrderController {
     
 	
 	 @GetMapping(value="/mypage/orders.html") //마이페이지 > 주문정보 이동
-	    public ModelAndView orders() {
+	    public ModelAndView orders(HttpSession session) {
 	        ModelAndView mav = new ModelAndView("index");
+	        LoginUser user = (LoginUser) session.getAttribute("loginUser");
 	        mav.addObject("BODY", "mypage/mypage.jsp");
+			String userId = user.getId();
+//			List<Cart> orderList = cartService.getUserCart(userId); // 장바구니 목록 조회
+			List<Order> orderList = orderService.getOrderList(userId);
+			mav.addObject("orderList", orderList);
 	        mav.addObject("CONTENT", "orders.jsp");
+	        
 	        return mav;
 	    }
     
@@ -60,11 +69,18 @@ public class OrderController {
 
             // 주문 테이블에 데이터 삽입
             this.orderService.putOrder(order);  // OrderService를 통해 주문을 DB에 삽입
+            System.out.println("전달되는 데이터 :"+userId+itemCodes[i] + quantities[i] + 
+            		itemColors[i] + itemSizes[i]);
+            Cart cart = new Cart();
+//            cart.setUser_id(userId);
+            cart.setUser_id(userId);
+            cart.setItem_code(itemCodes[i]);
+            cart.setItem_color(itemColors[i]);
+            cart.setItem_size(itemSizes[i]);
+            this.cartService.updateCartToOrdered(cart); //주문 후 장바구니 테이블의 상품정보를 주문완료 상태로 변경.
         }
 
         // 주문이 완료된 후 장바구니 비우기
-//        this.cartService.deleteAllCart(userId);  // 해당 userId에 대한 장바구니 삭제
-        this.cartService.updateCartToOrdered(userId); //주문 후 장바구니 테이블의 상품정보를 주문완료 상태로 변경.
         mav.addObject("BODY", "order/orderResult.jsp");
         return mav;
     }
