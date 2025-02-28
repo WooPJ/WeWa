@@ -20,6 +20,6 @@ public class Items_tbl {
 	private Integer num; //등록 순서 저장
 	private List<Item_size> item_sizes; 
     private List<Item_color> item_colors;  
-	private MultipartFile file;
+    private List<MultipartFile> files; 
 	private String codeChecked;
 }

@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,8 +21,19 @@
 			<div class="product-details">
 				<h1>상품 상세 정보</h1>
 				<c:set var="item_code" value="${param.item_code}" />
-				<img class="product-image" src="${item.imagename}"
-					width="400" height="450"/>
+				    <c:set var="imageList" value="${fn:split(item.imagename, ',')}" />
+				    <div class="slideshow-container">
+				        <c:forEach var="image" items="${imageList}" varStatus="status">
+				            <div class="mySlides fade" style="display: ${status.index == 0 ? 'block' : 'none'};">
+				                <img src="${image}" class="myItem-image" width="320" height="350"/>
+				            </div>
+				        </c:forEach>
+				
+				        <!-- 이전 버튼 -->
+				        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+				        <!-- 다음 버튼 -->
+				        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+				    </div>	
 				<div class="product-name">${item.item_title}</div>
 				<div class="product-description">${item.content}</div>
 				<div class="product-price">
@@ -230,6 +242,27 @@
 	            window.location.href = "/login/login.html"; // 로그인 페이지로 이동
 	        }
 	    }
+	    //이미지 관련 스크립트
+	     var slideIndex = 0;
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function showSlides(n) {
+        var slides = document.getElementsByClassName("mySlides");
+        if (n >= slides.length) {slideIndex = 0}
+        if (n < 0) {slideIndex = slides.length - 1}
+
+        // 모든 슬라이드를 숨기고, 현재 인덱스의 슬라이드만 보이게 설정
+        for (var i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none"; 
+        }
+        slides[slideIndex].style.display = "block";
+    }
+
+    // 첫 번째 슬라이드 자동으로 보여줌
+    showSlides(slideIndex);
     </script>
 </body>
 </html>

@@ -192,3 +192,31 @@
         .heart-icon.filled {
             fill: red;
         }
+        .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 45%;
+    padding: 16px;
+    color: white;
+    font-size: 20px; /* 화살표 크기 증가 */
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.5); /* 배경색을 조금 어두운 색으로 설정 */
+    border: none;
+    user-select: none;
+    transition: 0.3s;
+    transform: translateY(-50%);
+}
+
+/* 호버 시 배경색 변화 */
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* 화살표 버튼 위치 */
+.prev {
+    left: 5px; /* 왼쪽 버튼 */
+}
+
+.next {
+    right: 5px; /* 오른쪽 버튼 */
+}

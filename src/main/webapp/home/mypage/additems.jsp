@@ -35,7 +35,8 @@
 		</select>
 		<form:input type="hidden" id="item_id" name="item_id" path="item_id" value=""/>
         <label for="file">이미지 선택:</label>
-        <input type="file" name=file accept="image/*"  required />
+		<input type="file" name="files" id="fileInput" accept="image/*" multiple required />
+		<div id="preview"></div>
         <label for="price">가격:</label>
         <form:input path="price" placeholder="가격을 입력하세요" required="true"/>
         <label for="color">색상:</label>
@@ -56,11 +57,35 @@
         <label for="content">상품설명:</label>
         <form:textarea path="content" placeholder="설명을 입력하세요" required="true"/>
 
-        <button type="submit" onclick="showAler(this.form)">업로드</button>
+        <button type="submit" onclick="showAlert(this.form)">업로드</button>
     </form:form>
 </div>
 
 <script type="text/javascript">
+document.getElementById("fileInput").addEventListener("change", function(event) {
+    var previewContainer = document.getElementById("preview");
+    previewContainer.innerHTML = ""; // 기존 미리보기 초기화
+
+    var files = event.target.files;
+
+    if (files.length > 0) {
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+
+            if (file.type.startsWith("image/")) { // 이미지 파일만 허용
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    let img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.style.width = "100px";
+                    img.style.margin = "5px";
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+});
 function codeCheck(){
 	if(document.itemFrm.item_code.value == ''){
 		alert("상품코드를 입력하세요."); return;

@@ -4,6 +4,8 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,62 +41,78 @@ public class ItemsController {
 		return mav;
 	}
 	
-	@PostMapping(value="/items/addItems.html") 
+	@PostMapping(value="/items/addItems.html")
 	@Transactional
-	public ModelAndView inputItems(@ModelAttribute("Items") Items_tbl items, @RequestParam("color[]") List<String> colors,
-			 @RequestParam("item_id") Integer item_id,
-			 @RequestParam("size[]") List<String> sizes,@RequestParam("quantity[]") List<Integer> quantities, HttpSession session) {
-		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
-		MultipartFile multipart = items.getFile();//선택한 파일을 불러온다.
-		String fileName = null; String path = null; OutputStream os = null;
-		fileName = multipart.getOriginalFilename();//선택한 파일의 이름을 찾는다.
-		ServletContext ctx = session.getServletContext();//ServletContext 생성
-		String userFolder = ctx.getRealPath("/imgs/item/"+loginUser.getId()+"/");
-		
-		File dir = new File(userFolder);
+	public ModelAndView inputItems(@ModelAttribute("Items") Items_tbl items, 
+	                               @RequestParam("color[]") List<String> colors,
+	                               @RequestParam("item_id") Integer item_id,
+	                               @RequestParam("size[]") List<String> sizes,
+	                               @RequestParam("quantity[]") List<Integer> quantities, 
+	                               HttpSession session) {
+	    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+	    List<MultipartFile> files = items.getFiles(); // 여러 개의 이미지 불러오기
+	    List<String> savedFilePaths = new ArrayList<>();
+	    
+	    ServletContext ctx = session.getServletContext();
+	    String userFolder = ctx.getRealPath("/imgs/item/" + loginUser.getId() + "/");
+	    
+	    File dir = new File(userFolder);
 	    if (!dir.exists()) {
 	        dir.mkdirs(); // 폴더가 없으면 생성
 	    }
-	    path = userFolder + fileName;
-		try {
-			os = new FileOutputStream(path);//OutputStream을 생성한다.즉, 파일 생성
-			BufferedInputStream bis = new BufferedInputStream(multipart.getInputStream());
-			//InputStream을 생성한다. 즉, 원본파일을 읽을 수 있도록 연다.
-			byte[] buffer = new byte[8156];//8K 크기로 배열을 생성한다.
-			int read = 0;//원본 파일에서 읽은 바이트 수를 저장할 변수 선언
-			while( (read = bis.read(buffer)) > 0) {//원본 파일에서 읽은 바이트 수가 0이상인 경우 반복
-				os.write(buffer, 0, read);//생성된 파일에 출력(원본 파일에서 읽은 바이트를 파일에 출력)
-			}
-		}catch(Exception e) {
-			System.out.println("파일 업로드 중 문제 발생!");
-		}finally {
-			try { if(os != null) os.close(); }catch(Exception e) {}
-		}
-		items.setImagename("/imgs/item/"+ loginUser.getId() + "/"+fileName);
-		int maxNum = this.itemsService.getMaxNum() + 1;
-		items.setItem_id(item_id);
-		items.setNum(maxNum); items.setUser_id(loginUser.getId());
-		this.itemsService.putItems(items);
-		 for (String color : colors) {
-		        if (color != null && !color.trim().isEmpty()) {
-		            Item_color colorData = new Item_color();
-		            colorData.setItem_code(items.getItem_code());
-		            colorData.setItem_color(color);
-		            this.itemsService.putColor(colorData);
-		        }
-		    }
 
-		    // 사이즈 및 갯수 정보 저장
-		    for (int i = 0; i < sizes.size(); i++) {
-		        if (sizes.get(i) != null && !sizes.get(i).trim().isEmpty() && quantities.get(i) > 0) {
-		            Item_size sizeData = new Item_size();
-		            sizeData.setItem_code(items.getItem_code());
-		            sizeData.setItem_size(sizes.get(i));
-		            sizeData.setQuantity(quantities.get(i));
-		            this.itemsService.putSize(sizeData);
-		        }
-		    }
-		return new ModelAndView("redirect:/items/myitemlist.html");
+	    for (MultipartFile multipart : files) {
+	        if (!multipart.isEmpty()) {
+	            String fileName = multipart.getOriginalFilename();
+	            String filePath = userFolder + fileName;
+	            
+	            try (OutputStream os = new FileOutputStream(filePath);
+	                 BufferedInputStream bis = new BufferedInputStream(multipart.getInputStream())) {
+	                
+	                byte[] buffer = new byte[8192]; // 8K 크기
+	                int read;
+	                while ((read = bis.read(buffer)) > 0) {
+	                    os.write(buffer, 0, read);
+	                }
+	                
+	                savedFilePaths.add("/imgs/item/" + loginUser.getId() + "/" + fileName);
+	            } catch (Exception e) {
+	                System.out.println("파일 업로드 중 문제 발생: " + e.getMessage());
+	            }
+	        }
+	    }
+	    
+	    // 업로드한 이미지 경로를 저장
+	    items.setImagename(String.join(",", savedFilePaths)); // 여러 개의 이미지 경로를 쉼표로 구분하여 저장
+
+	    int maxNum = this.itemsService.getMaxNum() + 1;
+	    items.setItem_id(item_id);
+	    items.setNum(maxNum);
+	    items.setUser_id(loginUser.getId());
+	    this.itemsService.putItems(items);
+
+	    // 색상 정보 저장
+	    for (String color : colors) {
+	        if (color != null && !color.trim().isEmpty()) {
+	            Item_color colorData = new Item_color();
+	            colorData.setItem_code(items.getItem_code());
+	            colorData.setItem_color(color);
+	            this.itemsService.putColor(colorData);
+	        }
+	    }
+
+	    // 사이즈 및 갯수 정보 저장
+	    for (int i = 0; i < sizes.size(); i++) {
+	        if (sizes.get(i) != null && !sizes.get(i).trim().isEmpty() && quantities.get(i) > 0) {
+	            Item_size sizeData = new Item_size();
+	            sizeData.setItem_code(items.getItem_code());
+	            sizeData.setItem_size(sizes.get(i));
+	            sizeData.setQuantity(quantities.get(i));
+	            this.itemsService.putSize(sizeData);
+	        }
+	    }
+
+	    return new ModelAndView("redirect:/items/myitemlist.html");
 	}
 	
 	@GetMapping(value="/items/itemlist.html") 
@@ -148,47 +166,70 @@ public class ItemsController {
 	}
 	
 	@PostMapping(value="/items/updateItemDo.html")
-	public ModelAndView updateDo(Items_tbl items, HttpSession session,  @RequestParam(value="color[]", required=false) List<String> colors,
-            @RequestParam(value="size[]", required=false) List<String> sizes,
-            @RequestParam(value="quantity[]", required=false) List<Integer> quantities) {
+	public ModelAndView updateDo(
+	        Items_tbl items, 
+	        HttpSession session,  
+	        @RequestParam(value="color[]", required=false) List<String> colors,
+	        @RequestParam(value="size[]", required=false) List<String> sizes,
+	        @RequestParam(value="quantity[]", required=false) List<Integer> quantities,
+	        @RequestParam(value="file", required=false) List<MultipartFile> files,
+	        @RequestParam(value="deleteImages", required=false) List<String> deleteImages) { // 삭제할 이미지 리스트 추가
+	    
 	    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-	    MultipartFile multiFile = items.getFile();
+	    ServletContext ctx = session.getServletContext();
+	    String userFolder = ctx.getRealPath("/imgs/item/" + loginUser.getId() + "/");
 
-	    if (multiFile != null && !multiFile.getOriginalFilename().equals("")) {
-	        String fileName = multiFile.getOriginalFilename();
-	        ServletContext ctx = session.getServletContext();
-	        String userFolder = ctx.getRealPath("/imgs/item/" + loginUser.getId() + "/");
-	        String path = userFolder + fileName;
-	        OutputStream os = null;
+	    File dir = new File(userFolder);
+	    if (!dir.exists()) {
+	        dir.mkdirs(); // 폴더가 없으면 생성
+	    }
 
-	        try {
-	            os = new FileOutputStream(path);
-	            BufferedInputStream bis = new BufferedInputStream(multiFile.getInputStream());
-	            byte[] buffer = new byte[8156];
-	            int read;
-	            while ((read = bis.read(buffer)) > 0) {
-	                os.write(buffer, 0, read);
+	    // 기존 이미지 불러오기
+	    Items_tbl existingItem = itemsService.getMyItem(items.getItem_code());
+	    List<String> imagePaths = new ArrayList<>();
+
+	    if (existingItem != null && existingItem.getImagename() != null) {
+	        imagePaths.addAll(Arrays.asList(existingItem.getImagename().split(","))); // 기존 이미지 유지
+	    }
+
+	    // 🛑 삭제할 이미지 목록이 있으면 제거
+	    if (deleteImages != null) {
+	        imagePaths.removeAll(deleteImages);
+
+	        // 실제 파일도 삭제
+	        for (String deleteImage : deleteImages) {
+	            File deleteFile = new File(ctx.getRealPath(deleteImage));
+	            if (deleteFile.exists()) {
+	                deleteFile.delete();
 	            }
-	            items.setImagename("/imgs/item/" + loginUser.getId() + "/" + fileName);
-	        } catch (Exception e) {
-	            System.out.println("변경된 이미지 업로드 중 문제 발생!");
-	        } finally {
-	            try {
-	                if (os != null) os.close();
-	            } catch (Exception ignored) {}
-	        }
-	    } else {
-	        // 기존 값 유지 (현재 DB에 있는 값으로 설정)
-	        Items_tbl existingItem = itemsService.getMyItem(items.getItem_code());
-	        if (existingItem != null) {
-	            items.setImagename(existingItem.getImagename());
 	        }
 	    }
 
+	    // 새로운 이미지 업로드
+	    for (MultipartFile multipart : files) {
+	        if (multipart != null && !multipart.isEmpty()) {
+	            try {
+	                String fileName = multipart.getOriginalFilename();
+	                String filePath = userFolder + fileName;
+	                multipart.transferTo(new File(filePath));
+
+	                imagePaths.add("/imgs/item/" + loginUser.getId() + "/" + fileName);
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+
+	    // 쉼표(,)로 구분된 이미지 경로를 저장
+	    items.setImagename(String.join(",", imagePaths));
+
+	    // 데이터 업데이트
 	    this.itemsService.updateItem(items);
+
+	    // 기존 색상 및 사이즈 삭제 후 재등록
 	    itemsService.deleteItem_size(items.getItem_code());
 	    itemsService.deleteItem_color(items.getItem_code());
-	    
+
 	    for (String color : colors) {
 	        if (color != null && !color.trim().isEmpty()) {
 	            Item_color colorData = new Item_color();
@@ -198,7 +239,6 @@ public class ItemsController {
 	        }
 	    }
 
-	    // 사이즈 및 갯수 정보 저장
 	    for (int i = 0; i < sizes.size(); i++) {
 	        if (sizes.get(i) != null && !sizes.get(i).trim().isEmpty() && quantities.get(i) > 0) {
 	            Item_size sizeData = new Item_size();
@@ -208,13 +248,15 @@ public class ItemsController {
 	            this.itemsService.putSize(sizeData);
 	        }
 	    }
-	    
+
+	    // 권한에 따라 리다이렉트
 	    if (loginUser.getGrade() == 0) {
 	        return new ModelAndView("redirect:/items/itemlist.html");
 	    } else {
 	        return new ModelAndView("redirect:/items/myitemlist.html");
 	    }
 	}
+
 
 	@GetMapping(value = "/items/codecheck.html")
 	public ModelAndView idcheck(String item_code) {
