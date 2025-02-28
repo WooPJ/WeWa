@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>   
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>  
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>  
 <html>
 <head>
@@ -89,7 +90,34 @@
     height: 1px;
     overflow: hidden;
   }   
-    
+  .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 45%;
+    padding: 16px;
+    color: white;
+    font-size: 20px; /* 화살표 크기 증가 */
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.5); /* 배경색을 조금 어두운 색으로 설정 */
+    border: none;
+    user-select: none;
+    transition: 0.3s;
+    transform: translateY(-50%);
+}
+
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* 화살표 버튼 위치 */
+.prev {
+    left: 5px; /* 왼쪽 버튼 */
+}
+
+.next {
+    right: 5px; /* 오른쪽 버튼 */
+}
 </style>
 </head>
 <body>
@@ -97,7 +125,19 @@
 <h2>리뷰목록</h2>
 <!-- 상품 정보 -->
 <c:set var="item_code" value="${param.item_code}" />
-<img class="product-image" src="${item.imagename}" width="400" height="450" />
+<c:set var="imageList" value="${fn:split(item.imagename, ',')}" />
+   <div class="slideshow-container">
+       <c:forEach var="image" items="${imageList}" varStatus="status">
+           <div class="mySlides fade" style="display: ${status.index == 0 ? 'block' : 'none'};">
+               <img src="${image}" class="myItem-image" width="320" height="350"/>
+           </div>
+       </c:forEach>
+
+       <!-- 이전 버튼 -->
+       <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+       <!-- 다음 버튼 -->
+       <a class="next" onclick="plusSlides(1)">&#10095;</a>
+   </div>	
 <div class="product-name"><h3>${item.item_title}</h3></div>
 
 <table>
@@ -217,6 +257,27 @@ function setCurrentDate() {
   const formattedDate = now.toISOString().slice(0, 19).replace('T', ' '); // YYYY-MM-DD HH:MM:SS 형태
   document.getElementById("w_date").value = formattedDate;
 }
+//이미지 관련 스크립트
+var slideIndex = 0;
+
+function plusSlides(n) {
+showSlides(slideIndex += n);
+}
+
+function showSlides(n) {
+var slides = document.getElementsByClassName("mySlides");
+if (n >= slides.length) {slideIndex = 0}
+if (n < 0) {slideIndex = slides.length - 1}
+
+// 모든 슬라이드를 숨기고, 현재 인덱스의 슬라이드만 보이게 설정
+for (var i = 0; i < slides.length; i++) {
+   slides[i].style.display = "none"; 
+}
+slides[slideIndex].style.display = "block";
+}
+
+// 첫 번째 슬라이드 자동으로 보여줌
+showSlides(slideIndex);
 </script>
 </body>
 </html>

@@ -41,7 +41,8 @@
             margin-bottom: 15px;
         }
 		
-		.product-description {
+		.product-descriptions {
+			margin-top: 15px;
 			font-size: 14px;
 			color: #666;
 			margin-bottom: 15px;
@@ -153,6 +154,26 @@
 		    width: 100%; /* 가로 너비 100% */
 		    text-align: center;
 		}
+		
+			
+		.inquire-button {
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    gap: 5px;
+		    background-color: #007bff;
+		    color: white;
+		    border: none;
+		    border-radius: 5px;
+		    padding: 10px 15px;
+		    cursor: pointer;
+		    font-size: 16px;
+		    transition: background-color 0.3s;
+		    white-space: nowrap; /* 줄바꿈 방지 */
+		    width: 100%; /* 가로 너비 100% */
+		    text-align: center;
+		}
+		
 		
 		/* 장바구니 버튼을 다음 줄에서 가운데 정렬 */
 		.purchase-button-wrapper {

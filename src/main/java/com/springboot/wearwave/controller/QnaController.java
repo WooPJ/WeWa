@@ -35,12 +35,15 @@ public class QnaController {
 	private ItemsService itemsService;
 	
 	@GetMapping(value="/qna/qnaWrite.html")
-	public ModelAndView writeform() {
-		ModelAndView mav = new ModelAndView("index");
-		mav.addObject("qnabbs",new Qna_bbs());
-		mav.addObject("BODY","mypage/mypage.jsp");
-		mav.addObject("CONTENT", "qnaWriteForm.jsp");
-		return mav;
+	public ModelAndView writeform(@RequestParam(value = "item_code", required = false) String itemCode) {
+	ModelAndView mav = new ModelAndView("index");
+	    if (itemCode != null) {
+	        mav.addObject("item_code", itemCode);  // item_code를 ModelAndView에 추가
+	    }
+	    mav.addObject("qnabbs", new Qna_bbs()); 
+	    mav.addObject("BODY", "mypage/mypage.jsp");
+	    mav.addObject("CONTENT", "qnaWriteForm.jsp");
+	    return mav;
 	}
 	
 	@GetMapping(value = "/qna/finditem_code.html")

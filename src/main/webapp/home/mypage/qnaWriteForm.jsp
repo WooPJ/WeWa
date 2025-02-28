@@ -19,9 +19,8 @@
                 <form:input path="title" id="title" required="true" placeholder="제목을 입력하세요"/>
             </div>
             <div class="form-group">
-                <label for="title">상품코드: <button type="button" class="btn btn-primary" onclick="findProduct()">상품 찾기</button></label>
-               
-                <form:input path="item_code" id="item_code" placeholder="관련 상품이 있으면 입력해주세요"/> 
+                <label for="item_code">상품코드: <button type="button" class="btn btn-primary" onclick="findProduct()">상품 찾기</button></label>
+                <form:input path="item_code" id="item_code" value="${param.item_code}" placeholder="관련 상품이 있으면 입력해주세요"/> 
             </div>
              <div class="form-group">
                 <label for="file">이미지:</label>

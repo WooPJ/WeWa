@@ -35,7 +35,7 @@
 				        <a class="next" onclick="plusSlides(1)">&#10095;</a>
 				    </div>	
 				<div class="product-name">${item.item_title}</div>
-				<div class="product-description">${item.content}</div>
+				<div class="product-descriptions">${item.content}</div>
 				<div class="product-price">
 					<fmt:formatNumber value="${item.price}" type="number" groupingUsed="true" />원
 				</div>
@@ -133,9 +133,24 @@
 							</form>
 						</c:when>
 					</c:choose>
-
-
 				</div>
+			</div>
+			<div class="product-details">
+			     <c:choose>
+			        <c:when test="${sessionScope.loginUser == null}">
+			     		  <button type="submit" class="inquire-button" onclick="redirectToLoginPage('qnawrite')">
+			            	문의하기
+			        	</button>
+			        </c:when>
+			        <c:otherwise>
+			        <form action="/qna/qnaWrite.html" method="get">
+				        <input type="hidden" name="item_code" value="${item.item_code}"/>
+				        <button type="submit" class="inquire-button">
+				            문의하기
+				        </button>
+				    </form>
+			        </c:otherwise>
+			    </c:choose>
 			</div>
 		</div>
 	</div>
@@ -263,6 +278,16 @@
 
     // 첫 번째 슬라이드 자동으로 보여줌
     showSlides(slideIndex);
+    
+    //문의하기
+    function goToInquire(itemCode) {
+        window.location.href = `/qna/qnaWrite.html?item_code=${itemCode}`;
+    }
+    function redirectToLoginPage(page) { 
+        if (confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?")) {
+            window.location.href = "/login/login.html"; // 로그인 페이지로 이동
+        }
+    }
     </script>
 </body>
 </html>
