@@ -65,34 +65,9 @@ th {
 	background-color: #005aff;
 }
 </style>
-<script type="text/javascript">
-	    // 삭제 버튼 클릭 시 확인 창을 띄우는 함수
-	    function confirmDelete(form) {
-	        if (confirm("정말 삭제하시겠습니까?")) {
-	            form.submit(); // 확인을 누르면 폼을 제출
-	        } else {
-	            return false; // 취소를 누르면 아무것도 하지 않음
-	        }
-	    }
-	</script>
 </head>
 <body>
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 	<div class="cart-container">
 		<h2>${sessionScope.loginUser.id}님의장바구니 목록</h2>
 		<table>
@@ -170,9 +145,17 @@ th {
 			보러 가기</button>
 	</div>
 	<script type="text/javascript">
-	function gohome() {
+		function gohome() {
 	    window.location.href = "/home/index.html"; // 페이지 이동
 	}
+	    // 삭제 버튼 클릭 시 확인 창을 띄우는 함수
+	    function confirmDelete(form) {
+	        if (confirm("정말 삭제하시겠습니까?")) {
+	            form.submit(); // 확인을 누르면 폼을 제출
+	        } else {
+	            return false; // 취소를 누르면 아무것도 하지 않음
+	        }
+	    }
 	</script>
 </body>
 </html>

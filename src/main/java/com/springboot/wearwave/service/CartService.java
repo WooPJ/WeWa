@@ -39,7 +39,7 @@ public class CartService {
 
     
     // 주문 후 장바구니 상태 업데이트
-    public void updateCartToOrdered(String userId) {
-        this.cartMapper.updateCartItemStatusToOrdered(userId);  // 주문된 항목 상태 변경
+    public void updateCartToOrdered(Cart cart) {
+        this.cartMapper.updateCartItemStatusToOrdered(cart); // 주문된 항목 상태 변경
     }
 }

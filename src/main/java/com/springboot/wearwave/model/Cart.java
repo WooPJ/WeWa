@@ -15,4 +15,5 @@ public class Cart {
 	private String item_title;
 	private Integer price;
 	private Integer status;	//0 : 장바구니담기만함 주문미완료 1 : 주문완료
+	private Integer serial_num;
 }

@@ -1,5 +1,7 @@
 package com.springboot.wearwave.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +19,8 @@ public class OrderService {
 	
 	public Integer countOrdersByUserId(String user_id) {
 		return this.orderMapper.countOrdersByUserId(user_id);
+	}
+	public List<Order> getOrderList(String user_id){
+		return this.orderMapper.getOrderList(user_id);
 	}
 }

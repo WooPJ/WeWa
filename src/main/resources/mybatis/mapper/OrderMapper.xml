@@ -4,11 +4,11 @@
 <mapper namespace="com.springboot.wearwave.mapper.OrderMapper">
 
 	<!-- 주문한 상품 내역 확인-->
-<!-- 	<select id="getOrderList" resultType="com.springboot.wearwave.model.Order">
+	<select id="getOrderList" parameterType="String" resultType="com.springboot.wearwave.model.Order">
 		select order_no, user_id, item_code, quantity, item_color, item_size, order_date
 		from order_tbl
-		where 
-	</select> -->
+		where user_id = #{user_id} order by order_date
+	</select>
 	<!-- 주문하기 -->
 	<insert id="putOrder" parameterType="com.springboot.wearwave.model.Order">
 	    insert into order_tbl (ORDER_NO, USER_ID, ITEM_CODE, QUANTITY, ITEM_COLOR, ITEM_SIZE, ORDER_DATE)
