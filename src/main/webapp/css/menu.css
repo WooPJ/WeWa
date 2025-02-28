@@ -9,6 +9,7 @@ header {
     left: 0;
     z-index: 100;
     width: 100%;
+    z-index: 1000; /* 다른 요소 위에 표시 */
 }
 
 .sub-header {

@@ -15,7 +15,7 @@ html, body {
 	display: flex;
 	flex-direction: column;
     align-items: center;
-    width: 80%;
+    width: 100%;
     max-width: 800px;
 }
 
@@ -25,25 +25,28 @@ html, body {
     align-items: center;
     width: 100%;
     max-width: 600px;
-	
-/*     width: 975px; */
-/*     padding: 30px 20px 0; */
-/*     display: flex; */
-/*     align-items: center; */
-/*     flex-direction: column; */
 }
 
 
 
 
 /* 게시물, 저장됨, 태그됨 선택 메뉴 */
+/* user_navi 상단 고정 */
 .user_navi{
-    width: 935px;
-    border-top: solid 1px #efefef;
+	position: fixed;
+    top: 130px;
+	left: 70px; /* 왼쪽 여백 */
+    width: calc(100% - 130px); /* 전체 너비에서 (좌: 70px + 우: 60px) 제외 */
+    background-color: white; /* 배경 색 추가 (스크롤 시 가려지는 것 방지) */
+    z-index: 500; /* 다른 요소 위에 표시 */
     display: flex;
     justify-content: center;
-    align-items: center;
-    user-select: none;
+    padding: 10px 0;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* 살짝 그림자 추가 */
+    
+/*     border-top: solid 1px #efefef; */
+/*     align-items: center; */
+/*     user-select: none; */
 }
 .user_navi > input{
     display: none;
@@ -71,7 +74,7 @@ html, body {
 }
 
 .stored_post{
-    width: 57px;
+    width: 80px;
     height: 57px;
     display: flex;
     align-items: center;
@@ -81,7 +84,7 @@ html, body {
     color: #737373;
 }
 
-.tag_post{
+.profile{
     width: 57px;
     height: 57px;
     display: flex;
@@ -118,62 +121,38 @@ html, body {
 /* 게시물 페이지*/
 /* 게시물 페이지 중앙 정렬 */
 .posting_page {
-    display: flex;
-    flex-direction: column; /* 세로 정렬 */
-    gap: 10px; /* 간격 */
+	margin-top: 200px; /* 네비게이션 높이만큼 여백 추가 */
+    height: calc(100vh - 20px); /* 화면 높이에서 네비게이션 높이 제외 */
+    overflow-y: auto; /* 내용이 많아지면 스크롤 가능하게 설정 */
+    padding: 10px;
+	
+/*     display: flex; */
+/*     flex-direction: column; 세로 정렬 */
+/*     gap: 10px; 간격 */
+/*     width: 100%; */
+/*     max-width: 600px; */
+/*     justify-content: center; */
+}
+/* 한 줄에 3개씩 배치하고 자동 줄바꿈 */
+.posting_line {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(180px, 1fr)); /* 가로 3개씩 */
+    gap: 5px; /* 박스 간격 */
     width: 100%;
     max-width: 600px;
-    justify-content: center;
-}
-/* 각 줄을 가로 배치 */
-.posting_line {
-    display: flex;
-    justify-content: center; /* 가운데 정렬 */
-    gap: 10px; /* 박스 간격 */
-    width: 100%;
+    margin: 0 auto; /* 중앙 정렬 */
 }
 
-/* 박스 스타일 한 줄에 3개씩 배치 */
+/* 개별 박스 */
 .posting_box {
-	width: calc(33.33% - 10px); /* 가로 3개 배치 */
-	max-width: 180px;
     aspect-ratio: 1 / 1; /* 정사각형 유지 */
-    background-color: #ddd;
+    width: 100%; /* 부모 그리드 크기에 맞게 확장 */
+    background-color: #f3f3f1;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
 }
-
-/* .posting_line{ */
-/*     display: flex; */
-/*     flex-direction: row; */
-/*     box-sizing: border-box; */
-/*     align-items: stretch; */
-/*     position: relative; */
-/*     justify-content: space-between; */
-/*     margin-bottom: 4px;    */
-/* } */
-
-/* .posting_box{ */
-/*     display: block; */
-/*     width: 309px; */
-/*     height: 309px; */
-/*     overflow: hidden; */
-/* } */
-
-/* .posting_line>.posting_box:nth-of-type(1),.posting_line>.posting_box:nth-of-type(2){ */
-/*     padding-right: 5px; */
-/* } */
-
-/* .posting_img{ */
-/*     width: 309px; */
-/*     height: 309px; */
-/*     top: 0; */
-/*     left: 0; */
-/*     transform: translate(40,50); */
-/*     object-fit: cover;    */
-/* } */
 
 .posting_img {
     width: 100%;
@@ -224,4 +203,23 @@ html, body {
     margin: 0 10px 20px;
     font-size: 12px;
     color: #737373;
+}
+
+@media (max-width: 1024px) {
+	.user_navi{
+    	top: 220px;
+	}
+	.posting_page {
+		margin-top: 350px;
+	}
+}
+/* 모바일 환경 (768px 이하) */
+@media (max-width: 768px) {
+	.user_navi {
+    	top: 270px;
+    	left: 0; width: 100%; /* 네비바 여백없애기 */
+	}
+	.posting_page {
+		margin-top: 500px;
+	}
 }
