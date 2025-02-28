@@ -36,7 +36,7 @@ html, body {
 	position: fixed;
     top: 130px;
 	left: 70px; /* 왼쪽 여백 */
-    width: calc(100% - 130px); /* 전체 너비에서 (좌: 70px + 우: 60px) 제외 */
+    width: calc(100% - 170px); /* 전체 너비에서 (좌: 70px + 우: 100px) 제외 */
     background-color: white; /* 배경 색 추가 (스크롤 시 가려지는 것 방지) */
     z-index: 500; /* 다른 요소 위에 표시 */
     display: flex;
@@ -58,11 +58,12 @@ html, body {
     font-weight: bold;
 }
 
-.posting, .stored_post{
+.navi_posting, .navi_stored{
     margin-right: 60px;
 }
 
-.posting{
+.navi_posting{
+	cursor: pointer;
     width: 57px;
     height: 57px;
     display: flex;
@@ -73,7 +74,8 @@ html, body {
     color: #000000;
 }
 
-.stored_post{
+.navi_stored{
+	cursor: pointer;
     width: 80px;
     height: 57px;
     display: flex;
@@ -84,7 +86,8 @@ html, body {
     color: #737373;
 }
 
-.profile{
+.navi_profile{
+	cursor: pointer;
     width: 57px;
     height: 57px;
     display: flex;
@@ -122,7 +125,7 @@ html, body {
 /* 게시물 페이지 중앙 정렬 */
 .posting_page {
 	margin-top: 200px; /* 네비게이션 높이만큼 여백 추가 */
-    height: calc(100vh - 20px); /* 화면 높이에서 네비게이션 높이 제외 */
+    height: calc(100vh - 10px); /* 화면 높이에서 네비게이션 높이 제외 */
     overflow-y: auto; /* 내용이 많아지면 스크롤 가능하게 설정 */
     padding: 10px;
 	
