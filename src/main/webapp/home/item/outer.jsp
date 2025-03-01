@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +37,10 @@
     <div class="product">
     	<a href="/item/itemDetail.html?item_code=${item.item_code }">
         <div class="image-container">
-                <img src="../imgs/item/${item.imagename}" alt="${item.item_title}"/>
+                 <c:if test="${not empty item.imagename}">
+			        <c:set var="images" value="${fn:split(item.imagename, ',')}" />
+			        <img src="${images[0]}" alt="${item.item_title}" />
+			    </c:if>
                 <div class="heart-container">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512" class="heart-icon"
                          data-item-id="${item.item_code}">

@@ -22,4 +22,7 @@ public class Items_tbl {
     private List<Item_color> item_colors;  
     private List<MultipartFile> files; 
 	private String codeChecked;
+	private Integer start;
+	private Integer end;
+	private String name;
 }

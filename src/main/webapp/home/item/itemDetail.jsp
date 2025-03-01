@@ -34,6 +34,7 @@
 				        <!-- 다음 버튼 -->
 				        <a class="next" onclick="plusSlides(1)">&#10095;</a>
 				    </div>	
+				<div class="product-descriptions">${item.user_id}</div>    
 				<div class="product-name">${item.item_title}</div>
 				<div class="product-descriptions">${item.content}</div>
 				<div class="product-price">

@@ -137,6 +137,7 @@ function updateSubcategories() {
             { value: 35, text: "스포츠" }
         ]
     };
+    subcategorySelect.innerHTML = "";
     // 기본 선택지 추가
     var defaultOption = document.createElement("option");
     defaultOption.disabled = true;

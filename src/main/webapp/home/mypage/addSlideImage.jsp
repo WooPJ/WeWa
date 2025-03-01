@@ -15,7 +15,8 @@
     <form:form modelAttribute="sliderImg" action="/slider/uploadImage.html" method="post" enctype="multipart/form-data">
         <label for="title">이미지 제목</label>
         <form:input path="title" placeholder="제목을 입력하세요" required="true"/>
-
+        <label for="item_code">상품코드: <button type="button" class="btn btn-primary" onclick="findProduct()">상품 찾기</button></label>
+        <form:input path="item_code" id="item_code"  placeholder="관련 상품을 입력해주세요"  required="true"/> 
         <label for="file">이미지 선택</label>
         <input type="file" name="file" accept="image/*"  required />
 
@@ -28,6 +29,11 @@ function showAlert(form) {
     alert("이미지 등록이 완료되었습니다.");
     // 폼 제출
     form.submit();
+}
+function findProduct() {
+    const itemCode = document.getElementById("item_code").value;
+    var url = "/qna/finditem_code.html"
+    window.open(url, "_blank_", "width=450,height=200");
 }
 </script>
 </body>

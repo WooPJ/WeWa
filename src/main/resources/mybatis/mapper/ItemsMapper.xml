@@ -37,9 +37,13 @@
 	from items_tbl order by num
 	</select>
 	
+	<select id="getItemListPage" resultType="com.springboot.wearwave.model.Items_tbl" parameterType="com.springboot.wearwave.model.Items_tbl">
+	 select * from(select rownum rn, a.* from(select * from items_tbl) a) where rn > #{start} and rn <![CDATA[<]]> #{end}
+	</select>
+	
 	<select id="getItemMenu" parameterType="com.springboot.wearwave.model.StartEnd" resultType="com.springboot.wearwave.model.Items_tbl">
 	select item_code, item_title, price, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, user_id
-	from items_tbl where item_id > #{start} and item_id <![CDATA[<]]> #{end} order by num
+	from items_tbl where item_id >= #{start} and item_id <![CDATA[<]]> #{end} order by num
 	</select>
 	
 	<select id="getCategory" parameterType="Integer" resultType="com.springboot.wearwave.model.Items_tbl">
@@ -84,5 +88,11 @@
 	
 	<select id="getItemByName" parameterType="String" resultType="com.springboot.wearwave.model.Items_tbl">
 	select * from items_tbl where item_title like '%' || #{name} || '%' or user_id like '%' || #{name} || '%' 
+	</select>
+	
+	<select id="searchItemByName" parameterType="com.springboot.wearwave.model.Items_tbl" resultType="com.springboot.wearwave.model.Items_tbl">
+	select * from (select rownum rn, a.* from(
+	select * from items_tbl where item_title like '%' || #{name} || '%' or user_id like '%' || #{name} || '%' )
+	 a) where rn > #{start} and rn <![CDATA[<]]> #{end}
 	</select>
 </mapper>

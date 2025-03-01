@@ -13,7 +13,7 @@
 <div class="slideshow-container">
   <c:forEach var="slide" items="${sliderList}">
     <div class="mySlides fade">
-      <a href=""><img src="${slide.image_url}" style="width:100%"></a>
+      <a href="/item/itemDetail.html?item_code=${slide.item_code}"><img src="${slide.image_url}" style="width:100%"></a>
     </div>
   </c:forEach>
 

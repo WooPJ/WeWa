@@ -7,7 +7,7 @@
 	</select>
 	
 	<insert id="putSliderImage" parameterType="com.springboot.wearwave.model.Slider_images">
-	insert into slider_images values(#{num}, #{title},#{image_url},#{display_order})
+	insert into slider_images values(#{num}, #{title},#{image_url},#{display_order}, #{item_code})
 	</insert>
 	
 	<select id="getMaxOrder" resultType="Integer">

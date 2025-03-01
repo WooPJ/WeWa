@@ -13,4 +13,5 @@ public class Slider_images {
 	private String image_url;
 	private Integer display_order;
 	private MultipartFile file;
+	private String item_code;
 }

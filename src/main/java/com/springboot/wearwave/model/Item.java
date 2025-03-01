@@ -15,4 +15,6 @@ public class Item {
 	private String color;
 	private String imagename;
 	private String content;
+	private String user_id;
+	
 }

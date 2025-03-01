@@ -21,32 +21,33 @@
 					<jsp:include page="${ BODY }"/>
 				</c:when>
 				<c:otherwise>
-<jsp:include page="main_slider.jsp"/>				
-<div class="product-container">
- <c:forEach var="item" items="${itemList}">
-    <div class="product">
-        <a href="/item/itemDetail.html?item_code=${item.item_code}">
-            <div class="image-container">
-                 <c:if test="${not empty item.imagename}">
-			        <c:set var="images" value="${fn:split(item.imagename, ',')}" />
-			        <img src="${images[0]}" alt="${item.item_title}" />
-			    </c:if>
-                <div class="heart-container">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512" class="heart-icon"
-                         data-item-code="${item.item_code}">
-                        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4
-                                c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4
-                                268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8
-                                c0 41.5 17.2 81.2 47.6 109.5z"/>
-                    </svg>
-                </div>
-            </div>    
-            <div class="product-name">${item.item_title}</div>
-            <div class="product-description">${item.content}</div>
-            <div class="product-price"><fmt:formatNumber value="${item.price}" groupingUsed="true"/>원</div>
-        </a>
-    </div>
-</c:forEach>				
+					<jsp:include page="main_slider.jsp"/>				
+				<div class="product-container">
+				 <c:forEach var="item" items="${itemList}">
+				    <div class="product">
+				        <a href="/item/itemDetail.html?item_code=${item.item_code}">
+				            <div class="image-container">
+				                 <c:if test="${not empty item.imagename}">
+							        <c:set var="images" value="${fn:split(item.imagename, ',')}" />
+							        <img src="${images[0]}" alt="${item.item_title}" />
+							    </c:if>
+				                <div class="heart-container">
+				                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512" class="heart-icon"
+				                         data-item-code="${item.item_code}">
+				                        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4
+				                                c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4
+				                                268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8
+				                                c0 41.5 17.2 81.2 47.6 109.5z"/>
+				                    </svg>
+				                </div>
+				            </div>    
+				            <div class="product-name">${item.item_title}</div>
+				            <div class="product-description">${item.content}</div>
+				            <div class="product-price"><fmt:formatNumber value="${item.price}" groupingUsed="true"/>원</div>
+				        </a>
+				    </div>
+				</c:forEach>
+				</div>				
             </c:otherwise>
         </c:choose>
     </td></tr>
@@ -81,7 +82,7 @@
 		        heart.addEventListener('click', function (event) {
 		            event.preventDefault();
 		            if (${sessionScope.loginUser == null}) {
-		               redirectToLogin();		               
+		               redirectToLogin();		               	
 		            } else {
 		                this.classList.toggle('filled');
 		                const isFilled = this.classList.contains('filled');
@@ -102,7 +103,52 @@
             window.location.reload(); 
         }
     };
+    
+    let pageNo = ${currentPage} + 1; // EL을 사용하여 JSP 변수를 JavaScript로 전달
+    let loading = false; // 로딩 중인지 확인
+    
+    console.log("Initial page number: ", pageNo);
 
+    // 무한 스크롤 구현
+   window.addEventListener("scroll", function() {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const triggerPoint = document.body.offsetHeight - 300; // 끝에서 300px 전에 실행
+
+    if (scrollPosition >= triggerPoint && !loading) {
+        loading = true;
+        
+        loadItems(pageNo); // 서버에서 새로운 아이템을 불러오기
+    }
+});
+
+   function loadItems(pageno) {
+       console.log("Requested page number: ", pageno);
+       const url = "/home/index.html?pageno=" + pageno;
+
+       fetch(url)
+           .then(response => response.text())
+           .then(html => {
+               const container = document.querySelector(".product-container");
+               const newContent = document.createElement('div');
+               newContent.innerHTML = html.trim();
+
+               // 새로운 데이터가 있는지 확인
+               const newItems = newContent.querySelector(".product-container")?.innerHTML.trim();
+               if (!newItems) {
+                   console.log("더 이상 불러올 데이터가 없습니다.");
+                   hasMoreData = false; // 데이터 없으면 로딩 중지
+                   return;
+               }
+
+               container.innerHTML += newItems; // 기존 컨텐츠에 새로운 아이템 추가
+               pageNo++; // 데이터가 있을 때만 증가
+               loading = false; // 로딩 상태 해제
+           })
+           .catch(error => {
+               console.error("아이템 로딩 실패", error);
+               loading = false;
+           });
+   }
 </script>
 </body>
 </html>

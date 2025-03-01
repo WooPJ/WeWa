@@ -30,4 +30,6 @@ public interface ItemsMapper {
 	List<Items_tbl> getItemMenu(StartEnd se);
 	List<Items_tbl> getCategory(Integer num);
 	List<Items_tbl> getItemByName(String name);
+	List<Items_tbl> getItemListPage(Items_tbl item);
+	List<Items_tbl> searchItemByName(Items_tbl item);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springboot.wearwave.mapper.ItemsMapper;
+import com.springboot.wearwave.model.Item;
 import com.springboot.wearwave.model.Item_color;
 import com.springboot.wearwave.model.Item_size;
 import com.springboot.wearwave.model.Items_tbl;
@@ -114,5 +115,12 @@ public class ItemsService {
 	
 	public List<Items_tbl> getItemByName(String name){
 		return this.itemsMapper.getItemByName(name);
+	}
+	
+	public List<Items_tbl> getItemListPage(Items_tbl item){
+		return this.itemsMapper.getItemListPage(item);
+	}
+	public List<Items_tbl> searchItemByName(Items_tbl item){
+		return this.itemsMapper.searchItemByName(item);
 	}
 }
