@@ -135,7 +135,7 @@ html, body {
     width: 935px;
     flex-direction: column;
 }
-.stored_post_page{
+.stored_page{
     display: none;
     width: 935px;
     flex-direction: column;
@@ -269,6 +269,9 @@ html, body {
     list-style: none;
     margin-right: 20px;
     cursor: pointer;
+}
+.user_follow>li>span{
+    font-weight: bold;
 }
 
 
