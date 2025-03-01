@@ -29,9 +29,28 @@ public class ItemReviewController {
     private ColorService colorService;
 	@Autowired
 	private ReviewService reviewService;
-    @PostMapping(value = "/review/submit")
-    public ModelAndView submitReview(HttpSession session, String writer, String review_title, String item_code, String content
-    		,String w_date, Integer item_rate, Review review) {
+	
+	@PostMapping(value = "/review/delete.html")//리뷰목록에서 삭제
+	public ModelAndView deleteReview(@RequestParam("seqno") Integer seqno,
+									@RequestParam("item_code") String item_code,
+		HttpSession session, Review review) {
+		Item item = itemService.getItemCodePage(item_code); 
+        List<String> sizeList = sizeService.sizeList(item_code); // `size` 대신 `sizeList`
+        List<String> colorList = colorService.colorList(item_code);
+		this.reviewService.deleteReview(seqno);
+		ModelAndView mav = new ModelAndView("index");
+		mav.addObject("BODY", "item/itemReviewAndWrite.jsp");
+		mav.addObject("item", item);
+		mav.addObject("sizeList", sizeList); // 변수명 수정
+		mav.addObject("colorList", colorList);
+		List<Review> reviews = this.reviewService.getReviewList(item_code);
+	    mav.addObject("reviews",reviews);
+	    return mav;
+	}
+	
+    @PostMapping(value = "/review/submit")//리뷰작성
+    public ModelAndView submitReview(HttpSession session, String writer, String review_title,
+    		String item_code, String content,String w_date, Integer item_rate, Review review) {
         ModelAndView mav = new ModelAndView("index");
         LoginUser user = (LoginUser) session.getAttribute("loginUser");
         String userId = user.getId();
@@ -41,10 +60,25 @@ public class ItemReviewController {
         review.setW_date(w_date);
         review.setItem_rate(item_rate);
         this.reviewService.insertReview(review);
-        mav.addObject("BODY", "item/itemReviewResult.jsp");
+        mav.setViewName("redirect:/item/reviewWrite.html?item_code="+review.getItem_code());
         return mav;
     }
+
     
+    @GetMapping(value = "/item/reviewWrite.html")
+    public ModelAndView reviewWrite(@RequestParam("item_code") String item_code) {
+		Item item = itemService.getItemCodePage(item_code); 
+        List<String> sizeList = sizeService.sizeList(item_code); // `size` 대신 `sizeList`
+        List<String> colorList = colorService.colorList(item_code);
+		ModelAndView mav = new ModelAndView("index");
+		mav.addObject("BODY", "item/itemReviewAndWrite.jsp");
+		mav.addObject("item", item);
+        mav.addObject("sizeList", sizeList); // 변수명 수정
+        mav.addObject("colorList", colorList);
+        List<Review> reviews = this.reviewService.getReviewList(item_code);
+        mav.addObject("reviews",reviews);
+		return mav;
+    }
     
 	@GetMapping(value = "/item/review.html") //상품 리뷰 목록 이동
 	public ModelAndView goReview(@RequestParam("item_code") String item_code) {
@@ -53,7 +87,6 @@ public class ItemReviewController {
         List<String> colorList = colorService.colorList(item_code);
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("BODY", "item/itemReview.jsp");
-//		mav.addObject("CONTENT", "itemReviewList.jsp");
 		mav.addObject("item", item);
         mav.addObject("sizeList", sizeList); // 변수명 수정
         mav.addObject("colorList", colorList);

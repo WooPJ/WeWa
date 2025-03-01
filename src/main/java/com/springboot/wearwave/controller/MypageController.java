@@ -56,15 +56,6 @@ public class MypageController {
 		mav.addObject(userInfo);
 		return mav;
 	}
-
-	 
-	 @GetMapping(value="/mypage/returns.html") //마이페이지 > 환불 이동
-	    public ModelAndView returns() {
-	        ModelAndView mav = new ModelAndView("index");
-	        mav.addObject("BODY", "mypage/mypage.jsp");
-	        mav.addObject("CONTENT", "returns.jsp");
-	        return mav;
-	    }
 	 
 	 
 	 @GetMapping(value="/mypage/support.html") //마이페이지 > FAQ 이동

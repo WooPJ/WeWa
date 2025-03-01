@@ -2,12 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springboot.wearwave.mapper.OrderMapper">
-
-	<!-- 주문한 상품 내역 확인-->
-	<select id="getOrderList" parameterType="String" resultType="com.springboot.wearwave.model.Order">
-		select order_no, user_id, item_code, quantity, item_color, item_size, order_date
+	
+	
+	<!-- 고객의 주문한 상품 취소/반품내역 확인-->
+	<select id="getReturnList" parameterType="String" resultType="com.springboot.wearwave.model.Order">
+		select order_no, user_id, item_code, quantity, item_color, item_size, order_date, order_status
 		from order_tbl
-		where user_id = #{user_id} order by order_date
+		where user_id = #{user_id} 
+		and (order_status = 3 or order_status = 4)
+		order by order_status
+	</select>
+	
+	<!-- 고객의 반품신청버튼 (order_staus를 3(반품처리 중)으로 바꾸는 쿼리) -->
+	<update id="setStatusRefunding" parameterType="Integer">
+		update order_tbl set order_status = 3
+		where order_no = #{order_no}
+	</update>
+	
+	<!-- 배송 상태 : order_status를 바꾸는 쿼리 -->
+	<!-- order_status 0 : 상품 준비 중, order_status 1 : 배송 중 order_status 2 : 배송 완료
+	order_status 3 : 반품신청 처리 중 order_status 4 : 반품처리완료 -->
+	<update id="setStatus" parameterType="com.springboot.wearwave.model.Order">
+		update order_tbl set order_status = #{order_status}
+		where order_no = #{order_no}
+	</update>
+	
+	<!-- 특정 사업자의 상품을 구입한 고객들의 배송중인 상품목록 배송상태(order_status) 불러오기 -->	
+	<select id="getOrderClearList" parameterType="com.springboot.wearwave.model.Order"
+	resultType="com.springboot.wearwave.model.Order">
+	select o.order_no, o.user_id, o.item_code, o.quantity, o.item_color, o.item_size, o.order_date, o.order_status
+	from order_tbl o
+	join items_tbl i on o.item_code = i.item_code
+	where i.user_id = #{user_id}
+	</select>
+	
+	<!-- 상품 주문 취소하기 -->
+	<delete id="deleteOrder" parameterType="Integer">
+	delete from order_tbl where order_no = #{order_no}
+	</delete>
+	
+	<!-- 고객의 주문한 상품 주문/배송내역 확인-->
+	<select id="getOrderList" parameterType="String" resultType="com.springboot.wearwave.model.Order">
+		select order_no, user_id, item_code, quantity, item_color, item_size, order_date, order_status
+		from order_tbl
+		where user_id = #{user_id} 
+		and (order_status = 0 or order_status = 1 or order_status = 2)
+		order by order_status
 	</select>
 	<!-- 주문하기 -->
 	<insert id="putOrder" parameterType="com.springboot.wearwave.model.Order">

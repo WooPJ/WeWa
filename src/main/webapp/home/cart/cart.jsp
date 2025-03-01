@@ -109,8 +109,8 @@ th {
 							<input type="hidden" name="item_code" value="${cart.item_code}">
 							<input type="hidden" name="item_color" value="${cart.item_color}" />
 							<input type="hidden" name="item_size" value="${cart.item_size}" />
-							<input type="hidden" name="BTN" value="삭제"> <input
-								type="submit" value="삭제" />
+							<input type="hidden" name="BTN" value="삭제">
+							<input type="submit" value="삭제" />
 						</form>
 					</td>
 				</tr>
