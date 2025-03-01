@@ -9,6 +9,34 @@ html, body {
     align-items: center;
 }
 
+.floating_btn {
+    position: fixed;
+    bottom: 50px;  /* 화면 하단에서 20px 위 */
+    right: 100px;   /* 화면 오른쪽에서 20px 왼쪽 */
+    width: 60px;
+    height: 60px;
+    background-color: #007bff; /* 파란색 */
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    border: none;
+    border-radius: 50%; /* 동그랗게 만들기 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.floating_btn:hover {
+    background-color: #0056b3; /* hover 시 색상 변경 */
+    transform: scale(1.1); /* 버튼 약간 확대 */
+}
+.floating_btn:active {
+    transform: scale(0.95); /* 클릭 시 약간 줄어듦 */
+}
+
+
 
 /* 중앙 정렬된 컨텐츠 박스 */
 #snap_container{
@@ -18,7 +46,6 @@ html, body {
     width: 100%;
     max-width: 800px;
 }
-
 .snap_content_box{
 	display: flex;
     flex-direction: column;
@@ -30,13 +57,12 @@ html, body {
 
 
 
-/* 게시물, 저장됨, 태그됨 선택 메뉴 */
-/* user_navi 상단 고정 */
+/* 게시물, 저장됨, 프로필 선택 메뉴 */
 .user_navi{
-	position: fixed;
+	position: fixed; /* user_navi 상단 고정 */
     top: 130px;
 	left: 70px; /* 왼쪽 여백 */
-    width: calc(100% - 130px); /* 전체 너비에서 (좌: 70px + 우: 60px) 제외 */
+    width: calc(100% - 170px); /* 전체 너비에서 (좌: 70px + 우: 100px) 제외 */
     background-color: white; /* 배경 색 추가 (스크롤 시 가려지는 것 방지) */
     z-index: 500; /* 다른 요소 위에 표시 */
     display: flex;
@@ -58,11 +84,12 @@ html, body {
     font-weight: bold;
 }
 
-.posting, .stored_post{
+.navi_posting, .navi_stored{
     margin-right: 60px;
 }
 
-.posting{
+.navi_posting{
+	cursor: pointer;
     width: 57px;
     height: 57px;
     display: flex;
@@ -73,7 +100,8 @@ html, body {
     color: #000000;
 }
 
-.stored_post{
+.navi_stored{
+	cursor: pointer;
     width: 80px;
     height: 57px;
     display: flex;
@@ -84,7 +112,8 @@ html, body {
     color: #737373;
 }
 
-.profile{
+.navi_profile{
+	cursor: pointer;
     width: 57px;
     height: 57px;
     display: flex;
@@ -100,51 +129,43 @@ html, body {
     height: 13px;
 }
 
+
 .posting_page{
     display: flex;
     width: 935px;
     flex-direction: column;
 }
-
 .stored_post_page{
     display: none;
     width: 935px;
     flex-direction: column;
 }
-
-.tag_post_page{
+.profile_page{
     display: none;
     width: 935px;
     flex-direction: column;
 }
 
+
 /* 게시물 페이지*/
-/* 게시물 페이지 중앙 정렬 */
 .posting_page {
-	margin-top: 200px; /* 네비게이션 높이만큼 여백 추가 */
-    height: calc(100vh - 20px); /* 화면 높이에서 네비게이션 높이 제외 */
-    overflow-y: auto; /* 내용이 많아지면 스크롤 가능하게 설정 */
+	margin-top: 200px; /* 네비게이션 높이로부터 여백 추가 */
+    height: calc(100vh - 10px); /* 화면 높이에서 네비게이션 높이 제외 */
+/*     overflow-y: auto; 내용이 많아지면 스크롤 가능하게 설정 */
     padding: 10px;
-	
-/*     display: flex; */
-/*     flex-direction: column; 세로 정렬 */
-/*     gap: 10px; 간격 */
-/*     width: 100%; */
-/*     max-width: 600px; */
-/*     justify-content: center; */
 }
 /* 한 줄에 3개씩 배치하고 자동 줄바꿈 */
 .posting_line {
     display: grid;
-    grid-template-columns: repeat(3, minmax(180px, 1fr)); /* 가로 3개씩 */
+    grid-template-columns: repeat(4, minmax(100px, 1fr)); /* 가로 4개씩 */
     gap: 5px; /* 박스 간격 */
     width: 100%;
-    max-width: 600px;
+    max-width: 1000px;
     margin: 0 auto; /* 중앙 정렬 */
 }
-
 /* 개별 박스 */
 .posting_box {
+	cursor: pointer;
     aspect-ratio: 1 / 1; /* 정사각형 유지 */
     width: 100%; /* 부모 그리드 크기에 맞게 확장 */
     background-color: #f3f3f1;
@@ -153,7 +174,6 @@ html, body {
     align-items: center;
     overflow: hidden;
 }
-
 .posting_img {
     width: 100%;
     height: 100%;
@@ -161,56 +181,153 @@ html, body {
 }
 
 
-/* 태그됨 페이지*/
-.tag_line{
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    align-items: stretch;
-    position: relative;
-    justify-content: space-between;
-    margin-bottom: 4px;
+
+
+/* 프로필 페이지*/
+.profile_page {
+	margin-top: 50px; /* 네비게이션 높이만큼 여백 추가 */
+    height: calc(100vh - 10px); /* 화면 높이에서 네비게이션 높이 제외 */
+    padding: 10px;
+}
+.profile {
+	position: fixed;
+	display: flex; /* 가로 정렬 */
+/* 	margin-top: 100px; 네비게이션 높이만큼 여백 추가 */
+    height: 40%;
+    padding-left: 10%;
+}
+.user_top {
+	width: 200px; /* 이미지 크기 너비 */
+	margin-right: 30px;
+    display: flex; /* 가로 정렬을 위한 flexbox */
+    justify-content: center;
+    align-items: center; /* 세로 중앙 정렬 */
 }
 
-.tag_box{
-    display: block;
-    width: 309px;
-    height: 309px;
+.user_img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* 프로필 이미지를 동그랗게 */
+    margin-right: 20px; /* user_section과의 간격 조정 */
+    margin: 0;
+}
+.user_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+}
+.user_info_box {
+    display: flex; /* 가로 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 10px; /* 요소 간격 */
+}
+.user_name h2 {
+    margin: 0; /* 기본 마진 제거 */
+    font-size: 20px;
+}
+
+/* 프로필 편집 */
+.profile_modify {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    font-size:15px;
+    padding: 0 10px;
+    margin:0 8px;
+    border-radius: 5px;
+    background-color: #efefef;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+.profile_modify:hover {
+    background-color: lightgray;
+}
+.setting{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+/*     width: 40px; */
+    height: 40px;
+}
+.setting_img{
+    width: 15px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    color: black;
+}
+
+
+.user_follow{
+    padding-left: 0px;
+    display: flex;
+}
+.user_follow>li{
+    list-style: none;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+
+
+
+/* 한 줄에 3개씩 배치하고 자동 줄바꿈 */
+.profile_posting_line {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(180px, 1fr)); /* 가로 3개씩 */
+    gap: 5px; /* 박스 간격 */
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto; /* 중앙 정렬 */
+}
+/* 개별 박스 */
+.profile_posting_box {
+    aspect-ratio: 1 / 1; /* 정사각형 유지 */
+    width: 100%; /* 부모 그리드 크기에 맞게 확장 */
+    background-color: #f3f3f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
 }
-
-.tag_line>.tag_box:nth-of-type(1),.tag_line>.tag_box:nth-of-type(2){
-    padding-right: 5px;
+.posting_img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.tag_img{
-    width: 309px;
-    height: 309px;
-    top: 0;
-    left: 0;
-    transform: translate(40,50);
-    object-fit: cover;  
-}
 
-#insta_info{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin-top: 20px;
-}
 
-#insta_info>span{
-    margin: 0 10px 20px;
-    font-size: 12px;
-    color: #737373;
-}
 
+
+/* ~~~~ 반응형 ~~~~  */
+@media (min-width: 1024px) {
+	.floating_btn {
+	    bottom: 50px;  /* 화면 하단에서 20px 위 */
+	    right: 300px;   /* 화면 오른쪽에서 20px 왼쪽 */
+	}
+}
 @media (max-width: 1024px) {
+	.posting_line {
+	    grid-template-columns: repeat(3, minmax(180px, 1fr)); /* 가로 3개씩 */
+	    max-width: 600px;
+	}
 	.user_navi{
     	top: 220px;
+    	left: 40px; /* 왼쪽 여백 */
+    	width: calc(100% - 80px);
 	}
 	.posting_page {
 		margin-top: 350px;
+	}
+	.profile {
+	    height: 50%;
+	    padding-left: 50px;
+		padding-top: 100px;
+		padding-left: 100px;
 	}
 }
 /* 모바일 환경 (768px 이하) */
@@ -221,5 +338,13 @@ html, body {
 	}
 	.posting_page {
 		margin-top: 500px;
+	}
+	.posting_line {
+	    grid-template-columns: repeat(3, minmax(150px, 1fr)); /* 가로 3개씩 */
+	    max-width: 450px;
+	}
+	.profile {
+		padding-top: 150px;
+		padding-left: 200px;
 	}
 }
