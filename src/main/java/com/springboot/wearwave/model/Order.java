@@ -13,4 +13,5 @@ public class Order {
 	private String item_color;
 	private String item_size;
 	private String order_date;
+	private Integer order_status;
 }

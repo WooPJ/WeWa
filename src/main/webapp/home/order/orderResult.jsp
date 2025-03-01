@@ -5,9 +5,37 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f5f5f5;
+    }
+.container {
+        width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+}
+
+.order-Result {
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+</style>
 </head>
 <body>
 <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-주문완료
+<div class="container">
+	<div class="order-Result">
+		<h2>주문이 완료되었습니다.</h2>
+	</div>
+</div>
 </body>
 </html>

@@ -21,8 +21,9 @@
 	            </c:when>
 	            <c:when test="${sessionScope.loginUser != null && sessionScope.loginUser.grade == 1}">
 	                <li><a href="/mypage/profile.html" onclick="showContent('profile')">내 정보</a></li>
-	                <li><a href="/mypage/orders.html" onclick="showContent('orders')">주문 내역</a></li>
+	                <li><a href="/mypage/orders.html" onclick="showContent('orders')">주문/배송 내역</a></li>
 	                <li><a href="/mypage/returns.html" onclick="showContent('returns')">취소/반품 내역</a></li>
+	                <!-- returns.html은 OrderController.java에서 매핑. -->
 	            </c:when>
 		        <c:when test="${sessionScope.loginUser != null && sessionScope.loginUser.grade == 0}">	
 		            <li><a href="/slider/sliderimg.html" onclick="showContent('sliderimage')">슬라이더 이미지 관리</a></li>
@@ -33,7 +34,8 @@
 		        <c:when test="${sessionScope.loginUser != null && sessionScope.loginUser.grade == 2}">
 		            <li><a href="/items/additems.html" onclick="showContent('additems')">상품 등록</a></li>
 		            <li><a href="/items/myitemlist.html" onclick="showContent('myItemlist')">등록한 상품 관리</a></li>
-		            <li><a href="" onclick="">취소/반품 신청 목록</a></li>
+		            <!-- orderClearList.html은 OrderController.java에서 매핑. -->
+		            <li><a href="/items/orderClearList.html" onclick="">제품 주문 고객 목록</a></li>
 		        </c:when>
 		    </c:choose>
 	        <li><a href="/mypage/support.html" onclick="showContent('support')">고객센터</a></li>

@@ -35,9 +35,6 @@ public class CartController {
 
 	    // 삭제 버튼을 클릭한 경우
 	    if ("삭제".equals(BTN)) {
-	        // item_code에 쉼표가 포함되어 있으면 이를 분리
-//	        String[] itemCodeArray = item_code.split(",");
-//	        String itemCode = itemCodeArray[0];  // 첫 번째 값만 사용
 	        cart.setItem_code(item_code);
 	        cart.setUser_id(user.getId());
 	        cart.setItem_color(item_color);

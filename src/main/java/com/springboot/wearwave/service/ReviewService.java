@@ -19,4 +19,7 @@ public class ReviewService {
 	public List<Review> getReviewList(String item_code){
 		return this.reviewMapper.getReviewList(item_code);
 	}
+	public void deleteReview(Integer seqno) {
+		this.reviewMapper.deleteReview(seqno);
+	}
 }

@@ -10,4 +10,6 @@ import com.springboot.wearwave.model.Review;
 public interface ReviewMapper {
 	void insertReview(Review review);
 	List<Review> getReviewList(String item_code);
+	//리뷰 삭제 메서드
+	void deleteReview(Integer seqno);
 }

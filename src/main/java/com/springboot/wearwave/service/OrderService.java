@@ -23,4 +23,19 @@ public class OrderService {
 	public List<Order> getOrderList(String user_id){
 		return this.orderMapper.getOrderList(user_id);
 	}
+	public void deleteOrder(Integer order_no) {
+		this.orderMapper.deleteOrder(order_no);
+	}
+	public List<Order> getOrderClearList(Order order){
+		return this.orderMapper.getOrderClearList(order);
+	}
+	public void setStatus(Order order) {
+		this.orderMapper.setStatus(order);
+	}
+	public void setStatusRefunding(Integer order_no) {
+		this.orderMapper.setStatusRefunding(order_no);
+	}
+	public List<Order> getReturnList(String user_id){
+		return this.orderMapper.getReturnList(user_id);
+	}
 }

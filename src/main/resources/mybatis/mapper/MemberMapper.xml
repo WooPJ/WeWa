@@ -4,7 +4,7 @@
 <mapper namespace="com.springboot.wearwave.mapper.MemberMapper">
 
 <select id="memberList"	resultType="com.springboot.wearwave.model.User_info">
-	select user_id,name,addr,phone,email,grade from user_info
+	select user_id,name,addr,phone,email,grade from user_info order by grade
 </select>
 
 <select id="gradebymemberList" parameterType="Integer" resultType="com.springboot.wearwave.model.User_info">
