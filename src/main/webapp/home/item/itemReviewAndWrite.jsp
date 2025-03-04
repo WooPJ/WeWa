@@ -10,152 +10,7 @@
 <meta charset="UTF-8">
 <title>상품 리뷰 작성</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/items.css">
-<style type="text/css">
-.starpoint_box {
-  position: relative;
-  display: inline-block;
-  background: url(https://ido-archive.github.io/svc/etc/element/img/sp_star.png) 0 0 no-repeat;
-  width: 100px; /* 5 * 20px, 별 하나당 20px */
-  height: 18px;
-}
-
-.starpoint_box .starpoint_bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 18px;
-  background: url(https://ido-archive.github.io/svc/etc/element/img/sp_star.png) 0 -20px no-repeat;
-  pointer-events: none;
-}
-/*리뷰작성 테이블 디자인*/
-.write-review {
-    width: 70%; /* 너비를 70%로 설정 */
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin: 30px auto; /* 위 아래로 30px, 좌우로 자동 설정 (중앙 정렬) */
-    background-color: #f9f9f9;
-}
-
-.write-review h3 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-    th, td {
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-        text-align: center;
-        vertical-align: middle;
-    }
-    th {
-        background-color: #f4f4f4;
-        color: #555;
-    }
-    td input, td textarea {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-td input[type="submit"] {
-    width: auto;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-td input[type="submit"]:hover {
-    background-color: #45a049;
-}
-    
-   .starpoint_wrap {
-    display: inline-block;
-  }
-  .starpoint_box {
-    position: relative;
-    background: url(https://ido-archive.github.io/svc/etc/element/img/sp_star.png) 0 0 no-repeat;
-    font-size: 0;
-  }
-  .starpoint_box .starpoint_bg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 18px;
-    background: url(https://ido-archive.github.io/svc/etc/element/img/sp_star.png) 0 -20px no-repeat;
-    pointer-events: none;
-  }
-  .starpoint_box .label_star {
-    display: inline-block;
-    width: 20px;
-    height: 18px;
-    box-sizing: border-box;
-  }
-  .starpoint_box .star_radio {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    position: absolute;
-  }
-  /* 정수 별점 (1~5) */
-  .starpoint_box .star_radio:nth-of-type(1):hover ~ .starpoint_bg,
-  .starpoint_box .star_radio:nth-of-type(1):checked ~ .starpoint_bg { width: 20%; }
-  .starpoint_box .star_radio:nth-of-type(2):hover ~ .starpoint_bg,
-  .starpoint_box .star_radio:nth-of-type(2):checked ~ .starpoint_bg { width: 40%; }
-  .starpoint_box .star_radio:nth-of-type(3):hover ~ .starpoint_bg,
-  .starpoint_box .star_radio:nth-of-type(3):checked ~ .starpoint_bg { width: 60%; }
-  .starpoint_box .star_radio:nth-of-type(4):hover ~ .starpoint_bg,
-  .starpoint_box .star_radio:nth-of-type(4):checked ~ .starpoint_bg { width: 80%; }
-  .starpoint_box .star_radio:nth-of-type(5):hover ~ .starpoint_bg,
-  .starpoint_box .star_radio:nth-of-type(5):checked ~ .starpoint_bg { width: 100%; }
-
-  .blind {
-    position: absolute;
-    clip: rect(0 0 0 0);
-    margin: -1px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-  }   
-  .prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 45%;
-    padding: 16px;
-    color: white;
-    font-size: 20px; /* 화살표 크기 증가 */
-    font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.5); /* 배경색을 조금 어두운 색으로 설정 */
-    border: none;
-    user-select: none;
-    transition: 0.3s;
-    transform: translateY(-50%);
-}
-
-
-.prev:hover, .next:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* 화살표 버튼 위치 */
-.prev {
-    left: 5px; /* 왼쪽 버튼 */
-}
-
-.next {
-    right: 5px; /* 오른쪽 버튼 */
-}
-
-</style>
+<link rel="stylesheet" type="text/css" href="/css/itemReviewAndWrite.css">
 </head>
 <body>
 <br/><br/><br/><br/><br/><br/><br/><br/>	
@@ -266,8 +121,8 @@ td input[type="submit"]:hover {
                             </td>
                         </tr>
                         <tr>
-                            <td><label for="w_date">작성일:</label></td>
-                            <td><input type="text" name="w_date" id="w_date" readonly></td>
+<!--                             <td><label for="w_date">작성일:</label></td>
+                            <td><input type="text" name="w_date" id="w_date" readonly></td> -->
                         </tr>
                     </table>
                     
