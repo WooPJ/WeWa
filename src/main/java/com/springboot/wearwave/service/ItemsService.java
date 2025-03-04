@@ -109,8 +109,8 @@ public class ItemsService {
 		return this.itemsMapper.getItemMenu(se);
 	}
 	
-	public List<Items_tbl> getCategory(Integer num){
-		return this.itemsMapper.getCategory(num);
+	public List<Items_tbl> getCategory(Items_tbl item){
+		return this.itemsMapper.getCategory(item);
 	}
 	
 	public List<Items_tbl> getItemByName(String name){

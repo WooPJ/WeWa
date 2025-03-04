@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class StartEnd {
 
-	private int start;
-	private int end;
+	private Integer start;
+	private Integer end;
+	private Integer startnum;
+	private Integer endnum;
 }

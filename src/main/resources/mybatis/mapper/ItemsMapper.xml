@@ -42,13 +42,15 @@
 	</select>
 	
 	<select id="getItemMenu" parameterType="com.springboot.wearwave.model.StartEnd" resultType="com.springboot.wearwave.model.Items_tbl">
-	select item_code, item_title, price, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, user_id
-	from items_tbl where item_id >= #{start} and item_id <![CDATA[<]]> #{end} order by num
+	select * from (select rownum rn, a.* 
+	from ( select * from items_tbl WHERE item_id BETWEEN #{start} AND #{end} order by num) a) 
+	where rn > #{startnum} and rn <![CDATA[<]]>  #{endnum}
 	</select>
 	
-	<select id="getCategory" parameterType="Integer" resultType="com.springboot.wearwave.model.Items_tbl">
-	select item_code, item_title, price, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, user_id
-	from items_tbl where item_id = #{num} order by num
+	<select id="getCategory" parameterType="com.springboot.wearwave.model.Items_tbl" resultType="com.springboot.wearwave.model.Items_tbl">
+	select * from( select rownum rn, a.* 
+	from (select * from items_tbl where item_id = #{item_id} order by num) a) 
+	where rn > #{start} and rn <![CDATA[<]]>  #{end}
 	</select>
 	
 	

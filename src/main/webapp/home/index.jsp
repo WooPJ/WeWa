@@ -47,7 +47,54 @@
 				        </a>
 				    </div>
 				</c:forEach>
-				</div>				
+				</div>			
+				<script type="text/javascript">
+				 let pageNo = ${currentPage} + 1; // EL을 사용하여 JSP 변수를 JavaScript로 전달
+				    let loading = false; // 로딩 중인지 확인
+				    
+				    console.log("Initial page number: ", pageNo);
+
+				    // 무한 스크롤 구현
+				   window.addEventListener("scroll", function() {
+				    const scrollPosition = window.innerHeight + window.scrollY;
+				    const triggerPoint = document.body.offsetHeight - 300; // 끝에서 300px 전에 실행
+
+				    if (scrollPosition >= triggerPoint && !loading) {
+				        loading = true;
+				        
+				        loadItems(pageNo); // 서버에서 새로운 아이템을 불러오기
+				    }
+				});
+
+				   function loadItems(pageno) {
+				       console.log("Requested page number: ", pageno);
+				       const url = "/home/index.html?pageno=" + pageno;
+
+				       fetch(url)
+				           .then(response => response.text())
+				           .then(html => {
+				               const container = document.querySelector(".product-container");
+				               const newContent = document.createElement('div');
+				               newContent.innerHTML = html.trim();
+
+				               // 새로운 데이터가 있는지 확인
+				               const newItems = newContent.querySelector(".product-container")?.innerHTML.trim();
+				               if (!newItems) {
+				                   console.log("더 이상 불러올 데이터가 없습니다.");
+				                   hasMoreData = false; // 데이터 없으면 로딩 중지
+				                   return;
+				               }
+
+				               container.innerHTML += newItems; // 기존 컨텐츠에 새로운 아이템 추가
+				               pageNo++; // 데이터가 있을 때만 증가
+				               loading = false; // 로딩 상태 해제
+				           })
+				           .catch(error => {
+				               console.error("아이템 로딩 실패", error);
+				               loading = false;
+				           });
+				   }
+				</script>	
             </c:otherwise>
         </c:choose>
     </td></tr>
@@ -104,51 +151,7 @@
         }
     };
     
-    let pageNo = ${currentPage} + 1; // EL을 사용하여 JSP 변수를 JavaScript로 전달
-    let loading = false; // 로딩 중인지 확인
-    
-    console.log("Initial page number: ", pageNo);
-
-    // 무한 스크롤 구현
-   window.addEventListener("scroll", function() {
-    const scrollPosition = window.innerHeight + window.scrollY;
-    const triggerPoint = document.body.offsetHeight - 300; // 끝에서 300px 전에 실행
-
-    if (scrollPosition >= triggerPoint && !loading) {
-        loading = true;
-        
-        loadItems(pageNo); // 서버에서 새로운 아이템을 불러오기
-    }
-});
-
-   function loadItems(pageno) {
-       console.log("Requested page number: ", pageno);
-       const url = "/home/index.html?pageno=" + pageno;
-
-       fetch(url)
-           .then(response => response.text())
-           .then(html => {
-               const container = document.querySelector(".product-container");
-               const newContent = document.createElement('div');
-               newContent.innerHTML = html.trim();
-
-               // 새로운 데이터가 있는지 확인
-               const newItems = newContent.querySelector(".product-container")?.innerHTML.trim();
-               if (!newItems) {
-                   console.log("더 이상 불러올 데이터가 없습니다.");
-                   hasMoreData = false; // 데이터 없으면 로딩 중지
-                   return;
-               }
-
-               container.innerHTML += newItems; // 기존 컨텐츠에 새로운 아이템 추가
-               pageNo++; // 데이터가 있을 때만 증가
-               loading = false; // 로딩 상태 해제
-           })
-           .catch(error => {
-               console.error("아이템 로딩 실패", error);
-               loading = false;
-           });
-   }
+   
 </script>
 </body>
 </html>
