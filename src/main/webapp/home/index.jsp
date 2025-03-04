@@ -103,7 +103,8 @@
 
 <script type="text/javascript">
     function redirectToLogin() {
-    	if(confirm("로그인 후 찜 기능을 사용할 수 있습니다. \n로그인 하시겠습니까?")) {
+    	//if(confirm("로그인 후 찜 기능을 사용할 수 있습니다. \n로그인 하시겠습니까?")) {
+    	if(confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?")){
 	        window.location.href = "/login/login.html";
     	}
     }

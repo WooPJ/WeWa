@@ -8,37 +8,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
+<link rel="stylesheet" type="text/css" href="/css/orderReturns.css">
 
-h2 {
-	color: #007bff;
-	margin-bottom: 20px;
-	text-align: center;
-}
-
-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-bottom: 20px;
-}
-.return-table th, .return-table td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    text-align: center;
-}
-
-th {
-	background-color: #f4f4f4;
-	color: #555;
-}
-
-</style>
 
 </head>
 <body>
 <br/><br/><br/><br/><br/>
-<h2>${sessionScope.loginUser.id}님의 반품신청 목록</h2>
-<table class="return-table">
+	<div class="container">
+		<h2>${sessionScope.loginUser.id}님의반품신청 목록</h2>
+		<table class="return-table">
 			<tr>
 				<th>상품 코드</th>
 				<th>수량</th>
@@ -47,7 +25,7 @@ th {
 				<th>주문일</th>
 				<th>반품상태</th>
 				<th>리뷰 작성</th>
-			</tr>	
+			</tr>
 			<c:forEach var="returns" items="${returnList}">
 				<tr>
 					<td>
@@ -56,7 +34,7 @@ th {
 					<td>
 						<div class="return-quantity">${returns.quantity }</div>
 					</td>
-					<td>	
+					<td>
 						<div class="return-itemcolor">${returns.item_color }</div>
 					</td>
 					<td>
@@ -66,25 +44,28 @@ th {
 						<div class="return-itemorderdate">${returns.order_date }</div>
 					</td>
 					<td>
-					    <div class="return-status">
-					        <c:choose>
-					            <c:when test="${returns.order_status == 0}">상품준비중</c:when>
-					            <c:when test="${returns.order_status == 1}">배송 중</c:when>
-					            <c:when test="${returns.order_status == 2}">배송완료</c:when>
-					            <c:when test="${returns.order_status == 3}">반품신청 처리 중</c:when>
-					            <c:when test="${returns.order_status == 4}">반품처리완료</c:when>
-					            <c:otherwise>알 수 없는 상태</c:otherwise>
-					        </c:choose>
-					    </div>
+						<div class="return-status">
+							<c:choose>
+								<c:when test="${returns.order_status == 0}">상품준비중</c:when>
+								<c:when test="${returns.order_status == 1}">배송 중</c:when>
+								<c:when test="${returns.order_status == 2}">배송완료</c:when>
+								<c:when test="${returns.order_status == 3}">반품신청 처리 중</c:when>
+								<c:when test="${returns.order_status == 4}">반품처리완료</c:when>
+								<c:otherwise>알 수 없는 상태</c:otherwise>
+							</c:choose>
+						</div>
 					</td>
 					<td>
 						<form action="/item/reviewWrite.html" method="get">
-						    <input type="hidden" name="item_code" value="${returns.item_code}">
-						    <input type="submit" value="리뷰쓰러가기">
+							<input type="hidden" name="item_code"
+								value="${returns.item_code}"> <input type="submit"
+								value="리뷰쓰러가기">
 						</form>
 					</td>
 				</tr>
-			</c:forEach>			
-</table>
+			</c:forEach>
+		</table>
+	</div>
+
 </body>
 </html>
