@@ -58,8 +58,8 @@ html, body {
 
 
 /* 게시물, 저장됨, 프로필 선택 메뉴 */
-.user_navi{
-	position: fixed; /* user_navi 상단 고정 */
+.snap_navi{
+	position: fixed; /* snap_navi 상단 고정 */
     top: 130px;
 	left: 70px; /* 왼쪽 여백 */
     width: calc(100% - 170px); /* 전체 너비에서 (좌: 70px + 우: 100px) 제외 */
@@ -74,13 +74,13 @@ html, body {
 /*     align-items: center; */
 /*     user-select: none; */
 }
-.user_navi > input{
+.snap_navi > input{
     display: none;
     width: 57px;
     height: 57px;
 }
 
-.user_navi> input:checked + label{
+.snap_navi> input:checked + label{
     font-weight: bold;
 }
 
@@ -98,6 +98,7 @@ html, body {
     font-size: 13px;
     border-top: solid 1px black;
     color: #000000;
+    text-decoration: none;
 }
 
 .navi_stored{
@@ -110,6 +111,7 @@ html, body {
     font-size: 13px;
     border-top: none;
     color: #737373;
+    text-decoration: none;
 }
 
 .navi_profile{
@@ -122,6 +124,7 @@ html, body {
     font-size: 13px;
     border-top: none;
     color: #737373;
+    text-decoration: none;
 }
 
 .navi_img{
@@ -183,99 +186,6 @@ html, body {
 
 
 
-/* 프로필 페이지*/
-.profile_page {
-	margin-top: 50px; /* 네비게이션 높이만큼 여백 추가 */
-    height: calc(100vh - 10px); /* 화면 높이에서 네비게이션 높이 제외 */
-    padding: 10px;
-}
-.profile {
-	position: fixed;
-	display: flex; /* 가로 정렬 */
-/* 	margin-top: 100px; 네비게이션 높이만큼 여백 추가 */
-    height: 40%;
-    padding-left: 10%;
-}
-.user_top {
-	width: 200px; /* 이미지 크기 너비 */
-	margin-right: 30px;
-    display: flex; /* 가로 정렬을 위한 flexbox */
-    justify-content: center;
-    align-items: center; /* 세로 중앙 정렬 */
-}
-
-.user_img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%; /* 프로필 이미지를 동그랗게 */
-    margin-right: 20px; /* user_section과의 간격 조정 */
-    margin: 0;
-}
-.user_section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0;
-}
-.user_info_box {
-    display: flex; /* 가로 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
-    gap: 10px; /* 요소 간격 */
-}
-.user_name h2 {
-    margin: 0; /* 기본 마진 제거 */
-    font-size: 20px;
-}
-
-/* 프로필 편집 */
-.profile_modify {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 30px;
-    font-size:15px;
-    padding: 0 10px;
-    margin:0 8px;
-    border-radius: 5px;
-    background-color: #efefef;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-}
-.profile_modify:hover {
-    background-color: lightgray;
-}
-.setting{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-/*     width: 40px; */
-    height: 40px;
-}
-.setting_img{
-    width: 15px;
-    height: 15px;
-    display: flex;
-    align-items: center;
-    color: black;
-}
-
-
-.user_follow{
-    padding-left: 0px;
-    display: flex;
-}
-.user_follow>li{
-    list-style: none;
-    margin-right: 20px;
-    cursor: pointer;
-}
-.user_follow>li>span{
-    font-weight: bold;
-}
-
-
-
 
 /* 한 줄에 3개씩 배치하고 자동 줄바꿈 */
 .profile_posting_line {
@@ -318,7 +228,7 @@ html, body {
 	    grid-template-columns: repeat(3, minmax(180px, 1fr)); /* 가로 3개씩 */
 	    max-width: 600px;
 	}
-	.user_navi{
+	.snap_navi{
     	top: 220px;
     	left: 40px; /* 왼쪽 여백 */
     	width: calc(100% - 80px);
@@ -335,7 +245,7 @@ html, body {
 }
 /* 모바일 환경 (768px 이하) */
 @media (max-width: 768px) {
-	.user_navi {
+	.snap_navi {
     	top: 270px;
     	left: 0; width: 100%; /* 네비바 여백없애기 */
 	}

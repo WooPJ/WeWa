@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>스냅피드 모달창</title>
-<link rel="stylesheet" type="text/css" href="../css/snap_modal.css">
+<link rel="stylesheet" type="text/css" href="../css/snap/snap_modal.css">
 </head>
 <body>
 
