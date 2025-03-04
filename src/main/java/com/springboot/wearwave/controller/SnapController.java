@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.springboot.wearwave.model.LoginUser;
 import com.springboot.wearwave.model.Snapshot_board;
+import com.springboot.wearwave.service.LoginService;
 import com.springboot.wearwave.service.SnapService;
 
 import jakarta.servlet.http.HttpSession;
@@ -19,9 +20,21 @@ import jakarta.servlet.http.HttpSession;
 public class SnapController {
 	@Autowired
 	private SnapService snapService;
+	@Autowired
+	private LoginService loginService;
 	
 	
 	
+	// 게시물작성 페이지로 이동
+	@GetMapping("/snap/postWrite.html")
+	public ModelAndView postWrite() {
+		ModelAndView mav = new ModelAndView("index");
+		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
+		mav.addObject("CONTENT", "posting_write_page.jsp");
+		return mav;
+	}
+	
+	// 스냅네비 페이지 3가지(포스팅,저장,프로필)페이지
 	@GetMapping("/snap/profileContent.html")
 	public ModelAndView profile() {
 		ModelAndView mav = new ModelAndView("index");
@@ -47,10 +60,13 @@ public class SnapController {
 		return mav;
 	}
 	
-	@GetMapping("/snap/snap.html") //스냅페이지 이동
+	//기본 스냅페이지 이동
+	@GetMapping("/snap/snap.html") 
 	public ModelAndView snap(HttpSession session) {
 	    ModelAndView mav = new ModelAndView("index"); 
 	    mav.addObject("BODY", "snap/snap.jsp"); 
+	    LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
+	    mav.addObject("loginUser", loginUser);
 	    return mav;
 	}
 }

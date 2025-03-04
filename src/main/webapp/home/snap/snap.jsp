@@ -36,14 +36,7 @@
 		
 		<!-- 동적으로 페이지 포함 -->
         <div class="snap_content_box">
-<%--         	<c:if test="${CONTENT != null}"> --%>
-<%--         		<jsp:include page="${CONTENT }"/> --%>
-<%--         	</c:if> --%>
-<%--         	<c:if test="${CONTENT == null}"> --%>
-<%--         		<jsp:include page="posting_page.jsp"/> --%>
-<%--         	</c:if> --%>
             <jsp:include page="${CONTENT != null ? CONTENT : 'posting_page.jsp'}" />
-<%--             <jsp:include page="${param.page != null ? param.page : 'posting_page.jsp'}" /> --%>
         </div>
 		
     
