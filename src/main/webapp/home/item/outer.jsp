@@ -104,7 +104,7 @@ function loadItems(pageno) {
 	let url;
     if (categoryId) {
         // 카테고리가 있을 경우
-        url = "/menu/outercategoryList.html?item_id=" + categoryId + "&pageno=" + pageno;
+        url = "/menu/outercategoryList.html?item_id=" + categoryId + "&pageno=" + (pageno+1);
     } else {
         // 카테고리가 없으면 기본 리스트를 요청
         url = "/menu/outer.html?pageno=" + pageno;

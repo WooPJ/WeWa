@@ -93,8 +93,15 @@
 	</select>
 	
 	<select id="searchItemByName" parameterType="com.springboot.wearwave.model.Items_tbl" resultType="com.springboot.wearwave.model.Items_tbl">
-	select * from (select rownum rn, a.* from(
-	select * from items_tbl where item_title like '%' || #{name} || '%' or user_id like '%' || #{name} || '%' )
-	 a) where rn > #{start} and rn <![CDATA[<]]> #{end}
-	</select>
+    SELECT * FROM (
+        SELECT rownum rn, a.* FROM (
+            SELECT i.*
+            FROM items_tbl i
+            JOIN user_info u ON i.user_id = u.user_id
+            WHERE i.item_title LIKE '%' || #{name} || '%'
+               OR i.user_id LIKE '%' || #{name} || '%'
+               OR u.name LIKE '%' || #{name} || '%'
+        ) a
+    ) WHERE rn > #{start} AND rn <![CDATA[<]]> #{end}
+</select>
 </mapper>

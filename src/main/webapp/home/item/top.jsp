@@ -103,39 +103,43 @@ if (scrollPosition >= triggerPoint && !loading) {
 });
 
 function loadItems(pageno) {
-	let url;
+    let url;
     if (categoryId) {
         // 카테고리가 있을 경우
-        url = "/menu/topcategoryList.html?item_id=" + categoryId + "&pageno=" + pageno;
+        url = "/menu/topcategoryList.html?item_id=" + categoryId + "&pageno=" + (pageno+1);
     } else {
         // 카테고리가 없으면 기본 리스트를 요청
         url = "/menu/top.html?pageno=" + pageno;
     }
     console.log("Requested URL: ", url);
-   fetch(url)
-       .then(response => response.text())
-       .then(html => {
-           const container = document.querySelector(".product-container");
-           const newContent = document.createElement('div');
-           newContent.innerHTML = html.trim();
 
-           // 새로운 데이터가 있는지 확인
-           const newItems = newContent.querySelector(".product-container")?.innerHTML.trim();
-   
-           if (!newItems) {
-               console.log("더 이상 불러올 데이터가 없습니다.");
-               hasMoreData = false; // 데이터 없으면 로딩 중지
-               return;
-           }
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            const container = document.querySelector(".product-container");
+            const newContent = document.createElement('div');
+            newContent.innerHTML = html.trim();
 
-           container.innerHTML += newItems; // 기존 컨텐츠에 새로운 아이템 추가
-           pageNo++; // 데이터가 있을 때만 증가
-           loading = false; // 로딩 상태 해제
-       })
-       .catch(error => {
-           console.error("아이템 로딩 실패", error);
-           loading = false;
-       });
+            // 새로운 아이템 개별적으로 선택 ('.product' 요소만 가져오기)
+            const newItems = newContent.querySelectorAll(".product");
+
+            // 새로운 아이템이 없으면 더 이상 로딩하지 않음
+            if (newItems.length === 0) {
+                console.log("더 이상 불러올 데이터가 없습니다.");
+                hasMoreData = false;
+                return;
+            }
+
+            // 개별 아이템을 기존 컨테이너에 추가
+            newItems.forEach(item => container.appendChild(item));
+
+            pageNo++; // 페이지 증가
+            loading = false; // 로딩 상태 해제
+        })
+        .catch(error => {
+            console.error("아이템 로딩 실패", error);
+            loading = false;
+        });
 }
 
 </script>
