@@ -106,6 +106,7 @@ body.modal-open {
     font-size: 14px;
     outline: none;
 }
+
 #comment_input:focus {
     border-color: #0095f6; /* 포커스 시 강조 */
 }

@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>스냅피드 모달창</title>
-<link rel="stylesheet" type="text/css" href="../css/snap_modal.css">
+<link rel="stylesheet" type="text/css" href="../css/snap/snap_modal.css">
 </head>
 <body>
 
@@ -27,8 +29,16 @@
             </p>
         </div>
 		<div class="modal_comment_section">
-            <input type="text" id="comment_input" placeholder="댓글을 입력하세요...">
-            <button id="comment_button" onclick="submitComment()">게시</button>
+			<c:choose>
+				<c:when test="${loginUser != null }">
+		            <input type="text" id="comment_input" placeholder="댓글을 입력하세요..." onclick="checkLogin(event)">
+		            <button id="comment_button" onclick="submitComment()">게시</button>
+				</c:when>
+				<c:otherwise>
+		            <input type="text" id="comment_input" placeholder="로그인 후 이용가능합니다..." readonly="readonly">
+		            <button id="comment_button" onclick="confirmLogin()">로그인 하러가기</button>
+				</c:otherwise>
+			</c:choose>
         </div>
 		    
 		<div class="modal_comment_list">
@@ -56,6 +66,16 @@
 
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function() {
+	
+	function confirmLogin() {
+	    if (confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?")) {
+	        // '확인' 클릭 시 로그인 페이지로 이동
+	        window.location.href = "/login/login.html";
+	    } else {
+	    	return false; //아무동작도 안함
+	    }
+	}
+	
 	//✅ 모달 열기 함수
 	window.openModal = function(imageSrc) { // ✅ 전역 함수
 		let modal = document.getElementById("modal");
