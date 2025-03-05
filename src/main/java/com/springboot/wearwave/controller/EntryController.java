@@ -48,6 +48,7 @@ public class EntryController {
 	        return mav;
 	    }
 	    try {
+	    	
 	        this.loginService.putCustomerUser(user);//DB 저장 실행
 	        mav.setViewName("login/userEntryResult"); // 회원가입 성공 시 이동할 페이지
 	    } catch (Exception e) {

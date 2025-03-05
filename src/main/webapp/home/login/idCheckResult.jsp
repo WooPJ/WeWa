@@ -10,7 +10,7 @@
 <body>
 <h2 align="center">계정 중복 확인</h2>
 <form action="../entry/idcheck.html">
-계 정 : <input type="text" name="USER_ID" value="${ID }"/>
+계 정 : <input type="text" name="user_id" value="${ID }"/>
 	<input type="submit" value="중복검사"/>
 </form>
 <c:choose>

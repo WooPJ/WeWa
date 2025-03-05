@@ -17,10 +17,18 @@ public class LoginService {
 	}
 	
 	public void putCustomerUser(User user) {
+	    // 전화번호를 합친 후 저장
+	    user.setPhoneFromParts();  // phone1, phone2, phone3를 합치는 작업을 진행합니다.
+	    // 이메일과 도메인을 합쳐서 저장
+	    user.setEmailFromParts();  // email과 domain을 합치는 작업을 진행합니다.
 		this.loginMapper.putCustomerUser(user);
 	}
 	
 	public void putBusinessUser(User user) {
+	    // 전화번호를 합친 후 저장
+	    user.setPhoneFromParts();  // phone1, phone2, phone3를 합치는 작업을 진행합니다.
+	    // 이메일과 도메인을 합쳐서 저장
+	    user.setEmailFromParts();  // email과 domain을 합치는 작업을 진행합니다.
 		this.loginMapper.putBusinessUser(user);
 	}
 }

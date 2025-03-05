@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +31,10 @@
 				    <div class="product">
 				        <a href="/item/itemDetail.html?item_code=${heart.item_code}">
 				            <div class="image-container">
-				                <img src="../imgs/item/${heart.imagename}" alt="${heart.item_title}"/>
+				                <c:if test="${not empty heart.imagename}">
+                                    <c:set var="images" value="${fn:split(heart.imagename, ',')}" />
+                                    <img src="${images[0]}" alt="${heart.item_title}" />
+                                </c:if>
 				                <!-- 찜하트 -->
 				                <div class="heart-container">
 				                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512" class="heart-icon"

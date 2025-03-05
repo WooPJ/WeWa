@@ -152,3 +152,51 @@ h2 {
         font-size: 12px;
     }
 }
+
+/* === 수정된 부분: 이메일 입력 필드 스타일 === */
+
+/* 이메일 입력을 위한 스타일 */
+.email_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 73%;
+}
+
+.email_input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-right: 5px;
+    max-width: 120px; /* 최대 너비를 지정 */
+}
+
+.email_select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 150px;
+}
+
+.email_input, .email_select {
+    width: 100%;
+    max-width: 200px; /* 최대 너비로 제한 */
+}
+
+/* 반응형 디자인: 이메일 입력 부분 */
+@media (max-width: 480px) {
+    .email_wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .email_input,
+    .email_select {
+        width: 100%;
+        max-width: none;
+        margin-bottom: 10px;
+    }
+}

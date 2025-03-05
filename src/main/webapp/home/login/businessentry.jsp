@@ -15,7 +15,7 @@
             <img alt="로고" src="../imgs/icon/logo.png" width="200" height="50">
         </a> 
         
-    <h2>회원가입</h2>
+    <h2>사업자 회원가입</h2>
 
     <form:form action="/signup/businessprocess.html" method="post" name="frm" modelAttribute="user">
         <form:hidden path="idChecked"/>
@@ -56,18 +56,53 @@
             <font color="red"><form:errors path="addr"/></font>
         </div>
 
-        <!-- 이메일 입력 -->
-        <div class="input_row">
-            <label class="input_label">이메일</label>
-            <form:input path="email" class="input_field" placeholder="이메일을 입력하세요"/>
-            <font color="red"><form:errors path="email"/></font>
-        </div>
+		<!-- 이메일 입력 -->
+		<div class="input_row">
+		    <label class="input_label">이메일</label>
+		    <div class="email_wrapper">
+		        <form:input path="email" class="input_field email_input" placeholder="이메일을 입력하세요" id="emailInput" style="width: 120px; display: inline-block;"/> @ 
+		        <select name="emailDomain" id="emailDomain" class="input_field email_select" style="width: 150px; display: inline-block;" onchange="emailDomainChange()">
+				    <option value="naver.com">naver.com</option>
+				    <option value="gmail.com">gmail.com</option>
+				    <option value="daum.net">daum.net</option>
+				    <option value="yahoo.com">yahoo.com</option>
+				    <option value="nate.com">nate.com</option>
+				    <option value="hotmail.com">hotmail.com</option>
+				    <option value="outlook.com">outlook.com</option>
+				    <option value="kakao.com">kakao.com</option>
+				    <option value="icloud.com">icloud.com</option>
+				    <option value="mail.com">mail.com</option>
+				</select>
+		    </div>
+		    <font color="red"><form:errors path="email"/></font>
+		</div>
 
         <!-- 전화번호 입력 -->
         <div class="input_row">
             <label class="input_label">전화번호</label>
-            <form:input path="phone" class="input_field" placeholder="전화번호를 입력하세요"/>
-            <font color="red"><form:errors path="phone"/></font>
+            <select name="phone1" class="input_field">
+			    <option value="02">02</option>
+			    <option value="031">031</option>
+			    <option value="033">033</option>
+			    <option value="041">041</option>
+			    <option value="042">042</option>
+			    <option value="043">043</option>
+			    <option value="044">044</option>
+			    <option value="051">051</option>
+			    <option value="052">052</option>
+			    <option value="053">053</option>
+			    <option value="054">054</option>
+			    <option value="055">055</option>
+			    <option value="061">061</option>
+			    <option value="062">062</option>
+			    <option value="063">063</option>
+			    <option value="064">064</option>
+            </select> -
+            <form:input path="phone2" class="input_field" placeholder="1234" maxlength="4" style="width: 60px; display: inline-block;" />
+            <font color="red"><form:errors path="phone2" /></font>
+            - 
+            <form:input path="phone3" class="input_field" placeholder="5678" maxlength="4" style="width: 60px; display: inline-block;" />
+            <font color="red"><form:errors path="phone3" /></font>
         </div>
 
         <!-- 가입하기 버튼 -->
