@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
@@ -15,7 +14,7 @@
             <img alt="로고" src="../imgs/icon/logo.png" width="200" height="50">
         </a> 
         
-    <h2>회원가입</h2>
+    <h2>고객 회원가입</h2>
 
     <form:form action="/signup/customerprocess.html" method="post" name="frm" modelAttribute="user">
         <form:hidden path="idChecked"/>
@@ -25,7 +24,6 @@
             <label class="input_label">아이디</label>
             <form:input path="user_id" class="input_field" name="user_id" placeholder="아이디를 입력하세요"/>
             <font color="red" size="2"><form:errors path="idChecked"/></font>
-            <!-- <button type="button" class="check_button" onclick="idCheck()">중복 확인</button> -->
             <input type="button" value="중복 확인" class="check_button" onclick="idCheck()">
         </div>
 
@@ -42,7 +40,7 @@
             <form:password path="user_pwd_confirm" class="input_field" placeholder="비밀번호를 다시 입력하세요"/>
         </div>
 
-        <!-- 이름(상호) 입력 -->
+        <!-- 이름 입력 -->
         <div class="input_row">
             <label class="input_label">이름</label>
             <form:input path="name" class="input_field" placeholder="이름을 입력하세요"/>
@@ -55,20 +53,47 @@
             <form:input path="addr" class="input_field" placeholder="주소를 입력하세요"/>
             <font color="red"><form:errors path="addr"/></font>
         </div>
+		
+		<!-- 이메일 입력 -->
+		<div class="input_row">
+		    <label class="input_label">이메일</label>
+		    <div class="email_wrapper">
+		        <form:input path="email" class="input_field email_input" placeholder="이메일을 입력하세요" id="emailInput" style="width: 120px; display: inline-block;"/> @ 
+				<select name="emailDomain" id="emailDomain" class="input_field email_select" style="width: 150px; display: inline-block;" onchange="emailDomainChange()">
+				    <option value="naver.com">naver.com</option>
+				    <option value="gmail.com">gmail.com</option>
+				    <option value="daum.net">daum.net</option>
+				    <option value="yahoo.com">yahoo.com</option>
+				    <option value="nate.com">nate.com</option>
+				    <option value="hotmail.com">hotmail.com</option>
+				    <option value="outlook.com">outlook.com</option>
+				    <option value="kakao.com">kakao.com</option>
+				    <option value="icloud.com">icloud.com</option>
+				    <option value="mail.com">mail.com</option>
+				</select>
+		    </div>
+		    <font color="red"><form:errors path="email"/></font>
+		</div>
 
-        <!-- 이메일 입력 -->
-        <div class="input_row">
-            <label class="input_label">이메일</label>
-            <form:input path="email" class="input_field" placeholder="이메일을 입력하세요"/>
-            <font color="red"><form:errors path="email"/></font>
-        </div>
 
         <!-- 전화번호 입력 -->
         <div class="input_row">
             <label class="input_label">전화번호</label>
-            <form:input path="phone" class="input_field" placeholder="전화번호를 입력하세요"/>
-            <font color="red"><form:errors path="phone"/></font>
+            <select name="phone1" class="input_field">
+			    <option value="010">010</option>
+			    <option value="011">011</option>
+			    <option value="016">016</option>
+			    <option value="017">017</option>
+			    <option value="018">018</option>
+			    <option value="019">019</option>
+            </select> -
+            <form:input path="phone2" class="input_field" placeholder="1234" maxlength="4" style="width: 60px; display: inline-block;" />
+            <font color="red"><form:errors path="phone2" /></font>
+            - 
+            <form:input path="phone3" class="input_field" placeholder="5678" maxlength="4" style="width: 60px; display: inline-block;" />
+            <font color="red"><form:errors path="phone3" /></font>
         </div>
+
 
         <!-- 가입하기 버튼 -->
         <div class="submit_wrap">
@@ -76,12 +101,28 @@
         </div>
     </form:form>
 </div>
-    </div>
+</div>
 </div>
 
 <script>
+// 	// 이메일 도메인 선택에 따라 입력 필드 변경
+// 	function emailDomainChange() {
+// 	    var emailInput = document.getElementById("emailInput");
+// 	    var emailDomain = document.getElementById("emailDomain").value;
+	
+// 	    if (emailDomain === "etc") {
+// 	        // '직접 입력'이 선택되면 이메일 입력 필드 활성화
+// 	        emailInput.disabled = false;
+// 	        emailInput.placeholder = "직접 입력하세요";
+// 	    } else {
+// 	        // 다른 도메인이 선택되면 이메일 입력 필드를 비활성화하고 도메인에 맞는 값을 채움
+// 	        emailInput.disabled = true;
+// 	        emailInput.value = "";
+// 	        emailInput.placeholder = "이메일을 입력하세요";
+// 	    }
+// 	}
     function idCheck() {
-        let userIdField = document.getElementsByName("user_id")[0]; // user_id 필드 가져오기
+        let userIdField = document.getElementsByName("user_id")[0];
         if (userIdField.value.trim() === '') {
             alert("아이디를 입력하세요.");
             userIdField.focus();

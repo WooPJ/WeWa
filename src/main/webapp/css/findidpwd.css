@@ -139,3 +139,45 @@ body, html {
         font-size: 12px;
     }
 }
+/* 전화번호 입력란을 flex로 배치 */
+.phone_wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px;  /* 각 요소 간의 간격을 조금 여유 있게 */
+    width: 100%; /* 부모 요소에 맞춰서 100% 너비로 확장 */
+}
+
+.phone_wrap .input_field {
+    width: 30%; /* select와 input 필드의 너비를 30%로 설정 */
+    display: inline-block;
+}
+
+.email_wrapper {
+    display: flex;
+    justify-content: flex-start;
+    gap: 4px;
+    width: 100%; /* 부모 요소에 맞춰서 100% 너비로 확장 */
+}
+
+.email_wrapper .input_field,
+.email_wrapper select {
+    width: 47%; /* 이메일 입력 필드와 선택 박스를 각각 47%씩 차지 */
+    display: inline-block;
+}
+
+/* '조회' 버튼의 너비를 100%로 설정 */
+.submit_button {
+    width: 100%;  /* 버튼의 너비를 100%로 설정하여 모든 입력 필드와 맞추기 */
+    padding: 10px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit_button:hover {
+    background-color: skyblue;
+}
