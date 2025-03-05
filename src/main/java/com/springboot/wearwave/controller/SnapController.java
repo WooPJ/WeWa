@@ -20,8 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.springboot.wearwave.model.LoginUser;
 import com.springboot.wearwave.model.Post_style_tags;
 import com.springboot.wearwave.model.Post_tpo_tags;
-import com.springboot.wearwave.model.Snap_nickname;
 import com.springboot.wearwave.model.Snap_post_detail;
+import com.springboot.wearwave.model.Snap_profile;
 import com.springboot.wearwave.model.Snapshot_board;
 import com.springboot.wearwave.model.User_info;
 import com.springboot.wearwave.service.LoginService;
@@ -45,21 +45,15 @@ public class SnapController {
 	@Transactional
 	public ModelAndView inputPost(
 			@ModelAttribute("Posting") Snap_post_detail post,
-//            @RequestParam("photo") MultipartFile photo,
-//            @RequestParam("height") Integer height,
-//            @RequestParam("weight") Integer weight,
-//            @RequestParam("gender") String gender,
             @RequestParam(value = "styleTags[]", required = false) List<String> styleTags,
             @RequestParam(value = "tpoTags[]", required = false) List<String> tpoTags,
             HttpSession session) {
-		// 파일 업로드 로직 (생략 가능)
-		//String photoPath = FileUploadUtil.saveFile(photo);
-		
 		// post 전송 데이터
 		//styleTags=casual&styleTags=retro
 		//styleTags = ["casual", "retro"]
 		
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
+        if(loginUser == null) return new ModelAndView("redirect:/login/login.html");
 	    List<MultipartFile> files = post.getFiles(); // 여러 개의 이미지 불러오기
 	    List<String> savedFilePaths = new ArrayList<>();
 	    
@@ -70,22 +64,6 @@ public class SnapController {
 	    if (!dir.exists()) {
 	        dir.mkdirs(); // 폴더가 없으면 생성
 	    }
-/*	    for (MultipartFile multipart : files) {
-	        if (!multipart.isEmpty()) {
-	            try {
-	                // UUID를 사용해 파일명 중복 방지
-	                String originalFileName = multipart.getOriginalFilename();
-	                String uniqueFileName = UUID.randomUUID().toString() + "_" + originalFileName;
-	                String filePath = userFolder + uniqueFileName;
-
-	                multipart.transferTo(new File(filePath));
-	                savedFilePaths.add("/imgs/snap/" + loginUser.getId() + "/" + uniqueFileName);
-	            } catch (Exception e) {
-	                // 로깅 프레임워크 사용 권장 (e.g., Logger)
-	                System.out.println("파일 업로드 중 문제 발생: " + e.getMessage());
-	            }
-	        }
-	    }*/
 	    for (MultipartFile multipart : files) {
 	        if (!multipart.isEmpty()) {
 	            String fileName = multipart.getOriginalFilename();
@@ -114,37 +92,40 @@ public class SnapController {
         post.setUser_id(loginUser.getId());
         
         User_info name = (User_info)session.getAttribute("name");
-        Snap_nickname nickname = this.snapService.getNicknameByUserId(loginUser.getId());
+        Snap_profile profile = this.snapService.getNicknameByUserId(loginUser.getId());
         
-        //스냅닉네임 테이블에 닉네임정보가 없는경우
-        if(nickname == null || nickname.getNickname() == null) {
-        	nickname = new Snap_nickname();
-        	nickname.setUser_id(loginUser.getId()); 
-        	nickname.setNickname(name.getName()); // user_info의 이름으로 닉네임 초기화
-        	this.snapService.putNickname(nickname); // 스냅닉네임 테이블에 insert
+        //스냅프로필 테이블에 닉네임정보가 없는경우
+        if(profile == null || profile.getNickname() == null) {
+        	profile = new Snap_profile();
+        	profile.setUser_id(loginUser.getId()); 
+        	profile.setNickname(name.getName()); // user_info의 이름으로 닉네임 초기화
+        	this.snapService.putNickname(profile); // 스냅프로필 테이블에 insert
         } 
-        post.setNickname(nickname);
+        post.setProfile(profile);
         this.snapService.putFeedPost(post); //포스팅정보 insert
         
 	    // 스타일태그 정보 저장
-	    for (String styleTag : styleTags) {
-	        if (styleTag != null && !styleTag.trim().isEmpty()) {
-	        	Post_style_tags styleData = new Post_style_tags();
-	        	styleData.setPost_id(maxId);
-	        	styleData.setStyle_tag(styleTag);
-	        	this.snapService.putStyleTag(styleData); //스타일태그정보 insert
-	        }
-	    }
+        if (styleTags != null) {
+        	for (String styleTag : styleTags) {
+        		if (styleTag != null && !styleTag.trim().isEmpty()) {
+        			Post_style_tags styleData = new Post_style_tags();
+        			styleData.setPost_id(maxId);
+        			styleData.setStyle_tag(styleTag);
+        			this.snapService.putStyleTag(styleData); //스타일태그정보 insert
+        		}
+        	}
+        }
 	    // TPO태그 정보 저장
-	    for (String tpoTag : tpoTags) {
-	    	if (tpoTag != null && !tpoTag.trim().isEmpty()) {
-	    		Post_tpo_tags tpoData = new Post_tpo_tags();
-	    		tpoData.setPost_id(maxId);
-	    		tpoData.setTpo_tag(tpoTag);
-	    		this.snapService.putTpoTag(tpoData); //TPO태그정보 insert
-	    	}
-	    }
-
+        if(tpoTags != null) {
+        	for (String tpoTag : tpoTags) {
+        		if (tpoTag != null && !tpoTag.trim().isEmpty()) {
+        			Post_tpo_tags tpoData = new Post_tpo_tags();
+        			tpoData.setPost_id(maxId);
+        			tpoData.setTpo_tag(tpoTag);
+        			this.snapService.putTpoTag(tpoData); //TPO태그정보 insert
+        		}
+        	}
+        }
         return new ModelAndView("redirect:/snap/postingContent.html");
 	}
 	
@@ -178,6 +159,7 @@ public class SnapController {
 		ModelAndView mav = new ModelAndView("index");
 		List<Snapshot_board> FeedList = this.snapService.getFeedList();
 		session.setAttribute("FeedList", FeedList);
+//		mav.addObject("FeedList", FeedList);
 		
 		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
 		mav.addObject("CONTENT", "posting_page.jsp");
