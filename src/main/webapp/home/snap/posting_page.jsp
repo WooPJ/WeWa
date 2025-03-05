@@ -27,7 +27,7 @@
                     
 			<c:choose>
 				<c:when test="${loginUser != null }">
-					<form action="/snap/postWrite.html" method="get">
+					<form action="/snap/addPostWrite.html" method="get">
 						<button class="floating_btn">+</button>
 					</form>
 				</c:when>

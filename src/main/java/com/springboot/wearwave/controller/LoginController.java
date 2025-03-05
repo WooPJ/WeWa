@@ -17,6 +17,7 @@ import com.springboot.wearwave.model.User_info;
 import com.springboot.wearwave.service.FindService;
 import com.springboot.wearwave.service.HeartService;
 import com.springboot.wearwave.service.LoginService;
+import com.springboot.wearwave.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +31,8 @@ public class LoginController {
 	private FindService findService;
 	@Autowired
 	private HeartService heartService;
+	@Autowired
+	private UserService userService;
 	
 	
 	@GetMapping("/login/selectentry.html") //회원가입 선택 이동
@@ -155,7 +158,9 @@ public class LoginController {
 	        mav.setViewName("login/login"); // 로그인 화면 유지
 	        mav.addObject("errorMessage", "아이디 또는 비밀번호가 올바르지 않습니다.");
 	    } else { // 로그인 성공
+	    	User_info name = userService.getUserInfo(user.getId());
 	        session.setAttribute("loginUser", user);
+	        session.setAttribute("name", name);
 	        
 	        // 로그인한 사용자의 찜 목록을 DB에서 가져와서 세션에 저장
             List<Heart> heartList = heartService.getUserHeartList(user.getId());
