@@ -20,7 +20,7 @@
            	<a>
                 <div class="posting_box" onclick="openModal('/imgs/item/${feed.imagename}')">
                 <c:set var="images" value="${fn:split(feed.imagename, ',')}" />
-  				<img class="posting_img" src="/imgs/item/${images[0]}" alt="${feed.imagename}" />
+  				<img class="posting_img" src="/imgs/snap/${images[0]}" alt="${feed.imagename}" />
                 </div>
            	</a>
          </c:forEach>

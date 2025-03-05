@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.springboot.wearwave.mapper.SnapMapper;
 import com.springboot.wearwave.model.Post_style_tags;
 import com.springboot.wearwave.model.Post_tpo_tags;
-import com.springboot.wearwave.model.Snap_nickname;
 import com.springboot.wearwave.model.Snap_post_detail;
+import com.springboot.wearwave.model.Snap_profile;
 import com.springboot.wearwave.model.Snapshot_board;
 
 @Service
@@ -22,10 +22,10 @@ public class SnapService {
 		return this.snapMapper.getMaxPostId();
 	}
 	
-	public Snap_nickname getNicknameByUserId(String userId) {
+	public Snap_profile getNicknameByUserId(String userId) {
 		return this.snapMapper.getNicknameByUserId(userId);
 	}
-	public void putNickname(Snap_nickname nickname) {
+	public void putNickname(Snap_profile nickname) {
 		this.snapMapper.putNickname(nickname);
 	}
 	

@@ -9,16 +9,16 @@
 </select>
 
 <!-- 사용자 ID로 닉네임 조회 -->
-<select id="getNicknameByUserId" parameterType="string" resultType="com.springboot.wearwave.model.Snap_nickname">
-    SELECT user_id, nickname FROM snap_nickname 
+<select id="getNicknameByUserId" parameterType="string" resultType="com.springboot.wearwave.model.Snap_profile">
+    SELECT user_id, nickname FROM snap_profile 
     WHERE user_id = #{userId}
 </select>
-<insert id="putNickname" parameterType="com.springboot.wearwave.model.Snap_nickname">
-	insert into snap_nickname values(#{user_id}, #{nickname})
+<insert id="putNickname" parameterType="com.springboot.wearwave.model.Snap_profile">
+	insert into snap_profile (user_id, nickname) values(#{user_id}, #{nickname})
 </insert>
 
 <insert id="putTpoTag" parameterType="com.springboot.wearwave.model.Post_tpo_tags">
-	INSERT INTO post_style_tags VALUES (#{post_id}, #{tpo_tag})
+	INSERT INTO post_tpo_tags VALUES (#{post_id}, #{tpo_tag})
 </insert>
 <insert id="putStyleTag" parameterType="com.springboot.wearwave.model.Post_style_tags">
 	INSERT INTO post_style_tags VALUES (#{post_id}, #{style_tag})
