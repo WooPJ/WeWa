@@ -38,22 +38,43 @@
 	</select>
 	
 	<select id="getItemListPage" resultType="com.springboot.wearwave.model.Items_tbl" parameterType="com.springboot.wearwave.model.Items_tbl">
-	 select * from(select rownum rn, a.* from(select * from items_tbl) a) where rn > #{start} and rn <![CDATA[<]]> #{end}
+	    SELECT * FROM (
+	        SELECT rownum rn, a.*
+	        FROM (
+	            SELECT i.*, u.name 
+	            FROM items_tbl i
+	            JOIN user_info u ON i.user_id = u.user_id
+	        ) a
+	    )
+	    WHERE rn > #{start} AND rn <![CDATA[<]]> #{end}
 	</select>
-	
+
 	<select id="getItemMenu" parameterType="com.springboot.wearwave.model.StartEnd" resultType="com.springboot.wearwave.model.Items_tbl">
-	select * from (select rownum rn, a.* 
-	from ( select * from items_tbl WHERE item_id BETWEEN #{start} AND #{end} order by num) a) 
-	where rn > #{startnum} and rn <![CDATA[<]]>  #{endnum}
+	    SELECT * FROM (
+	        SELECT rownum rn, a.*
+	        FROM (
+	            SELECT i.*, u.name 
+	            FROM items_tbl i
+	            JOIN user_info u ON i.user_id = u.user_id
+	            WHERE i.item_id BETWEEN #{start} AND #{end} 
+	        ) a
+	    )
+	    WHERE rn > #{startnum} AND rn <![CDATA[<]]> #{endnum}
 	</select>
-	
+
 	<select id="getCategory" parameterType="com.springboot.wearwave.model.Items_tbl" resultType="com.springboot.wearwave.model.Items_tbl">
-	select * from( select rownum rn, a.* 
-	from (select * from items_tbl where item_id = #{item_id} order by num) a) 
-	where rn > #{start} and rn <![CDATA[<]]>  #{end}
+	    SELECT * FROM (
+	        SELECT rownum rn, a.*
+	        FROM (
+	            SELECT i.*, u.name 
+	            FROM items_tbl i
+	            JOIN user_info u ON i.user_id = u.user_id
+	            WHERE i.item_id = #{item_id} 
+	        ) a
+	    )
+	    WHERE rn > #{start} AND rn <![CDATA[<]]> #{end}
 	</select>
-	
-	
+
 	<select id="getMyItemList" parameterType="String" resultType="com.springboot.wearwave.model.Items_tbl">
 	select item_code, item_title, price, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, num
 	from items_tbl where user_id = #{user_id} order by num 
