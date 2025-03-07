@@ -37,29 +37,33 @@
             </thead>
             <tbody>
                 <c:forEach var="item" items="${Items}">
-                    <tr>
-                        <td>${item.item_code}</td>
-                        <td>${item.user_id}</td>
-                        <td>
-						    <c:set var="imageList" value="${fn:split(item.imagename, ',')}" />
-						    <img src="${imageList[0]}" class="myItem-image" />
-						</td>
-                        <td>${item.item_title}</td>
-                        <td>${item.reg_date}</td>
-                        <td>
-                            <form action="/items/updateItem.html" method="post" class="update-form">
-							    <input type="hidden" name="item_code" value="${item.item_code}" />
-							    <input type="submit" class="update-btn" value="수정"/>
-							</form>
-                        </td>
-                        <td>
-                            <form action="/items/deleteItem.html" method="post" class="delete-form" onsubmit="return deleteimage(this)">
-							    <input type="hidden" name="item_code" value="${item.item_code}" />
-							     <input type="hidden" name="num" value="${item.num}" />
-							    <input type="submit" class="delete-btn" value="삭제"/>
-							</form>
-                        </td>
-                    </tr>
+                    <%-- 선택된 user_id와 일치하는 데이터만 출력 --%>
+                    <c:if test="${param.user_id eq 'all' or param.user_id eq item.user_id or empty param.user_id}">
+                        <tr>
+                            <td>${item.item_code}</td>
+                            <td>${item.user_id}</td>
+                            <td>
+                                <c:set var="imageList" value="${fn:split(item.imagename, ',')}" />
+                                <c:set var="lastIndex" value="${fn:length(imageList) - 1}" />
+                                <img src="${imageList[lastIndex]}" class="myItem-image" />
+                            </td>
+                            <td>${item.item_title}</td>
+                            <td>${item.reg_date}</td>
+                            <td>
+                                <form action="/items/updateItem.html" method="post" class="update-form">
+                                    <input type="hidden" name="item_code" value="${item.item_code}" />
+                                    <input type="submit" class="update-btn" value="수정"/>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/items/deleteItem.html" method="post" class="delete-form" onsubmit="return deleteimage(this)">
+                                    <input type="hidden" name="item_code" value="${item.item_code}" />
+                                    <input type="hidden" name="num" value="${item.num}" />
+                                    <input type="submit" class="delete-btn" value="삭제"/>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:if>
                 </c:forEach>
             </tbody>
         </table>
@@ -73,6 +77,23 @@
             }
             return false;  // 기본 폼 제출 방지
         }
+<<<<<<< HEAD
+=======
+        // 폼 제출 전 action을 동적으로 변경하는 함수
+        function updateAction() {
+            var select = document.getElementById("user-select");
+            if (select.value === "all") {
+                // '전체 보기'를 선택한 경우, action을 '/items/itemlist.html'로 변경
+                document.getElementById("user-search-form").action = "/items/itemlist.html";
+            } else {
+                // 다른 값을 선택한 경우 기존 action을 유지
+                document.getElementById("user-search-form").action = "/items/userIdSearch.html";
+            }
+            return true; // 폼 제출을 계속 진행
+        }
+        
+        
+>>>>>>> 86530e5 (0305)
     </script>
 </body>
 </html>
