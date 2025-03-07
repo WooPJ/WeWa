@@ -59,7 +59,8 @@
                             <td>${item.user_id}</td>
                             <td>
                                 <c:set var="imageList" value="${fn:split(item.imagename, ',')}" />
-                                <img src="${imageList[0]}" class="myItem-image" />
+                                <c:set var="lastIndex" value="${fn:length(imageList) - 1}" />
+                                <img src="${imageList[lastIndex]}" class="myItem-image" />
                             </td>
                             <td>${item.item_title}</td>
                             <td>${item.reg_date}</td>
@@ -104,6 +105,8 @@
             }
             return true; // 폼 제출을 계속 진행
         }
+        
+        
     </script>
 </body>
 </html>
