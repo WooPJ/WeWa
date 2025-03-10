@@ -13,7 +13,7 @@
 <body>
 <div id="upload-container">
     <h3>상품 등록</h3>
-    <form:form modelAttribute="Items" action="/items/addItems.html" method="post" enctype="multipart/form-data"  name="itemFrm">
+    <form:form modelAttribute="Items" action="/items/addItems.html" method="post" enctype="multipart/form-data" name="itemFrm">
     	<label for="item_code">상품 코드:</label>
         <form:input path="item_code" placeholder="상품 코드를 입력하세요 ex)상호이니셜_001" required="true"/>
         <input type="button" value="중복 검사" onclick="codeCheck()"/>

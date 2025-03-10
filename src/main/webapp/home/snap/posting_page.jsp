@@ -20,14 +20,14 @@
            	<a>
                 <div class="posting_box" onclick="openModal('/imgs/item/${feed.imagename}')">
                 <c:set var="images" value="${fn:split(feed.imagename, ',')}" />
-  				<img class="posting_img" src="/imgs/item/${images[0]}" alt="${feed.imagename}" />
+  				<img class="posting_img" src="/imgs/snap/${images[0]}" alt="${feed.imagename}" />
                 </div>
            	</a>
          </c:forEach>
                     
 			<c:choose>
 				<c:when test="${loginUser != null }">
-					<form action="/snap/postWrite.html" method="get">
+					<form action="/snap/addPostWrite.html" method="get">
 						<button class="floating_btn">+</button>
 					</form>
 				</c:when>
