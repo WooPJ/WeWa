@@ -31,31 +31,31 @@
                     <label class="input_label">전화번호</label>
                     <div class="phone_wrap">
                         <select name="phone1" class="input_field">
-                        	<option value="010">---고객---</option>
-                            <option value="010">010</option>
-                            <option value="011">011</option>
-                            <option value="016">016</option>
-                            <option value="017">017</option>
-                            <option value="018">018</option>
-                            <option value="019">019</option>
-                            <option value="010">---사업자---</option>
-						    <option value="02">02</option>
-						    <option value="031">031</option>
-						    <option value="033">033</option>
-						    <option value="041">041</option>
-						    <option value="042">042</option>
-						    <option value="043">043</option>
-						    <option value="044">044</option>
-						    <option value="051">051</option>
-						    <option value="052">052</option>
-						    <option value="053">053</option>
-						    <option value="054">054</option>
-						    <option value="055">055</option>
-						    <option value="061">061</option>
-						    <option value="062">062</option>
-						    <option value="063">063</option>
-						    <option value="064">064</option>                            
-                        </select> - 
+							    <option value="000">---고객---</option>
+							    <option value="010" selected>010</option> <!-- 기본 선택값을 010으로 설정 -->
+							    <option value="011">011</option>
+							    <option value="016">016</option>
+							    <option value="017">017</option>
+							    <option value="018">018</option>
+							    <option value="019">019</option>
+							    <option value="010">---사업자---</option>
+							    <option value="02">02</option>
+							    <option value="031">031</option>
+							    <option value="033">033</option>
+							    <option value="041">041</option>
+							    <option value="042">042</option>
+							    <option value="043">043</option>
+							    <option value="044">044</option>
+							    <option value="051">051</option>
+							    <option value="052">052</option>
+							    <option value="053">053</option>
+							    <option value="054">054</option>
+							    <option value="055">055</option>
+							    <option value="061">061</option>
+							    <option value="062">062</option>
+							    <option value="063">063</option>
+							    <option value="064">064</option>
+							</select> - 
                         <form:input path="phone2" class="input_field" placeholder="1234" maxlength="4" />
                         <font color="red"><form:errors path="phone2" /></font> - 
                         <form:input path="phone3" class="input_field" placeholder="5678" maxlength="4" />
@@ -85,10 +85,10 @@
             <label class="input_label">이메일</label>
             <div class="email_wrapper">
                 <!-- 이메일 앞부분 -->
-                <form:input path="email" class="input_field email_input" placeholder="이메일을 입력하세요" id="emailInput" style="width: 120px; display: inline-block;" /> @
+				<form:input path="email" class="input_field email_input" placeholder="이메일을 입력하세요" id="emailInput" /> @
 
                 <!-- 이메일 도메인 선택 -->
-                <select name="emailDomain" id="emailDomain" class="input_field email_select" style="width: 150px; display: inline-block;" onchange="emailDomainChange()">
+                <select name="emailDomain" id="emailDomain" class="input_field email_select" onchange="emailDomainChange()">
                     <option value="naver.com">naver.com</option>
                     <option value="gmail.com">gmail.com</option>
                     <option value="daum.net">daum.net</option>

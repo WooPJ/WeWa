@@ -30,8 +30,8 @@
                     <label class="input_label">전화번호</label>
                     <div class="phone_wrap">
                         <select name="phone1" class="input_field">
-                        	<option value="010">---고객---</option>
-                            <option value="010">010</option>
+                        	<option value="000">---고객---</option>
+                            <option value="010" selected>010</option>
                             <option value="011">011</option>
                             <option value="016">016</option>
                             <option value="017">017</option>
@@ -81,10 +81,10 @@
             <label class="input_label">이메일</label>
             <div class="email_wrapper">
                 <!-- 이메일 앞부분 -->
-                <form:input path="email" class="input_field email_input" placeholder="이메일을 입력하세요" id="emailInput" style="width: 120px; display: inline-block;" /> @
+                <form:input path="email" class="input_field email_input" placeholder="이메일을 입력하세요" id="emailInput" /> @
 
                 <!-- 이메일 도메인 선택 -->
-                <select name="emailDomain" id="emailDomain" class="input_field email_select" style="width: 150px; display: inline-block;" onchange="emailDomainChange()">
+                <select name="emailDomain" id="emailDomain" class="input_field email_select" onchange="emailDomainChange()">
                     <option value="naver.com">naver.com</option>
                     <option value="gmail.com">gmail.com</option>
                     <option value="daum.net">daum.net</option>
