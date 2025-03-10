@@ -12,16 +12,31 @@
 <body>
  	<div id="header-container">
   	 <h3>등록된 상품 관리</h3>
-  	 <form id="user-search-form" action="/items/userIdSearch.html">
-    <label for="user_id">상호명:</label>
-    <select id="user-select" name="user_id">
-        <c:forEach var="item" items="${Items}">
-            <option value="${item.user_id}">${item.user_id}</option>
-        </c:forEach>
-    </select>
-    <input class="btn-search" type="submit" value="조회"/>
-</form>
+
+  	 <%-- 중복 제거된 user_id 목록 생성 --%>
+  	 <c:set var="userList" value="" />
+  	 <c:forEach var="item" items="${Items}">
+  	     <c:if test="${not fn:contains(userList, item.user_id)}">
+  	         <c:set var="userList" value="${userList},${item.user_id}" />
+  	     </c:if>
+  	 </c:forEach>
+
+  	 <%-- userList에서 첫 번째 ',' 제거 후 배열로 변환 --%>
+  	 <c:set var="userArray" value="${fn:split(fn:substring(userList, 1, fn:length(userList)), ',')}" />
+
+  	<form id="user-search-form" action="/items/userIdSearch.html" method="get" onsubmit="return updateAction()">
+	    <label for="user_id">상호명:</label>
+	    <select id="user-select" name="user_id" onchange="this.form.submit()">
+	        <option value="all">전체 보기</option>
+	        <c:forEach var="user" items="${userArray}">
+	            <option value="${user}" <c:if test="${param.user_id eq user}">selected</c:if>>${user}</option>
+	        </c:forEach>
+	    </select>
+	    <input class="btn-search" type="submit" value="조회"/>
+	</form>
+
 	</div>
+
 	<div>
         <table id="myItem-table" class="table">
             <thead>
@@ -68,6 +83,7 @@
             </tbody>
         </table>
     </div>
+
     <script type="text/javascript">
         // 삭제 확인 함수
         function deleteimage(form) {
@@ -78,7 +94,10 @@
             return false;  // 기본 폼 제출 방지
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/master
         // 폼 제출 전 action을 동적으로 변경하는 함수
         function updateAction() {
             var select = document.getElementById("user-select");
@@ -93,7 +112,10 @@
         }
         
         
+<<<<<<< HEAD
 >>>>>>> 86530e5 (0305)
+=======
+>>>>>>> origin/master
     </script>
 </body>
 </html>

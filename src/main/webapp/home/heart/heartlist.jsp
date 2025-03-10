@@ -32,10 +32,17 @@
 				        <a href="/item/itemDetail.html?item_code=${heart.item_code}">
 				            <div class="image-container">
 				                <c:if test="${not empty heart.imagename}">
+<<<<<<< HEAD
 
 							        <c:set var="images" value="${fn:split(heart.imagename, ',')}" />
 							        <img src="${images[0]}" alt="${heart.item_title}" />
 							    </c:if>
+=======
+							        <c:set var="images" value="${fn:split(heart.imagename, ',')}" />
+							        <img src="${images[0]}" alt="${heart.item_title}" />
+							    </c:if>
+
+>>>>>>> origin/master
 				                <!-- 찜하트 -->
 				                <div class="heart-container">
 				                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 580 512" class="heart-icon"
