@@ -40,7 +40,8 @@ public class EntryController {
 	}//사업자 회원가입
 	
 	@PostMapping(value = "/signup/customerprocess.html")
-	public ModelAndView customerRegister(@Valid User user, BindingResult br) {
+	public ModelAndView customerRegister(@Valid User user, BindingResult br,
+				String customDomainInput) {
 	    ModelAndView mav = new ModelAndView();	    
 	    if (br.hasErrors()) {
 	        mav.setViewName("login/userentry"); // 회원가입 페이지 유지
@@ -48,7 +49,6 @@ public class EntryController {
 	        return mav;
 	    }
 	    try {
-	    	
 	        this.loginService.putCustomerUser(user);//DB 저장 실행
 	        mav.setViewName("login/userEntryResult"); // 회원가입 성공 시 이동할 페이지
 	    } catch (Exception e) {
