@@ -34,7 +34,7 @@
 </select>
 <select id="getFeedAll" resultType="com.springboot.wearwave.model.Snap_post_detail">
 	select post_id, user_id, imagename, height, weight, gender, content
-	from Snap_post_detail order by reg_date
+	from Snap_post_detail order by post_id DESC
 </select>
 <select id="getFeedList" resultType="com.springboot.wearwave.model.Snapshot_board">
 	select seqno, writer, content, to_char(w_date,'YYYY/MM/DD HH24:MI:SS') AS w_date, like_count, imagename, pwd 

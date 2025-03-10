@@ -18,7 +18,7 @@
 	<div class = "posting_line">
          <c:forEach var="feed" items="${FeedList}">
            	<a>
-                <div class="posting_box" onclick="openModal('/imgs/item/${feed.imagename}')">
+                <div class="posting_box" onclick="openModal('${feed.imagename}')">
                 <c:set var="images" value="${fn:split(feed.imagename, ',')}" />
   				<img class="posting_img" src="${images[0]}" alt="${feed.imagename}" />
                 </div>

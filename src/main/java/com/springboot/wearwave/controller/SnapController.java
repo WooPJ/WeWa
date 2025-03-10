@@ -171,9 +171,13 @@ public class SnapController {
 	@GetMapping("/snap/snap.html") 
 	public ModelAndView snap(HttpSession session) {
 	    ModelAndView mav = new ModelAndView("index"); 
+	    List<Snap_post_detail> FeedList = this.snapService.getFeedAll();
+	    mav.addObject("FeedList", FeedList);
 	    mav.addObject("BODY", "snap/snap.jsp"); 
+	    
 	    LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
 	    mav.addObject("loginUser", loginUser);
+	    
 	    return mav;
 	}
 }

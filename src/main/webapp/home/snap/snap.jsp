@@ -36,7 +36,7 @@
 		
 		<!-- 동적으로 페이지 포함 -->
         <div class="snap_content_box">
-            <jsp:include page="${CONTENT != null ? CONTENT : 'posting_page.jsp'}" />
+            <jsp:include page="${not empty CONTENT ? CONTENT : 'posting_page.jsp'}" />
         </div>
 		
     
