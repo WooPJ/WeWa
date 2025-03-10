@@ -16,11 +16,11 @@
 <!-- 피드게시물----------------------- -->
 <div class = "posting_page"> 
 	<div class = "posting_line">
-         <c:forEach var="feed" items="${sessionScope.FeedList}">
+         <c:forEach var="feed" items="${FeedList}">
            	<a>
                 <div class="posting_box" onclick="openModal('/imgs/item/${feed.imagename}')">
                 <c:set var="images" value="${fn:split(feed.imagename, ',')}" />
-  				<img class="posting_img" src="/imgs/snap/${images[0]}" alt="${feed.imagename}" />
+  				<img class="posting_img" src="${images[0]}" alt="${feed.imagename}" />
                 </div>
            	</a>
          </c:forEach>

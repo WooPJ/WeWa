@@ -157,10 +157,11 @@ public class SnapController {
 	@GetMapping("/snap/postingContent.html")
 	public ModelAndView posting(HttpSession session) {
 		ModelAndView mav = new ModelAndView("index");
-		List<Snapshot_board> FeedList = this.snapService.getFeedList();
-		session.setAttribute("FeedList", FeedList);
-//		mav.addObject("FeedList", FeedList);
+		List<Snap_post_detail> FeedList = this.snapService.getFeedAll();
+//		List<Snapshot_board> FeedList = this.snapService.getFeedList();
+//		session.setAttribute("FeedList", FeedList);
 		
+		mav.addObject("FeedList", FeedList);
 		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
 		mav.addObject("CONTENT", "posting_page.jsp");
 		return mav;

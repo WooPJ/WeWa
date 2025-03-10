@@ -38,6 +38,10 @@ public class SnapService {
 	public void putFeedPost(Snap_post_detail snap_post_detail) {
 		this.snapMapper.putFeedPost(snap_post_detail);
 	}
+	
+	public List<Snap_post_detail> getFeedAll() {
+		return this.snapMapper.getFeedAll();
+	}
 	public List<Snapshot_board> getFeedList() {
 		return this.snapMapper.getFeedList();
 	}

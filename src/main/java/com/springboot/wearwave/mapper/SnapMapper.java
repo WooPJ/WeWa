@@ -21,5 +21,7 @@ public interface SnapMapper {
 	void putTpoTag(Post_tpo_tags tpoTag);
 	void putStyleTag(Post_style_tags styleTag);
 	void putFeedPost(Snap_post_detail snap_post_detail);
+	
+	List<Snap_post_detail> getFeedAll();
 	List<Snapshot_board> getFeedList();
 }
