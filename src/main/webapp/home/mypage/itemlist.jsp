@@ -11,31 +11,19 @@
 </head>
 <body>
  	<div id="header-container">
-  	 <h3>등록된 상품 관리</h3>
+    <h3>등록된 상품 관리</h3>
 
-  	 <%-- 중복 제거된 user_id 목록 생성 --%>
-  	 <c:set var="userList" value="" />
-  	 <c:forEach var="item" items="${Items}">
-  	     <c:if test="${not fn:contains(userList, item.user_id)}">
-  	         <c:set var="userList" value="${userList},${item.user_id}" />
-  	     </c:if>
-  	 </c:forEach>
-
-  	 <%-- userList에서 첫 번째 ',' 제거 후 배열로 변환 --%>
-  	 <c:set var="userArray" value="${fn:split(fn:substring(userList, 1, fn:length(userList)), ',')}" />
-
-  	<form id="user-search-form" action="/items/userIdSearch.html" method="get" onsubmit="return updateAction()">
-	    <label for="user_id">상호명:</label>
-	    <select id="user-select" name="user_id" onchange="this.form.submit()">
-	        <option value="all">전체 보기</option>
-	        <c:forEach var="user" items="${userArray}">
-	            <option value="${user}" <c:if test="${param.user_id eq user}">selected</c:if>>${user}</option>
-	        </c:forEach>
-	    </select>
-	    <input class="btn-search" type="submit" value="조회"/>
-	</form>
-
-	</div>
+    <form id="user-search-form" action="/items/userIdSearch.html" method="get" onsubmit="return updateAction()">
+        <label for="user-select">상호명:</label>
+        <select id="user-select" name="user_id" onchange="this.form.submit()">
+            <option value="all">전체 보기</option>
+            <c:forEach var="user" items="${userArray}">
+                <option value="${user}" <c:if test="${selectedUserId eq user}">selected</c:if>>${user}</option>
+            </c:forEach>
+        </select>
+        <input class="btn-search" type="submit" value="조회"/>
+    </form>
+</div>	
 
 	<div>
         <table id="myItem-table" class="table">

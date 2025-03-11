@@ -41,13 +41,27 @@
             margin-bottom: 15px;
         }
 		
+		.product-description {
+			font-weight: bold;
+			margin-top: 15px;
+			font-size: 16px;
+			color: #666;
+			margin-bottom: 15px;
+		}
+		.product-description a:visited {
+		    color: inherit;
+		}
+		.product-description a {
+		    text-decoration: none; /* 밑줄 제거 */
+		    color: initial; /* 기본 색상 */
+		}
 		.product-descriptions {
+			white-space: pre-wrap;
 			margin-top: 15px;
 			font-size: 14px;
 			color: #666;
 			margin-bottom: 15px;
 		}
-		
 		.product-price {
 			font-size: 20px;
 			font-weight: bold;
@@ -216,8 +230,8 @@
         .prev, .next {
     cursor: pointer;
     position: absolute;
-    top: 45%;
-    padding: 16px;
+    top: 37%;
+    padding: 12px;
     color: white;
     font-size: 20px; /* 화살표 크기 증가 */
     font-weight: bold;

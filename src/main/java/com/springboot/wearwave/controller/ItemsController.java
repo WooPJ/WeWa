@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -115,15 +117,28 @@ public class ItemsController {
 	    return new ModelAndView("redirect:/items/myitemlist.html");
 	}
 	
-	@GetMapping(value="/items/itemlist.html") 
-	public ModelAndView ltemlist() {
-		ModelAndView mav = new ModelAndView("index");
-		List<Items_tbl> Items = this.itemsService.getItemList();	
-        mav.addObject("Items",Items);
-		mav.addObject("BODY", "mypage/mypage.jsp");
-        mav.addObject("CONTENT", "itemlist.jsp");
-		return mav;
+	@GetMapping(value = "/items/itemlist.html")
+	public ModelAndView itemlist(@RequestParam(required = false, defaultValue = "all") String user_id) {
+	    ModelAndView mav = new ModelAndView("index");
+
+	    // 전체 상품 목록 가져오기
+	    List<Items_tbl> Items = this.itemsService.getItemList();
+
+	    // 중복 제거된 user_id 목록 생성
+	    Set<String> userSet = Items.stream()
+	                               .map(Items_tbl::getUser_id)  // user_id만 추출
+	                               .collect(Collectors.toSet()); // 중복 제거된 Set으로 변환
+
+	    // 모델에 데이터 추가
+	    mav.addObject("Items", Items);
+	    mav.addObject("userArray", userSet);  // 중복 제거된 user_id 목록
+	    mav.addObject("selectedUserId", user_id);  // 현재 선택된 user_id 추가
+	    mav.addObject("BODY", "mypage/mypage.jsp");
+	    mav.addObject("CONTENT", "itemlist.jsp");
+
+	    return mav;
 	}
+
 	
 	@GetMapping(value="/items/myitemlist.html") 
 	public ModelAndView myltemlist(HttpSession session) {

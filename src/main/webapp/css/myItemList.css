@@ -8,7 +8,8 @@ h3 {
 }
 
 #myItem-table{
-	margin-left: 50px;
+	min-width: 100%;
+	max-width: 100%;
 }
 
 #header-container {

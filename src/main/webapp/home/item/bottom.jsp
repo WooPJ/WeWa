@@ -51,7 +51,7 @@
                     </svg>
                 </div>
             </div>    
-        <div class="product-name">${item.user_id}</div>
+        <div class="product-name">${item.name}</div>
         <div class="product-description">${item.item_title}</div>
         <%-- <div class="product-price">${item.price}원</div> --%>
         <div class="product-price"><fmt:formatNumber value="${item.price}" groupingUsed="true"/>원</div>

@@ -37,7 +37,7 @@
     align-items: flex-start;
     justify-content: flex-start; /* 마지막 줄도 왼쪽 정렬 */
     margin-top: 50px;
-    margin-left: 80px;
+    margin-left: 100px;
     margin-right: 80px;
     gap: 30px;
 }

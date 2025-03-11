@@ -67,33 +67,74 @@
 				});
 
 				   function loadItems(pageno) {
-				       console.log("Requested page number: ", pageno);
-				       const url = "/home/index.html?pageno=" + pageno;
+					    console.log("Requested page number: ", pageno);
+					    const url = "/home/index.html?pageno=" + pageno;
 
-				       fetch(url)
-				           .then(response => response.text())
-				           .then(html => {
-				               const container = document.querySelector(".product-container");
-				               const newContent = document.createElement('div');
-				               newContent.innerHTML = html.trim();
+					    fetch(url)
+					        .then(response => response.text())
+					        .then(html => {
+					            const container = document.querySelector(".product-container");
+					            const newContent = document.createElement('div');
+					            newContent.innerHTML = html.trim();
 
-				               // 새로운 데이터가 있는지 확인
-				               const newItems = newContent.querySelector(".product-container")?.innerHTML.trim();
-				               if (!newItems) {
-				                   console.log("더 이상 불러올 데이터가 없습니다.");
-				                   hasMoreData = false; // 데이터 없으면 로딩 중지
-				                   return;
-				               }
+					            // 새로운 데이터가 있는지 확인
+					            const newItems = newContent.querySelector(".product-container")?.innerHTML.trim();
+					            if (!newItems) {
+					                console.log("더 이상 불러올 데이터가 없습니다.");
+					                hasMoreData = false; // 데이터 없으면 로딩 중지
+					                return;
+					            }
 
-				               container.innerHTML += newItems; // 기존 컨텐츠에 새로운 아이템 추가
-				               pageNo++; // 데이터가 있을 때만 증가
-				               loading = false; // 로딩 상태 해제
-				           })
-				           .catch(error => {
-				               console.error("아이템 로딩 실패", error);
-				               loading = false;
-				           });
-				   }
+					            container.innerHTML += newItems; // 기존 컨텐츠에 새로운 아이템 추가
+					            pageNo++; // 데이터가 있을 때만 증가
+					            loading = false; // 로딩 상태 해제
+
+					            // 새로운 하트 아이콘에 대해 이벤트 리스너 재등록
+					            registerHeartIcons();
+					        })
+					        .catch(error => {
+					            console.error("아이템 로딩 실패", error);
+					            loading = false;
+					        });
+					}
+
+					function registerHeartIcons() {
+					    const heartIcons = document.querySelectorAll('.heart-icon');
+					    heartIcons.forEach(heart => {
+					        const itemId = heart.getAttribute("data-item-code");
+
+					        // 찜한 상품인지 확인
+					        <c:forEach items="${sessionScope.heartList}" var="heart">
+					            if ("${heart.item_code}" == itemId) {
+					                heart.classList.add('filled'); // 하트 채우기
+					            }
+					        </c:forEach>
+
+					        if (document.querySelector('#item-detail-container')) {
+					            console.log("🚀 현재 페이지는 itemDetail.jsp입니다. index.jsp의 heartIcon 스크립트 실행 안함");
+					            return; // 실행 중단
+					        } else { // itemDetail.jsp가 아니면
+					            heart.addEventListener('click', function (event) {
+					                event.preventDefault();
+					                if (${sessionScope.loginUser == null}) {
+					                    redirectToLogin();
+					                } else {
+					                    this.classList.toggle('filled');
+					                    const isFilled = this.classList.contains('filled');
+					                    const inData = { itemCode: itemId, status: isFilled };
+					                    let param = new URLSearchParams(inData).toString();
+					                    fetch("/heart/toggle.html?" + param); //컨트롤러 매핑
+					                }
+					            });
+					        }
+					    });
+					}
+
+					// 페이지 로딩 시 하트 버튼 이벤트 리스너 등록
+					document.addEventListener("DOMContentLoaded", function () {
+					    registerHeartIcons(); // 초기 하트 버튼에 이벤트 리스너 등록
+					});
+
 				</script>	
             </c:otherwise>
         </c:choose>

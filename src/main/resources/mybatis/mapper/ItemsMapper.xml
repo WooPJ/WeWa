@@ -116,7 +116,7 @@
 	<select id="searchItemByName" parameterType="com.springboot.wearwave.model.Items_tbl" resultType="com.springboot.wearwave.model.Items_tbl">
     SELECT * FROM (
         SELECT rownum rn, a.* FROM (
-            SELECT i.*
+            SELECT i.*, u.name
             FROM items_tbl i
             JOIN user_info u ON i.user_id = u.user_id
             WHERE i.item_title LIKE '%' || #{name} || '%'

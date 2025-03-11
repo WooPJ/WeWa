@@ -69,7 +69,7 @@ public class QnaController {
 			 HttpSession session) {
 		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
 		MultipartFile multipart = qnabbs.getImage();//선택한 파일을 불러온다.
-	
+		System.out.println(qnabbs.getImage());
 		if (multipart != null && !multipart.isEmpty()) {  // 파일이 업로드된 경우에만 처리
 	        String fileName = multipart.getOriginalFilename();  // 선택한 파일의 이름을 찾는다.
 	        ServletContext ctx = session.getServletContext();  // ServletContext 생성
@@ -80,7 +80,6 @@ public class QnaController {
 	            dir.mkdirs();  // 폴더가 없으면 생성
 	        }
 	        String path = userFolder + fileName;
-	        
 	        try (OutputStream os = new FileOutputStream(path);
 	             BufferedInputStream bis = new BufferedInputStream(multipart.getInputStream())) {
 	             
@@ -124,27 +123,29 @@ public class QnaController {
 		 LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
 		 MultipartFile multiFile = qna_bbs.getImage();
 		 if (multiFile != null && !multiFile.getOriginalFilename().equals("")) {
-		        String fileName = multiFile.getOriginalFilename();
-		        ServletContext ctx = session.getServletContext();
+			 String fileName = multiFile.getOriginalFilename();  // 선택한 파일의 이름을 찾는다.
+		        ServletContext ctx = session.getServletContext();  // ServletContext 생성
 		        String userFolder = ctx.getRealPath("/imgs/qna/" + loginUser.getId() + "/");
+		        
+		        File dir = new File(userFolder);
+		        if (!dir.exists()) {
+		            dir.mkdirs();  // 폴더가 없으면 생성
+		        }
 		        String path = userFolder + fileName;
-		        OutputStream os = null;
-
-		        try {
-		            os = new FileOutputStream(path);
-		            BufferedInputStream bis = new BufferedInputStream(multiFile.getInputStream());
-		            byte[] buffer = new byte[8156];
+		        
+		        try (OutputStream os = new FileOutputStream(path);
+		             BufferedInputStream bis = new BufferedInputStream(multiFile.getInputStream())) {
+		             
+		            byte[] buffer = new byte[8156];  // 8K 크기로 배열을 생성한다.
 		            int read;
 		            while ((read = bis.read(buffer)) > 0) {
-		                os.write(buffer, 0, read);
+		                os.write(buffer, 0, read);  // 생성된 파일에 출력
 		            }
-		            qna_bbs.setImagename("/imgs/qna/" + loginUser.getId() + "/" + fileName);
+		            qna_bbs.setImagename("/imgs/qna/"+ loginUser.getId() + "/"+fileName);
 		        } catch (Exception e) {
-		            System.out.println("변경된 이미지 업로드 중 문제 발생!");
-		        } finally {
-		            try {
-		                if (os != null) os.close();
-		            } catch (Exception ignored) {}
+		            // 로그를 사용하여 에러 처리
+		            e.printStackTrace(); // 또는 logger.error("파일 업로드 중 오류 발생", e);
+		            return new ModelAndView("redirect:/errorPage.html");  // 에러 페이지로 리다이렉트
 		        }
 		    } else {
 		        // 기존 값 유지 (현재 DB에 있는 값으로 설정)
