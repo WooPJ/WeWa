@@ -39,12 +39,9 @@
             <jsp:include page="${not empty CONTENT ? CONTENT : 'posting_page.jsp'}" />
         </div>
 		
-    
 </div>
 
 
-<!-- 📌 모달 팝업-->
-<jsp:include page="snap_modal.jsp"/>
 
 <script type="text/javascript">
 //현재 선택된 메뉴를 저장하는 함수
@@ -72,7 +69,6 @@ function show_Posting(){
 function show_Stored(){
     setActiveTab("stored");
 }
-	
 function show_Profile(){
     setActiveTab("profile");
 }

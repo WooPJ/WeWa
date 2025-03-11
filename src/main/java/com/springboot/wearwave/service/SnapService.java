@@ -39,6 +39,20 @@ public class SnapService {
 		this.snapMapper.putFeedPost(snap_post_detail);
 	}
 	
+	
+	public Snap_profile getNicknameByPost(Integer postId) {
+		return this.snapMapper.getNicknameByPost(postId);
+	}
+	public List<Post_style_tags> getAllStyleById(Integer postId) {
+		return this.snapMapper.getAllStyleById(postId);
+	}
+	public List<Post_tpo_tags> getAllTpoById(Integer postId) {
+		return this.snapMapper.getAllTpoById(postId);
+	}
+	
+	public Snap_post_detail getPostDetailById(Integer postId) {
+		return this.snapMapper.getPostDetailById(postId);
+	}
 	public List<Snap_post_detail> getFeedAll() {
 		return this.snapMapper.getFeedAll();
 	}

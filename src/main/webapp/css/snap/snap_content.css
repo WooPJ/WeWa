@@ -110,7 +110,26 @@
     height: 100%;
     object-fit: cover;
 }
+/* 게시글 해시태그 */
+.style-tag {
+    background-color: #FFDDC1; /* 스타일 태그 배경색 */
+    color: #333;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin-right: 5px;
+    font-weight: bold;
+    font-size: 15px;
+}
 
+.tpo-tag {
+    background-color: #D1E7FF; /* TPO 태그 배경색 */
+    color: #333;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin-right: 5px;
+        font-weight: bold;
+    font-size: 15px;
+}
 
 
 
