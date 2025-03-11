@@ -22,6 +22,11 @@ public interface SnapMapper {
 	void putStyleTag(Post_style_tags styleTag);
 	void putFeedPost(Snap_post_detail snap_post_detail);
 	
+	Snap_profile getNicknameByPost(Integer postId);
+	List<Post_style_tags> getAllStyleById(Integer postId);
+	List<Post_tpo_tags> getAllTpoById(Integer postId);
+	
+	Snap_post_detail getPostDetailById(Integer postId);
 	List<Snap_post_detail> getFeedAll();
 	List<Snapshot_board> getFeedList();
 }

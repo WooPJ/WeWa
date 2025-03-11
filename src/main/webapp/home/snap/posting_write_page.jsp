@@ -46,7 +46,7 @@
                 <label><input type="checkbox" name="styleTags[]" value="street" class="posting-checkbox"> 스트릿</label>
             </div>
             
-            <label class="posting-label">TPO</label>
+            <label class="posting-label">TPO 태그</label>
             <div class="posting-checkbox-group">
                 <label><input type="checkbox" name="tpoTags[]" value="daily" class="posting-checkbox"> 데일리</label>
                 <label><input type="checkbox" name="tpoTags[]" value="date" class="posting-checkbox"> 데이트</label>

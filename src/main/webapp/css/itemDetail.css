@@ -213,7 +213,7 @@
         .heart-icon.filled {
             fill: red;
         }
-        .prev, .next {
+.prev, .next {
     cursor: pointer;
     position: absolute;
     top: 45%;
