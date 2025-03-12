@@ -43,7 +43,57 @@ public class SnapController {
 	private LoginService loginService;
 	
 	
-	//게시물을 클릭한경우 게시물 모달창 띄우기
+	
+	//댓글업로드
+	@PostMapping("/snap/addComment")
+	@Transactional
+	@ResponseBody
+	public Map<String, Object> addComment(@RequestParam("postId") Integer postId,
+	                                      @RequestParam("commentContent") String commentContent,
+	                                      HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
+
+	    // 로그인 사용자 확인 (세션에서 사용자 정보 확인)
+	    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+	    if (loginUser == null) {
+	        response.put("error", "로그인이 필요합니다.");
+	        return response;
+	    }
+
+	    try {
+		    // 댓글 객체 생성 및 데이터 삽입
+		    Snap_comment newComment = new Snap_comment();
+		    newComment.setPost_id(postId);
+		    newComment.setWriter_id(loginUser.getId()); // 로그인 사용자 ID 추가
+		    newComment.setContent(commentContent);
+	
+	        User_info userInfo = (User_info)session.getAttribute("userInfo");
+	        Snap_profile profile = this.snapService.getNicknameByUserId(loginUser.getId());
+	        
+	        //스냅프로필 테이블에 닉네임정보가 없는경우
+	        if(profile == null || profile.getNickname() == null) {
+	        	profile = new Snap_profile();
+	        	profile.setUser_id(loginUser.getId()); 
+	        	profile.setNickname(userInfo.getName()); // user_info의 이름으로 닉네임 초기화
+	        	this.snapService.putNickname(profile); // 스냅프로필 테이블에 insert
+	        } 
+	        this.snapService.putComment(newComment); //댓글정보 insert
+        
+	        // 댓글 목록 다시 불러오기
+	        List<Snap_comment> updatedComments = snapService.getCommentList(postId);
+	        response.put("comments", updatedComments);
+	        return response;
+	        
+	    } catch(Exception e){
+	    	e.printStackTrace();
+	    	//System.out.println("댓글작성중 문제발생: "+e);
+	    	response.put("error", "댓글 작성에 실패했습니다.");
+	    	return response;
+	    }
+	}
+	
+	
+	//📌 게시물 클릭시 게시물 모달창 띄우기
 	@GetMapping("/snap/getPostDetail.html")
 	@ResponseBody // JSON 데이터를 반환하도록 설정
 	public Map<String, Object> getPostDetail(@RequestParam("postId") Integer postId) {
@@ -53,7 +103,6 @@ public class SnapController {
 	    List<Post_style_tags> styleTag = snapService.getAllStyleById(postId);
 	    List<Post_tpo_tags> tpoTag = snapService.getAllTpoById(postId);
 	    List<Snap_comment> comment = snapService.getCommentList(postId);
-	    
 	    
 	    System.out.println("댓글 수: " + comment.size());
 	    System.out.println("매핑데이터: " + postId);
@@ -125,14 +174,14 @@ public class SnapController {
 	    post.setPost_id(maxId);
         post.setUser_id(loginUser.getId());
         
-        User_info name = (User_info)session.getAttribute("name");
+        User_info userInfo = (User_info)session.getAttribute("userInfo");
         Snap_profile profile = this.snapService.getNicknameByUserId(loginUser.getId());
         
         //스냅프로필 테이블에 닉네임정보가 없는경우
         if(profile == null || profile.getNickname() == null) {
         	profile = new Snap_profile();
         	profile.setUser_id(loginUser.getId()); 
-        	profile.setNickname(name.getName()); // user_info의 이름으로 닉네임 초기화
+        	profile.setNickname(userInfo.getName()); // user_info의 이름으로 닉네임 초기화
         	this.snapService.putNickname(profile); // 스냅프로필 테이블에 insert
         } 
         post.setProfile(profile);

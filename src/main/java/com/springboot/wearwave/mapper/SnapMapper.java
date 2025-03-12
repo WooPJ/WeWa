@@ -14,6 +14,8 @@ import com.springboot.wearwave.model.Snapshot_board;
 @Mapper
 public interface SnapMapper {
 	//댓글관련
+	void putComment(Snap_comment comment);
+	Integer getMaxCommentNo();
 	List<Snap_comment> getCommentList(Integer postId);
 	
 	

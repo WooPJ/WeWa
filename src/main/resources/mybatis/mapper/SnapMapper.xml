@@ -6,7 +6,7 @@
 <!-- 댓글관련 -->
 <insert id="putComment" parameterType="com.springboot.wearwave.model.Snap_comment">
 	insert into snap_comment values 
-	(#{comment_no}, #{post_id}, #{writer_id}, #{nickname}, #{content}, sysdate)
+	(#{comment_no}, #{post_id}, #{writer_id}, #{content}, sysdate)
 </insert>
 <select id="getMaxCommentNo" resultType="Integer"> <!-- comment_no 최대값찾아서 +1 해주기 -->
 	select max(comment_no) from snap_comment
@@ -29,7 +29,7 @@
 
 
 <!-- ===게시물관련=== -->
-<!-- 사용자 ID로 닉네임 조회 -->
+<!-- 사용자 ID로 닉네임 조회, 프로필테이블에 닉네임 있는지 조회 -->
 <select id="getNicknameByUserId" parameterType="string" resultType="com.springboot.wearwave.model.Snap_profile">
     SELECT user_id, nickname FROM snap_profile 
     WHERE user_id = #{userId}
@@ -52,7 +52,7 @@
 	select max(post_id) from snap_post_detail
 </select>
 
-
+<!-- 게시물 상세정보 -->
 <select id="getPostDetailByPostId" parameterType="Integer" resultType="com.springboot.wearwave.model.Snap_post_detail">
     SELECT d.post_id, 
            d.user_id, 

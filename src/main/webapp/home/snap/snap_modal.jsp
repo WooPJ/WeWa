@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<div id="modal" class="modal">
+<div id="modal" class="modal" data-post-id="">
     <div class="modal_content">
         <span class="close" onclick="closeModal()">&times;</span><!-- 창닫기 -->
     
@@ -38,7 +38,7 @@
 		<div class="modal_comment_section">
 			<c:choose>
 				<c:when test="${loginUser != null }">
-		            <input type="text" id="comment_input" placeholder="댓글을 입력하세요..." onclick="checkLogin(event)">
+		            <input type="text" id="comment_input" placeholder="댓글을 입력하세요...">
 		            <button id="comment_button" onclick="submitComment()">게시</button>
 				</c:when>
 				<c:otherwise>
@@ -49,28 +49,52 @@
         </div>
 		    
 		<div id="modal_comment_list" class="modal_comment_list">
-		<!-- 실제 데이터는 서버에서 받아와 동적으로 추가 -->
-		    <div class="modal_comment">
-		        <img src="img/user1.jpg" alt="User" class="comment_user_img">
-		        <div class="comment_content">
-		            <div class="comment_username">username123</div>
-		            <div class="comment_text">이 피드 너무 좋아요! 😊aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-		            <div class="comment_time">5분 전</div>
-		        </div>
-		    </div>
-		    <div class="modal_comment">
-		        <img src="img/user2.jpg" alt="User" class="comment_user_img">
-		        <div class="comment_content">
-		            <div class="comment_username">hello_world</div>
-		            <div class="comment_text">정말 멋진 사진이네요! 📷</div>
-		            <div class="comment_time">10분 전</div>
-		        </div>
-		    </div>
+			<!-- 서버에서 받아온 댓글데이터를 동적으로 추가 -->
 		</div>
 
     </div><!-- modal_content -->
 </div>
 
+<script type="text/javascript">
 
+function submitComment() {
+    const commentContent = document.getElementById("comment_input").value;
+    const postId = document.getElementById("modal").getAttribute("data-post-id");/* 게시물 ID를 가져오는 로직 추가 */
+
+    if (!commentContent.trim()) {
+        alert("댓글 내용을 입력해주세요.");
+        return;
+    }
+
+    fetch('/snap/addComment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+            'postId': postId,
+            'commentContent': commentContent
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            const commentList = document.getElementById('modal_comment_list');
+            commentList.innerHTML = ''; // 기존 댓글 초기화
+
+            data.comments.forEach(comment => {
+                const commentItem = document.createElement('div');
+                commentItem.textContent = comment.content;
+                commentList.appendChild(commentItem);
+            });
+
+            document.getElementById("comment_input").value = ''; // 댓글 입력창 초기화
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
 </body>
 </html>

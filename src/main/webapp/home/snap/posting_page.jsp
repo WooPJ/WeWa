@@ -20,12 +20,10 @@
 <div class = "posting_page"> 
 	<div class = "posting_line">
          <c:forEach var="feed" items="${FeedList}">
-<%--            	<a href="/snap/getPostDetail.html?postId=${feed.post_id}"> --%>
-                <div class="posting_box" post-code="${feed.post_id}">
-	                <c:set var="images" value="${fn:split(feed.imagename, ',')}" />
-	  				<img class="posting_img" src="${images[0]}" alt="${feed.imagename}" />
-                </div>
-<!--            	</a> -->
+             <div class="posting_box" post-code="${feed.post_id}">
+             <c:set var="images" value="${fn:split(feed.imagename, ',')}" />
+				<img class="posting_img" src="${images[0]}" alt="${feed.imagename}" />
+             </div>
          </c:forEach>
                    
         <!-- 게시물작성 버튼 -->            
@@ -77,24 +75,24 @@ postingBoxs.forEach(post => {
 			const response = await fetch("/snap/getPostDetail.html?" + param);
 			if (!response.ok) throw new Error('Network response was not ok');
 
-            const data = await response.json();
+            const DATA = await response.json();
             
             // JSON 데이터에 에러 메시지가 있는 경우 처리
-            if (data.error) {
-                alert(data.error);
-                return;
-            }
-            document.getElementById("modal_img").src = data.postInfo.imagename;
-//             document.getElementById("modal_img").innerText = data.imagename; 경로값확인
-            document.getElementById("modal_content").innerText = data.postInfo.content;
-            document.getElementById("modal_profile_img").src = "/imgs/snap/"+ data.postInfo.profile_img;
-            document.getElementById("modal_nickname").innerText = data.postInfo.nickname;
+            if (DATA.error) { alert(data.error); return; }
+            
+            const POST = DATA.postInfo;
+          	//프로필이미지 없으면 기본이미지 할당
+            document.getElementById("modal_profile_img").src = 
+            	POST.profile_img ? "/imgs/snap/"+ POST.user_id +"/"+ POST.profile_img : "/imgs/snap/image.png";
+            document.getElementById("modal_img").src = POST.imagename;
+            document.getElementById("modal_content").innerText = POST.content;
+            document.getElementById("modal_nickname").innerText = POST.nickname;
 
             
             const modalTags = document.getElementById("modal_tags");
             modalTags.innerHTML = ""; // 기존 태그 초기화
             //스타일 태그 추가
-            data.style_tags.forEach(tag => {
+            DATA.style_tags.forEach(tag => {
                 const tagElement = document.createElement("span");
                 tagElement.classList.add("tag", "style-tag"); // 스타일 태그에 고유 클래스 추가
                 let tagValue = "";
@@ -109,7 +107,7 @@ postingBoxs.forEach(post => {
                 modalTags.appendChild(tagElement);
             });
          	// TPO 태그 추가
-            data.tpo_tags.forEach(tag => {
+            DATA.tpo_tags.forEach(tag => {
                 const tagElement = document.createElement("span");
                 tagElement.classList.add("tag", "tpo-tag"); // TPO 태그에 고유 클래스 추가
                 let tagValue = "";
@@ -134,7 +132,7 @@ postingBoxs.forEach(post => {
          	const commentList = document.getElementById("modal_comment_list");
          	commentList.innerHTML = ""; // 기존 태그 초기화
          	
-         	data.comments.forEach(comment => { //댓글개수만큼 반복
+         	DATA.comments.forEach(comment => { //댓글개수만큼 반복
          		console.log("댓글개수: "+comment.comment_no)
          		  // 1. 댓글 컨테이너 생성
          		  const commentDiv = document.createElement("div");
@@ -143,7 +141,8 @@ postingBoxs.forEach(post => {
          		  // 2. 프로필 이미지 생성
          		  const userImg = document.createElement("img");
          		  userImg.className = "comment_user_img";
-         		  userImg.src = comment.profile_img ? "/imgs/snap/"+ data.postInfo.user_id +"/"+ comment.profile_img : "/imgs/snap/image.png";
+         		  //프로필이미지 없으면 기본이미지 할당
+         		  userImg.src = comment.profile_img ? "/imgs/snap/"+ comment.writer_id +"/"+ comment.profile_img : "/imgs/snap/image.png";
          		  userImg.alt = "User";
          		  
          		  // 3. 댓글 내용 컨테이너 생성
@@ -177,7 +176,8 @@ postingBoxs.forEach(post => {
          		  commentList.appendChild(commentDiv);
          	});
          	
-			
+            const modal = document.getElementById('modal');
+            modal.setAttribute('data-post-id', postCode); // 모달에 게시물 ID 저장
             document.getElementById("modal").style.display = "flex"; // 모달창 표시
             document.body.classList.add("modal-open"); // 배경스크롤 막기
             

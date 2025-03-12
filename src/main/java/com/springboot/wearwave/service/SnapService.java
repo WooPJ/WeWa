@@ -19,12 +19,25 @@ public class SnapService {
 	private SnapMapper snapMapper;
 	
 	
-	//댓글관련
+	//댓글관련========================
+	public void putComment(Snap_comment comment) {
+		Integer max = getMaxCommentNo(); 
+		comment.setComment_no(max + 1); //댓글PK 증가
+		this.snapMapper.putComment(comment);
+	}
+	public Integer getMaxCommentNo() {
+		Integer max = this.snapMapper.getMaxCommentNo();
+		if(max == null) max = 0;
+		return max;
+	}
+	
 	public List<Snap_comment> getCommentList(Integer postId) {
 		return this.snapMapper.getCommentList(postId);
 	}
 	
-	//게시물관련
+	
+	
+	//게시물관련=======================
 	public Snap_profile getNicknameByUserId(String userId) {
 		return this.snapMapper.getNicknameByUserId(userId);
 	}
@@ -42,7 +55,9 @@ public class SnapService {
 		this.snapMapper.putFeedPost(snap_post_detail);
 	}
 	public Integer getMaxPostId() {
-		return this.snapMapper.getMaxPostId();
+		Integer max = this.snapMapper.getMaxPostId();
+		if(max == null) max = 0;
+		return max;
 	}
 	
 	
