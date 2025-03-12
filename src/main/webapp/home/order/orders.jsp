@@ -64,6 +64,7 @@
 							<input type="submit" name="BTN" value="주문취소"
 								onclick="return confirmCancel()">
 						</form>
+						<br/>
 						<form action="/order/returnRequest.html" method="post"
 							id="returnForm${order.order_no}">
 							<input type="hidden" name="order_no" value="${order.order_no }">

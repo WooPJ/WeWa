@@ -26,7 +26,7 @@ public class MemberController {
 	}
 	
 	@GetMapping(value = "/member/gradeSearch.html") //회원 등급 검색
-	public ModelAndView gradSearch(Integer grade) {
+	public ModelAndView gradeSearch(Integer grade) {
 		ModelAndView mav = new ModelAndView("index");
 	    List<User_info> memberList = this.memberService.gradebymemberList(grade);
 		mav.addObject("BODY", "mypage/mypage.jsp");

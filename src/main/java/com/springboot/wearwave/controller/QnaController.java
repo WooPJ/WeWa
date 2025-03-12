@@ -34,7 +34,7 @@ public class QnaController {
 	@Autowired
 	private ItemsService itemsService;
 	
-	@GetMapping(value="/qna/qnaWrite.html")
+	@GetMapping(value="/qna/qnaWrite.html") //Q&A 작성 폼 이동
 	public ModelAndView writeform(@RequestParam(value = "item_code", required = false) String itemCode) {
 	ModelAndView mav = new ModelAndView("index");
 	    if (itemCode != null) {
@@ -46,7 +46,7 @@ public class QnaController {
 	    return mav;
 	}
 	
-	@GetMapping(value = "/qna/finditem_code.html")
+	@GetMapping(value = "/qna/finditem_code.html") //상품 코드 찾기
 	public ModelAndView findCode() {
 		ModelAndView mav = new ModelAndView("mypage/findCode");
 		List<Items_tbl> itemList = this.itemsService.getItemList();
@@ -54,7 +54,7 @@ public class QnaController {
 		return mav;
 	}
 	
-	@GetMapping(value = "/qna/finditem_codeResult.html")
+	@GetMapping(value = "/qna/finditem_codeResult.html") //상품 코드 검색
 	public ModelAndView findCodeResult(String NAME) {
 		List<Items_tbl> itemList = this.itemsService.getItemByName(NAME);
 		ModelAndView mav = new ModelAndView("mypage/findCodeResult");
@@ -64,7 +64,7 @@ public class QnaController {
 	}
 	
 	
-	@PostMapping(value="/qna/write.html")
+	@PostMapping(value="/qna/write.html") //Q&A 작성 내용 DB 주입
 	public ModelAndView write(@Valid @ModelAttribute("qnabbs") Qna_bbs qnabbs,  
 			 HttpSession session) {
 		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
@@ -108,7 +108,7 @@ public class QnaController {
 		return new ModelAndView("redirect:/mypage/qnalist.html");
 	}
 	
-	@GetMapping("/qna/update.html")
+	@GetMapping("/qna/update.html") //Q&A 수정 폼 이동
 	public ModelAndView update(@RequestParam("seqno") int seqno) {
 	    Qna_bbs qnabbs = qnaService.getQnaDetail(seqno);
 	    ModelAndView mav = new ModelAndView("index");
@@ -118,7 +118,7 @@ public class QnaController {
         return mav;
 	}
 	
-	@PostMapping("/qna/update.html")
+	@PostMapping("/qna/update.html") //Q&A 수정 내용 DB 주입
 	public ModelAndView updateQna(Qna_bbs qna_bbs, HttpSession session) {	
 		 LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
 		 MultipartFile multiFile = qna_bbs.getImage();
@@ -165,14 +165,14 @@ public class QnaController {
 		 return new ModelAndView("redirect:/mypage/qnalist.html");
 	}
 	
-	@GetMapping("/qna/delete.html")
+	@GetMapping("/qna/delete.html") //Q&A 삭제
 	public ModelAndView deleteQna(@RequestParam("seqno") int seqno) {
 	    this.qnaService.deleteQna(seqno);
 	    this.qnaService.updateseqno(seqno);
 		return new ModelAndView("redirect:/mypage/qnalist.html");
 	}
 	
-	@GetMapping(value="/qna/readqna.html")
+	@GetMapping(value="/qna/readqna.html") //Q&A 내용 출력
 	public ModelAndView readqna(Integer seqno) {
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("BODY", "mypage/mypage.jsp");
@@ -186,7 +186,7 @@ public class QnaController {
 		return mav;
 	}
 	
-	@PostMapping(value = "/qna/addComment.html")
+	@PostMapping(value = "/qna/addComment.html") //Q&A 댓글 작성
 	public ModelAndView addComment(@RequestParam int qna_seqno,
             @RequestParam String content, HttpSession session) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
@@ -201,7 +201,7 @@ public class QnaController {
 		return new ModelAndView("redirect:/qna/readqna.html?seqno=" + qna_seqno);
 	}
 	
-	@PostMapping("/qna/updateComment.html")
+	@PostMapping("/qna/updateComment.html") //Q&A 댓글 수정
 	public ModelAndView updateComment(@RequestParam("comment_no") int comment_no,
 	                                  @RequestParam("content") String content, 
 	                                  @RequestParam("qna_seqno") int qna_seqno) {
@@ -215,8 +215,7 @@ public class QnaController {
 	    return new ModelAndView("redirect:/qna/readqna.html?seqno=" + qna_seqno);
 	}
 
-	    // 댓글 삭제 처리
-	    @PostMapping("/qna/deleteComment.html")
+	    @PostMapping("/qna/deleteComment.html") // 댓글 삭제 처리
 	    public ModelAndView deleteComment(@RequestParam("comment_no") int comment_no, @RequestParam int qna_seqno) {
 	    	this.qnaService.deleteComment(comment_no);
 	    	return new ModelAndView("redirect:/qna/readqna.html?seqno=" + qna_seqno);

@@ -2,41 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springboot.wearwave.mapper.ItemsMapper">
-
+<!--상품 수정  -->
 	<update id="updateItem" parameterType="com.springboot.wearwave.model.Items_tbl">
 	update items_tbl set item_title=#{item_title}, price=#{price}, content=#{content}, imagename=#{imagename} where item_code = #{item_code}
 	</update>
-	
+<!--상품 삭제  -->	
 	<delete id="deleteItem" parameterType="String">
 	delete from items_tbl where item_code = #{item_code}
 	</delete>
-	
+<!--최대 num 찾기  -->	
 	<select id="getMaxNum" resultType="Integer">
 	select max(num) from items_tbl	
 	</select>
-
+<!--num 업데이트  -->
 	<update id="updateNum" parameterType="Integer">
 		update items_tbl set num = num - 1 where num > #{num}
 	</update>
-	
+<!--상품 상세정보  -->	
 	<select id="getMyItem" parameterType="String"  resultType="com.springboot.wearwave.model.Items_tbl">
 	select * from items_tbl where item_code = #{item_code}
 	</select>
-	
+<!--상품 사이즈 목록  -->	
 	<select id="getMyItem_size" parameterType="String"  resultType="com.springboot.wearwave.model.Item_size">
 	select item_size, quantity from item_size where item_code = #{item_code}
 	</select>
-	
+<!--상품 색상 목록  -->	
 	<select id="getMyItem_color" parameterType="String"  resultType="com.springboot.wearwave.model.Item_color">
 	select item_color from item_color where item_code = #{item_code}
 	</select>
 	
-	<!-- 모든 상품 가져오기 -->
+<!-- 모든 상품 가져오기 -->
 	<select id="getItemList" resultType="com.springboot.wearwave.model.Items_tbl">
-	select item_id, item_code, item_title, price, content, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, user_id
-	from items_tbl order by num
+	SELECT i.*, u.name 
+    FROM items_tbl i
+    JOIN user_info u ON i.user_id = u.user_id order by num
 	</select>
-	
+<!--모든 상품 페이지별로 가져오기  -->
 	<select id="getItemListPage" resultType="com.springboot.wearwave.model.Items_tbl" parameterType="com.springboot.wearwave.model.Items_tbl">
 	    SELECT * FROM (
 	        SELECT rownum rn, a.*
@@ -48,7 +49,7 @@
 	    )
 	    WHERE rn > #{start} AND rn <![CDATA[<]]> #{end}
 	</select>
-
+<!--카테고리 별 상품 가져오기  -->
 	<select id="getItemMenu" parameterType="com.springboot.wearwave.model.StartEnd" resultType="com.springboot.wearwave.model.Items_tbl">
 	    SELECT * FROM (
 	        SELECT rownum rn, a.*
@@ -61,7 +62,7 @@
 	    )
 	    WHERE rn > #{startnum} AND rn <![CDATA[<]]> #{endnum}
 	</select>
-
+<!-- 세부 카테고리 별 상품 가져오기  -->
 	<select id="getCategory" parameterType="com.springboot.wearwave.model.Items_tbl" resultType="com.springboot.wearwave.model.Items_tbl">
 	    SELECT * FROM (
 	        SELECT rownum rn, a.*
@@ -74,45 +75,48 @@
 	    )
 	    WHERE rn > #{start} AND rn <![CDATA[<]]> #{end}
 	</select>
-
+<!--등록한 상품 목록 -->
 	<select id="getMyItemList" parameterType="String" resultType="com.springboot.wearwave.model.Items_tbl">
 	select item_code, item_title, price, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, num
 	from items_tbl where user_id = #{user_id} order by num 
 	</select>
-	
+<!--상품 코드 중복 확인  -->	
 	<select id="checkDupCode" parameterType="String" resultType="Integer">
 	select count(*) from items_tbl where item_code = #{item_code}
 	</select>
-	
+<!--상품 등록  -->	
 	<insert id="putItems" parameterType="com.springboot.wearwave.model.Items_tbl">
 	insert into items_tbl values(#{item_code},#{item_title},#{item_id}, #{price},
 		sysdate,#{imagename},#{content},#{user_id},#{num})
 	</insert>
-	
+<!--사이즈 등록  -->	
 	<insert id="putSize" parameterType="com.springboot.wearwave.model.Item_size">
 	insert into item_size values(#{item_code},#{item_size},#{quantity})
 	</insert>
-	
+<!--색상 등록  -->	
 	<insert id="putColor" parameterType="com.springboot.wearwave.model.Item_color">
 	insert into item_color values(#{item_code},#{item_color})
 	</insert>
-	
+<!--사이즈 삭제  -->	
 	<delete id="deleteItem_size" parameterType="String">
 	delete from item_size where item_code = #{item_code}
 	</delete>
-	
+<!--색상 삭제  -->	
 	<delete id="deleteItem_color" parameterType="String">
 	delete from item_color where item_code = #{item_code}
 	</delete>
-	
+<!--사업자 별 등록한 상품 목록  -->
 	<select id="userIdbyItemList" parameterType="String" resultType="com.springboot.wearwave.model.Items_tbl">
-	select item_code, item_title, price, to_char(reg_date,'YYYY-MM-DD') "reg_date", imagename, user_id from items_tbl where user_id = #{user_id}
+	SELECT i.*, u.name 
+    FROM items_tbl i
+    JOIN user_info u ON i.user_id = u.user_id
+    where i.user_id = #{user_id}
 	</select>
-	
+<!--상품 코드 검색  -->
 	<select id="getItemByName" parameterType="String" resultType="com.springboot.wearwave.model.Items_tbl">
 	select * from items_tbl where item_title like '%' || #{name} || '%' or user_id like '%' || #{name} || '%' 
 	</select>
-	
+<!--상품 검색  -->	
 	<select id="searchItemByName" parameterType="com.springboot.wearwave.model.Items_tbl" resultType="com.springboot.wearwave.model.Items_tbl">
     SELECT * FROM (
         SELECT rownum rn, a.* FROM (

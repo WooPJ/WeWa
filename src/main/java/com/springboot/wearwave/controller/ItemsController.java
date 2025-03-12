@@ -34,7 +34,7 @@ public class ItemsController {
 	@Autowired
 	private ItemsService itemsService;
 	
-	@GetMapping(value="/items/additems.html") 
+	@GetMapping(value="/items/additems.html")  //상품 작성 폼 이동
 	public ModelAndView additems() {
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("BODY", "mypage/mypage.jsp");
@@ -43,7 +43,7 @@ public class ItemsController {
 		return mav;
 	}
 	
-	@PostMapping(value="/items/addItems.html")
+	@PostMapping(value="/items/addItems.html") //상품 BD 주입
 	@Transactional
 	public ModelAndView inputItems(@ModelAttribute("Items") Items_tbl items, 
 	                               @RequestParam("color[]") List<String> colors,
@@ -56,7 +56,7 @@ public class ItemsController {
 	    List<String> savedFilePaths = new ArrayList<>();
 	    
 	    ServletContext ctx = session.getServletContext();
-	    String userFolder = ctx.getRealPath("/imgs/item/" + loginUser.getId() + "/");
+	    String userFolder = ctx.getRealPath("/imgs/item/" + loginUser.getId() + "/"); 
 	    
 	    File dir = new File(userFolder);
 	    if (!dir.exists()) {
@@ -117,7 +117,7 @@ public class ItemsController {
 	    return new ModelAndView("redirect:/items/myitemlist.html");
 	}
 	
-	@GetMapping(value = "/items/itemlist.html")
+	@GetMapping(value = "/items/itemlist.html") //admin의 상품 목록 출력
 	public ModelAndView itemlist(@RequestParam(required = false, defaultValue = "all") String user_id) {
 	    ModelAndView mav = new ModelAndView("index");
 
@@ -140,7 +140,7 @@ public class ItemsController {
 	}
 
 	
-	@GetMapping(value="/items/myitemlist.html") 
+	@GetMapping(value="/items/myitemlist.html") //사업자의 상품 등록 목록 출력
 	public ModelAndView myltemlist(HttpSession session) {
 		ModelAndView mav = new ModelAndView("index");
 		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
@@ -151,7 +151,7 @@ public class ItemsController {
 		return mav;
 	}
 	
-	@PostMapping(value = "/items/deleteItem.html")
+	@PostMapping(value = "/items/deleteItem.html") //상품 삭제
 	public ModelAndView deleteMyItem(String item_code, Integer num, HttpSession session) {
 		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
 		this.itemsService.deleteItem_size(item_code);
@@ -160,13 +160,13 @@ public class ItemsController {
 		this.itemsService.updateNum(num);
 		
 		 if (loginUser.getGrade() == 0) {     
-	            return new ModelAndView("redirect:/items/itemlist.html");
+	            return new ModelAndView("redirect:/items/itemlist.html"); //관리자일 때 상품 전체목록 이동
 	        } else {
-	            return new ModelAndView("redirect:/items/myitemlist.html");
+	            return new ModelAndView("redirect:/items/myitemlist.html"); //사업자일 때 자신의 상품 목록 이동
 	        }
 	}
 	
-	@PostMapping(value = "/items/updateItem.html")
+	@PostMapping(value = "/items/updateItem.html") //상품 수정 폼 이동
 	public ModelAndView updateMyItem(String item_code) {
 		Items_tbl items = itemsService.getMyItem(item_code);
 		List<Item_size> size = itemsService.getMyItem_size(item_code);
@@ -180,7 +180,7 @@ public class ItemsController {
 		return mav;
 	}
 	
-	@PostMapping(value="/items/updateItemDo.html")
+	@PostMapping(value="/items/updateItemDo.html") //상품 수정 DB 적용
 	public ModelAndView updateDo(
 	        Items_tbl items, 
 	        HttpSession session,  
@@ -273,7 +273,7 @@ public class ItemsController {
 	}
 
 
-	@GetMapping(value = "/items/codecheck.html")
+	@GetMapping(value = "/items/codecheck.html") //상품 코드 중복 체크
 	public ModelAndView idcheck(String item_code) {
 		ModelAndView mav = new ModelAndView("mypage/codeCheckResult");
 		Integer count = this.itemsService.checkDupCode(item_code);
@@ -286,8 +286,8 @@ public class ItemsController {
 		return mav;
 	}
 	
-	@GetMapping(value = "/items/userIdSearch.html") //회원 등급 검색
-	public ModelAndView gradSearch(String user_id) {
+	@GetMapping(value = "/items/userIdSearch.html") //이름별로 목록 출력
+	public ModelAndView userIdSearch(String user_id) {
 		ModelAndView mav = new ModelAndView("index");
 	    List<Items_tbl> Items = this.itemsService.userIdbyItemList(user_id);
 		mav.addObject("BODY", "mypage/mypage.jsp");

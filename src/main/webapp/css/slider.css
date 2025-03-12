@@ -9,6 +9,7 @@
   position: relative;
   margin: auto;
   padding-top: 150px;
+  
 }
 
 /* 이미지 숨기기 */
@@ -79,14 +80,15 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   /* 슬라이드 쇼 컨테이너 */
   .slideshow-container {
-    padding-top: 80px;  /* 작은 화면에서는 상단 여백을 줄임 */
+    padding-top: 130px;  /* 작은 화면에서는 상단 여백을 줄임 */
   }
 
   /* 버튼 크기 조정 */
   .prev, .next {
+  	top: 65%;
     padding: 12px;
     font-size: 14px;
   }
@@ -104,16 +106,17 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   /* 슬라이드 쇼 컨테이너 */
   .slideshow-container {
-    padding-top: 50px;  /* 모바일 화면에서는 상단 여백을 더 줄임 */
+    padding-top: 130px;  /* 모바일 화면에서는 상단 여백을 더 줄임 */
   }
 
   /* 버튼 크기 더욱 줄임 */
   .prev, .next {
     padding: 10px;
     font-size: 12px;
+    top: 70%;
   }
 
   /* 점 크기 더 줄임 */

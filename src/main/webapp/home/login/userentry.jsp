@@ -15,7 +15,7 @@
         </a> 
     <h2>고객 회원가입</h2>
 
-    <form:form action="/signup/customerprocess.html" method="post" name="frm" modelAttribute="user" onsubmit="return checkAndLogEmailDomain()">
+    <form:form action="/entry/customerprocess.html" method="post" name="frm" modelAttribute="user" onsubmit="return checkAndLogEmailDomain()">
         <form:hidden path="idChecked"/>
 
         <!-- 아이디 입력 & 중복 검사 -->

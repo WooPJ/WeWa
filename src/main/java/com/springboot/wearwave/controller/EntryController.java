@@ -20,7 +20,7 @@ public class EntryController {
 	@Autowired
 	private CheckService checkService;
 	
-	@PostMapping(value = "/signup/businessprocess.html")
+	@PostMapping(value = "/entry/businessprocess.html")
 	public ModelAndView businessRegister(@Valid User user, BindingResult br) {
 	    ModelAndView mav = new ModelAndView();	    
 	    if (br.hasErrors()) {
@@ -39,7 +39,7 @@ public class EntryController {
 	    return mav;
 	}//사업자 회원가입
 	
-	@PostMapping(value = "/signup/customerprocess.html")
+	@PostMapping(value = "/entry/customerprocess.html")
 	public ModelAndView customerRegister(@Valid User user, BindingResult br,
 				String customDomainInput) {
 	    ModelAndView mav = new ModelAndView();	    

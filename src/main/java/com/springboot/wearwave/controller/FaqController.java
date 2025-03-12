@@ -15,7 +15,7 @@ public class FaqController {
 	@Autowired
 	private FaqService faqService;
 	
-	@GetMapping("/faq/write.html")
+	@GetMapping("/faq/write.html") //faq작성 폼 이동
 	public ModelAndView write() {
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("BODY", "mypage/mypage.jsp");
@@ -24,7 +24,7 @@ public class FaqController {
         return mav;
 	}
 	
-	@PostMapping("/faq/input.html")
+	@PostMapping("/faq/input.html") //faq db주입
 	public ModelAndView input(Faq_bbs faq) {
 		int num = this.faqService.getMaxNum() + 1;
 		faq.setSeqno(num);
@@ -32,14 +32,14 @@ public class FaqController {
 		return new ModelAndView("redirect:/mypage/support.html");
 	}
 	
-	@GetMapping("/faq/delete.html")
+	@GetMapping("/faq/delete.html") //faq 삭제
 	public ModelAndView deleteFAQ(@RequestParam("seqno") int seqno) {
 	    this.faqService.deletefaq(seqno);
 	    this.faqService.updateseqno(seqno);
 	    return new ModelAndView("redirect:/mypage/support.html");
 	}
 	
-	@GetMapping("/faq/update.html")
+	@GetMapping("/faq/update.html") //faq 수정폼 이동
 	public ModelAndView showUpdatePage(@RequestParam int seqno) {
 		Faq_bbs faq = faqService.getfaq(seqno);  
 	    ModelAndView mav = new ModelAndView("index");
@@ -49,7 +49,7 @@ public class FaqController {
         return mav;
 	}
 	
-	@PostMapping("/faq/update.html")
+	@PostMapping("/faq/update.html") //faq 수정 주입
 	public ModelAndView updateFAQ(Faq_bbs faq) {	
 	    this.faqService.updatefaq(faq);
 	    return new ModelAndView("redirect:/mypage/support.html");

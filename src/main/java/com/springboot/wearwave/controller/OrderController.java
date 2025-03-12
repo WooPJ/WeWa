@@ -32,11 +32,11 @@ public class OrderController {
     	// 서비스 계층을 통해 주문 상태를 업데이트
     	orderService.setStatusRefunding(orderNo);
         // 성공적으로 업데이트 후, 주문 목록 페이지로 리다이렉트
-    	ModelAndView mav = new ModelAndView("redirect:/mypage/orders.html");
+    	ModelAndView mav = new ModelAndView("redirect:/order/orders.html");
     	return mav;
     }
     
-	 @GetMapping(value="/mypage/returns.html") //마이페이지 > 환불 이동
+	 @GetMapping(value="/order/returns.html") //마이페이지 > 환불 이동
 	 public ModelAndView returns(HttpSession session) {
        ModelAndView mav = new ModelAndView("index");
        // 세션에서 로그인 사용자 정보 가져오기
@@ -58,11 +58,11 @@ public class OrderController {
     	// 서비스 계층을 통해 주문 상태를 업데이트
         orderService.setStatus(order);
         // 성공적으로 업데이트 후, 주문 목록 페이지로 리다이렉트
-        ModelAndView mav = new ModelAndView("redirect:/items/orderClearList.html");
+        ModelAndView mav = new ModelAndView("redirect:/order/orderClearList.html");
         return mav;
     }
     
-    @GetMapping(value = "/items/orderClearList.html") //마이페이지 > 취소/반품 신청 목록
+    @GetMapping(value = "/order/orderClearList.html") //마이페이지 > 취소/반품 신청 목록
     public ModelAndView getOrderClearList(HttpSession session, String user_id,
     		String item_code, Integer quantity, String item_color, String item_size,
     		String order_date, Integer order_status) {
@@ -111,7 +111,7 @@ public class OrderController {
     }
 
     // 마이페이지 > 주문정보 화면
-    @GetMapping(value = "/mypage/orders.html")
+    @GetMapping(value = "/order/orders.html")
     public ModelAndView orders(HttpSession session) {
         ModelAndView mav = new ModelAndView("index");
         
@@ -128,7 +128,7 @@ public class OrderController {
     }
 
     // 주문 처리 로직
-    @PostMapping(value = "/item/order.html")
+    @PostMapping(value = "/order/order.html")
     public ModelAndView order(HttpSession session,
                                @RequestParam("order_item_code") String[] itemCodes,
                                @RequestParam("order_item_color") String[] itemColors,

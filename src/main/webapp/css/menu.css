@@ -25,10 +25,11 @@ header {
     padding-right: 10px;
     background-color: powderblue;
     background-size: contain;
+   
 }
 
 .header-container {
-    display: flex;
+    display: flex;	
     align-items: center;
     justify-content: space-between;
     width: 95%;
@@ -37,6 +38,7 @@ header {
 .logo {
     margin-left: 50px;
     margin-right: 20px;
+    transition: all 0.3s ease-in-out;
 }
 
 .search-container {
@@ -55,6 +57,7 @@ header {
 .icon-container a img {
     width: 50px;
     height: 50px;
+    transition: all 0.3s ease-in-out;
 }
 
 .search-container input[type="text"] {
@@ -65,6 +68,7 @@ header {
     border-radius: 30px;
     padding: 0 40px 0 20px;
     border: 1px solid #ddd;
+    transition: all 0.3s ease-in-out; 
 }
 
 #search {
@@ -80,6 +84,7 @@ header {
     top: 15%;
     border: none;
     cursor: pointer;
+    transition: all 0.3s ease-in-out; 
 }
 
 .top-bar-button {
@@ -188,50 +193,75 @@ header {
 /* 반응형 디자인: 화면 크기에 맞는 스타일 */
 @media (max-width: 1024px) {
     .search-container input[type="text"] {
-        max-width: 350px;
+        max-width: 400px; /* 입력창 너비 줄이기 */
+        height: 35px;
+        font-size: 14px;
     }
 
-    .header-container {
-        width: 100%;
-        flex-direction: column;
-        align-items: flex-start;
+    #search {
+        width: 25px; /* 검색 버튼 크기 축소 */
+        height: 25px;
+        right: 10px; /* 오른쪽 정렬 보정 */
     }
 
-    .sub-header {
-        margin-right: 20px;
-        margin-left: 20px;
-        margin-top: 10px;
+	.header-container {
+	    display: flex;
+	    align-items: center;
+	    justify-content: space-between;
+	    width: 90%;
+	    height: auto;	
+	    margin-bottom: 30px;
+	}
+	.header-container img {
+        max-width: 150px; /* 화면이 작아지면 최대 크기 축소 */
+         height: auto;	
     }
-
+	
     .logo {
         margin-left: 20px;
     }
+    
+    .icon-container a img {
+        width: 40px; 
+        height: 40px;
+    }
+    
+    
 }
 
 /* 모바일 환경 (768px 이하) */
 @media (max-width: 768px) {
-    header {
-        padding: 10px 15px;
+     .search-container input[type="text"] {
+        max-width: 300px; 
+        height: 30px;
+        font-size: 12px;
     }
 
-    .sub-header {
-        flex-direction: column;
-        align-items: center;
-        margin-right: 10px;
-        margin-left: 10px;
+    #search {
+        width: 20px;
+        height: 20px;
+        right: 8px; 
     }
 
-    .search-container {
-        width: 100%;
-        max-width: 100%;
-        margin-bottom: 10px;
+	.header-container {
+	    display: flex;
+	    align-items: center;
+	    justify-content: space-between;
+	    width: 90%;
+	    height: auto;
+		margin-bottom: 40px;
+	}
+	.header-container img {
+        max-width: 120px; /* 화면이 작아지면 최대 크기 축소 */
+         height: auto;	
     }
-
-    .sidebar {
-        width: 250px;
+    .logo {
+        margin-left: 20px;
     }
-
-    .sidebar.open {
-        left: 0;
+    
+    .icon-container  a img {
+        width: 30px;
+        height: 30px;
     }
 }
+

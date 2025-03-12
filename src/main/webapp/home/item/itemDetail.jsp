@@ -123,7 +123,7 @@
 						<c:when
 							test="${sessionScope.loginUser != null && sessionScope.loginUser.grade != 0}">
 							<!-- 장바구니 담기 버튼 -->
-							<form action="../item/cart.html" method="post" onsubmit="return validateForm()">
+							<form action="../cart/cart.html" method="post" onsubmit="return validateForm()">
 							    <input type="hidden" name="item_code" value="${item.item_code}" />
 							    <input type="hidden" name="selectedSize" id="selectedSizePost"  />
 							    <input type="hidden" name="selectedColor" id="selectedColorPost" />
@@ -193,7 +193,7 @@
 		
 		//리뷰 작성 및 보러가는 버튼 기능 함수
 		function goToReview(itemCode) {
-		    window.location.href = `/item/review.html?item_code=${item_code}`;
+		    window.location.href = `/review/review.html?item_code=${item_code}`;
 		}	
 		//사이즈, 색상, 수량 미선택 시, 띄우는 메시지 함수
 		function validateForm() {

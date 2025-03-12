@@ -25,7 +25,7 @@ public class SliderController {
 	@Autowired
 	private SliderService sliderService;
 	
-	@GetMapping(value = "/slider/sliderimg.html")
+	@GetMapping(value = "/slider/sliderimg.html") //슬라이더 이미지 목록 출력
 	public ModelAndView sliderImg() {
         ModelAndView mav = new ModelAndView("index");
         List<Slider_images> sliderImg = this.sliderService.getSliderImageList();
@@ -35,7 +35,7 @@ public class SliderController {
         return mav;
 	}
 	
-	@GetMapping(value = "/slider/addImagePage.html")
+	@GetMapping(value = "/slider/addImagePage.html") //슬라이더 이미지 등록 폼 이동
 	public ModelAndView addImagePage() {
 	    ModelAndView mav = new ModelAndView("index");
         mav.addObject("BODY", "mypage/mypage.jsp");
@@ -44,7 +44,7 @@ public class SliderController {
         return mav;
 	}
 	
-	@PostMapping(value = "/slider/uploadImage.html")
+	@PostMapping(value = "/slider/uploadImage.html") //슬라이더 이미지 등록 DB 주입
 	public ModelAndView write(@ModelAttribute("sliderImg") Slider_images slideImg, 
 			 HttpSession session) {
 		MultipartFile multipart = slideImg.getFile();//선택한 파일을 불러온다.
@@ -75,14 +75,14 @@ public class SliderController {
 		return new ModelAndView("redirect:/slider/sliderimg.html");
 	}
 	
-	@PostMapping(value = "/slider/deleteImage.html")
+	@PostMapping(value = "/slider/deleteImage.html") //슬라이더 이미지 삭제
 	public ModelAndView deleteSlideImage(Integer order) {
 		this.sliderService.deleteslider(order);
 		this.sliderService.updatedisplayorder(order);
 		return new ModelAndView("redirect:/slider/sliderimg.html");
 	}
 	
-	@PostMapping(value = "/slider/updateOrder.html")
+	@PostMapping(value = "/slider/updateOrder.html") //슬라이더 이미지 순서 변경
 	public ModelAndView updateOrder(Integer num, Integer old_order, Integer new_order) {
 		SlideOrders orders = new SlideOrders();
 		orders.setNum(num); orders.setOld_order(old_order); orders.setNew_order(new_order);

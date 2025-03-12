@@ -48,7 +48,7 @@ public class LoginController {
 	    return mav;
 	}
 	
-	@PostMapping("/login/findidbyphone.html")
+	@PostMapping("/login/findidbyphone.html") //핸드폰 번호로 아이디 찾기
 	public ModelAndView findidbyphone(User_info user_info) {
 	    ModelAndView mav = new ModelAndView("login/findidresult"); 
 	    String id = findService.findIdbyPhone(user_info);
@@ -62,7 +62,7 @@ public class LoginController {
 	}
 
 	
-	@PostMapping("/login/findidbyemail.html")
+	@PostMapping("/login/findidbyemail.html") //이메일로 아이디 찾기
 	public ModelAndView findidbyemail(User_info user_info){
 		ModelAndView mav = new ModelAndView("login/findidresult"); 
 	    String id = findService.findIdbyEmail(user_info);
@@ -82,7 +82,7 @@ public class LoginController {
 	    return mav;
 	}
 	
-	@PostMapping("/login/findpwdbyphone.html")
+	@PostMapping("/login/findpwdbyphone.html") //핸드폰 번호로 비밀번호 찾기
 	public ModelAndView findpwdbyphone(User_info user_info){
 		ModelAndView mav = new ModelAndView("login/findpwdresult"); 
 	    Integer count = findService.findPwdbyPhone(user_info);
@@ -95,7 +95,7 @@ public class LoginController {
 	    return mav;
 	}
 	
-	@PostMapping("/login/findpwdbyemail.html")
+	@PostMapping("/login/findpwdbyemail.html")//이메일로 비밀번호 찾기
 	public ModelAndView findpwdbyemail(User_info user_info){
 		ModelAndView mav = new ModelAndView("login/findpwdresult"); 
 	    Integer count = findService.findPwdbyEmail(user_info);
@@ -108,7 +108,7 @@ public class LoginController {
 	    return mav;
 	}
 	
-	@PostMapping("/login/updatepwd.html")
+	@PostMapping("/login/updatepwd.html") //비밀번호 수정
 	public ModelAndView updatepwd(String user_id, String new_pwd) {
 		  ModelAndView mav = new ModelAndView("login/findpwdresult");
 		    User_info user_info = new User_info();
@@ -171,7 +171,7 @@ public class LoginController {
 	    return mav;
 	}
 
-	@GetMapping(value="/login/logout.html")
+	@GetMapping(value="/login/logout.html") //로그아웃
 	public ModelAndView logout(HttpSession session) {
 		session.invalidate();
 		ModelAndView mav = new ModelAndView("redirect:/home/index.html");

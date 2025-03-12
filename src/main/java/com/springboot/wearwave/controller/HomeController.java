@@ -39,7 +39,7 @@ public class HomeController {
 		return mav;
 	}
 	
-	@PostMapping(value="/home/search.html")
+	@PostMapping(value="/home/search.html") //검색창
 	public ModelAndView search(@RequestParam(required = false, defaultValue = "") String NAME,
 				@RequestParam(required = false, defaultValue = "1") Integer pageno) {
 		Items_tbl item = new Items_tbl();
