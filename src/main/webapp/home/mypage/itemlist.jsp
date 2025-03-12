@@ -44,7 +44,7 @@
                     <c:if test="${param.user_id eq 'all' or param.user_id eq item.user_id or empty param.user_id}">
                         <tr>
                             <td>${item.item_code}</td>
-                            <td>${item.user_id}</td>
+                            <td>${item.name}</td>
                             <td>
                                 <c:set var="imageList" value="${fn:split(item.imagename, ',')}" />
                                 <c:set var="lastIndex" value="${fn:length(imageList) - 1}" />
