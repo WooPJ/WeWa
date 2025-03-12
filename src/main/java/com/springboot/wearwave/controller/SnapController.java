@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.springboot.wearwave.model.LoginUser;
 import com.springboot.wearwave.model.Post_style_tags;
 import com.springboot.wearwave.model.Post_tpo_tags;
+import com.springboot.wearwave.model.Snap_comment;
 import com.springboot.wearwave.model.Snap_post_detail;
 import com.springboot.wearwave.model.Snap_profile;
 import com.springboot.wearwave.model.User_info;
@@ -42,94 +43,35 @@ public class SnapController {
 	private LoginService loginService;
 	
 	
+	//게시물을 클릭한경우 게시물 모달창 띄우기
 	@GetMapping("/snap/getPostDetail.html")
 	@ResponseBody // JSON 데이터를 반환하도록 설정
 	public Map<String, Object> getPostDetail(@RequestParam("postId") Integer postId) {
 	    Map<String, Object> response = new HashMap<>();
 
-	    Snap_post_detail postDetail = snapService.getPostDetailById(postId);
-	    Snap_profile profileInfo = snapService.getNicknameByPost(postId);
+	    Snap_post_detail postInfo = snapService.getPostDetailByPostId(postId);
 	    List<Post_style_tags> styleTag = snapService.getAllStyleById(postId);
 	    List<Post_tpo_tags> tpoTag = snapService.getAllTpoById(postId);
-
+	    List<Snap_comment> comment = snapService.getCommentList(postId);
+	    
+	    
+	    System.out.println("댓글 수: " + comment.size());
 	    System.out.println("매핑데이터: " + postId);
-
-	    if (postDetail == null) {
+	    if (postInfo == null) {
 	        response.put("error", "게시물을 찾을 수 없습니다.");
 	        return response; // JSON 형태로 에러 반환
 	    }
 
 	    // JSON 데이터 형태로 구성
-	    response.put("imagename", postDetail.getImagename());
-	    response.put("content", postDetail.getContent());
-	    response.put("profile", profileInfo);
+	    response.put("postInfo", postInfo);
 
-	    // 태그 배열 추가
+	    // 태그,댓글 배열 추가
 	    response.put("style_tags", styleTag);
 	    response.put("tpo_tags", tpoTag);
+	    response.put("comments", comment);
 
 	    return response;
 	}
-
-/*    @GetMapping("/snap/getPostDetail.html")
-    public String getPostDetail(@RequestParam("postId") Integer postId, Model model) {
-        Snap_post_detail postDetail = snapService.getPostDetailById(postId);
-        Snap_profile profileInfo = snapService.getNicknameByPost(postId);
-        
-        System.out.println("매핑데이터: "+postId);
-        if (postDetail == null) {
-            model.addAttribute("error", "게시물을 찾을 수 없습니다.");
-            return "errorPage"; // 에러 페이지로 리다이렉트
-        }
-
-        model.addAttribute("postDetail", postDetail);
-        model.addAttribute("nickname", profileInfo);
-
-        return "snap_modal"; // 모달창 JSP 페이지
-    }*/
-	
-/*    @GetMapping("/snap/getPostDetail.html")
-    public ResponseEntity<?> getPostDetail(@RequestParam("postId") Integer postId) {
-        Snap_post_detail postDetail = snapService.getPostDetailById(postId);
-
-        System.out.println("매핑완료!" + postId + postDetail);
-        if (postDetail == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Collections.singletonMap("error", "게시물을 찾을 수 없습니다."));
-        }
-
-        // DTO 데이터를 JSON으로 반환
-        Map<String, Object> response = new HashMap<>();
-        response.put("postDetail", postDetail);
-        response.put("styleTags", snapService.getAllStyleById(postId));
-        response.put("tpoTags", snapService.getAllTpoById(postId));
-
-        return ResponseEntity.ok(response);
-    }*/
-	
-	
-	
-/*    @GetMapping("/snap/getPostDetail.html")
-    public ModelAndView getPostDetail(@RequestParam("postId") Integer postId) {
-        Snap_post_detail postDetail = snapService.getPostDetailById(postId);
-        if (postDetail == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시물을 찾을 수 없습니다.");
-        }
-        ModelAndView mav = new ModelAndView("index");
-	    List<Snap_post_detail> FeedList = this.snapService.getFeedAll();
-		Snap_post_detail PostDetail = this.snapService.getPostDetailById(postId);
-		Post_style_tags StyleTag = this.snapService.getAllStyleById(postId);
-		Post_tpo_tags TpoTag = this.snapService.getAllTpoById(postId);
-	    
-		
-	    mav.addObject("FeedList", FeedList);
-	    mav.addObject("BODY", "snap/snap.jsp"); 
-	    mav.addObject("PostDetail", PostDetail);
-	    mav.addObject("StyleTag", StyleTag);
-        mav.addObject("TpoTag" ,TpoTag);
-        
-        return mav; 
-    }*/
 	
 	
     //게시물작성 수행

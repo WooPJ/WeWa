@@ -47,6 +47,20 @@
 
 
 <script type="text/javascript">
+
+//✅ 모달 닫기 함수
+window.closeModal = function() {
+    document.getElementById("modal").style.display = "none"; // 모달창 숨김
+    document.body.classList.remove("modal-open"); // 배경스크롤 허용
+}
+//✅ 모달 바깥 클릭 시 닫기
+document.getElementById("modal").addEventListener("click", function(event) {
+    if (event.target === this) {
+        closeModal();
+    }
+});
+
+//✅ 모달 열기
 const postingBoxs = document.querySelectorAll('.posting_box');
 postingBoxs.forEach(post => {
 	const postCode = post.getAttribute("post-code");
@@ -70,14 +84,15 @@ postingBoxs.forEach(post => {
                 alert(data.error);
                 return;
             }
-            document.getElementById("modal_img").src = data.imagename;
-            document.getElementById("modal_content").innerText = data.content;
-            document.getElementById("modal_profile_img").src = "/imgs/snap/" +data.profile.profile_img;
-            document.getElementById("modal_nickname").innerText = data.profile.nickname;
+            document.getElementById("modal_img").src = data.postInfo.imagename;
+//             document.getElementById("modal_img").innerText = data.imagename; 경로값확인
+            document.getElementById("modal_content").innerText = data.postInfo.content;
+            document.getElementById("modal_profile_img").src = "/imgs/snap/"+ data.postInfo.profile_img;
+            document.getElementById("modal_nickname").innerText = data.postInfo.nickname;
 
+            
             const modalTags = document.getElementById("modal_tags");
             modalTags.innerHTML = ""; // 기존 태그 초기화
-            
             //스타일 태그 추가
             data.style_tags.forEach(tag => {
                 const tagElement = document.createElement("span");
@@ -113,48 +128,66 @@ postingBoxs.forEach(post => {
                 tagElement.textContent = tagValue;
                 modalTags.appendChild(tagElement);
             });
-
-            document.getElementById("modal").style.display = "flex";
+         	
+         	
+         	// 댓글
+         	const commentList = document.getElementById("modal_comment_list");
+         	commentList.innerHTML = ""; // 기존 태그 초기화
+         	
+         	data.comments.forEach(comment => { //댓글개수만큼 반복
+         		console.log("댓글개수: "+comment.comment_no)
+         		  // 1. 댓글 컨테이너 생성
+         		  const commentDiv = document.createElement("div");
+         		  commentDiv.className = "modal_comment";
+         		  
+         		  // 2. 프로필 이미지 생성
+         		  const userImg = document.createElement("img");
+         		  userImg.className = "comment_user_img";
+         		  userImg.src = comment.profile_img ? "/imgs/snap/"+ data.postInfo.user_id +"/"+ comment.profile_img : "/imgs/snap/image.png";
+         		  userImg.alt = "User";
+         		  
+         		  // 3. 댓글 내용 컨테이너 생성
+         		  const contentDiv = document.createElement("div");
+         		  contentDiv.className = "comment_content";
+         		  
+         		  // 4. 사용자 이름 생성
+         		  const usernameDiv = document.createElement("div");
+         		  usernameDiv.className = "comment_username";
+         		  usernameDiv.textContent = comment.nickname || comment.writer_id;
+         		  
+         		  // 5. 댓글 텍스트 생성
+         		  const textDiv = document.createElement("div");
+         		  textDiv.className = "comment_text";
+         		  textDiv.textContent = comment.content;
+         		  
+         		  // 6. 댓글 시간 생성
+         		  const timeDiv = document.createElement("div");
+         		  timeDiv.className = "comment_time";
+         		  timeDiv.textContent = comment.w_date;
+         		  
+         		  // 7. 요소들을 순서대로 조립
+         		  contentDiv.appendChild(usernameDiv);
+         		  contentDiv.appendChild(textDiv);
+         		  contentDiv.appendChild(timeDiv);
+         		  
+         		  commentDiv.appendChild(userImg);
+         		  commentDiv.appendChild(contentDiv);
+         		  
+         		  // 8. 최종 댓글을 modal_comments에 추가
+         		  commentList.appendChild(commentDiv);
+         	});
+         	
+			
+            document.getElementById("modal").style.display = "flex"; // 모달창 표시
+            document.body.classList.add("modal-open"); // 배경스크롤 막기
             
 		} catch (error) {
             console.error("Error fetching post detail:", error);
             alert("게시물을 불러오지 못했습니다.");
         }
 		
-/*		fetch("/snap/getPostDetail.html?" + param)
-		    .then(response => {
-		        if (!response.ok) {
-		            throw new Error('Network response was not ok');
-		        }
-		        return response.json(); // JSON 형식으로 변환
-		    })		
-		    .then(data => {
-		        document.getElementById("modal_img").src = data.imagename;
-		        document.getElementById("modal_content").innerText = data.content;
-		        document.getElementById("modal_profile_img").src = data.profile.profile_img;
-		
-		        const modalTags = document.getElementById("modal_tags");
-		        modalTags.innerHTML = ""; // 태그 초기화
-		        data.post_style_tags.forEach(tag => {
-		            const tagElement = document.createElement("span");
-		            tagElement.classList.add("tag");
-		            tagElement.textContent = tag.tag_name;
-		            modalTags.appendChild(tagElement);
-		        });
-		
-		        document.getElementById("modal").style.display = "flex";
-		    })
-		
-	        .catch(error => {
-	            console.error("Error fetching post detail:", error);
-	            alert("게시물을 불러오지 못했습니다.");
-	        }); //컨트롤러 매핑 
-*/
-
-	        
 	}); //EventListener
 }); //forEach
-
 
 function confirmLogin() {
 	event.preventDefault(); // 기본 동작(폼 제출) 방지

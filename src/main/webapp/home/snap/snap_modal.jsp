@@ -48,7 +48,7 @@
 			</c:choose>
         </div>
 		    
-		<div class="modal_comment_list">
+		<div id="modal_comment_list" class="modal_comment_list">
 		<!-- 실제 데이터는 서버에서 받아와 동적으로 추가 -->
 		    <div class="modal_comment">
 		        <img src="img/user1.jpg" alt="User" class="comment_user_img">
@@ -70,70 +70,6 @@
 
     </div><!-- modal_content -->
 </div>
-
-
-<script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function() {
-	
-// 	function confirmLogin() {
-// 	    if (confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?")) {
-// 	        // '확인' 클릭 시 로그인 페이지로 이동
-// 	        window.location.href = "/login/login.html";
-// 	    } else {
-// 	    	return false; //아무동작도 안함
-// 	    }
-// 	}
-	
-	//✅ 모달 열기 함수 => 레거시
-// 	window.openModal = function(imageSrc) { // ✅ 전역 함수
-// 		let modal = document.getElementById("modal");
-// 		console.log(modal);
-// 		if(modal) {
-// 		    document.getElementById("modal_img").src = imageSrc;
-// 		    modal.style.display = "flex";
-// 		}
-// 		document.body.classList.add("modal-open"); // 배경 스크롤 막기
-// 	}
-	//✅ 모달 열기
-// 	window.openModal = function(postId) {
-// 	    $.ajax({
-// 	        type: "GET",
-// 	        url: "/snap/getPostDetail.html",  // 🔹 매핑 URL
-// 	        data: { postId: postId }, // 🔹 전달할 데이터
-// 	        success: function(response) {
-// 	            $('#modal_img').attr('src', response.imagename); // 이미지 표시
-// 	            $('#modal_content').text(response.content);       // 포스팅 내용 표시
-// 	            $('#modal_profile_img').attr('src', response.profile.profile_img); // 프로필 이미지 표시
-// 	            $('#modal_tags').empty(); // 태그 초기화
-	
-// 	            // 🔹 스타일 태그 추가
-// 	            response.post_style_tags.forEach(tag => {
-// 	                $('#modal_tags').append(`<span class="tag">${tag.tag_name}</span>`);
-// 	            });
-	
-// 	            $('#modal').show(); // 모달창 열기
-// 	        },
-// 	        error: function() {
-// 	            alert('게시물 정보를 불러오지 못했습니다.');
-// 	        }
-// 	    });
-// 	}
-
-	
-	
-	//✅ 모달 닫기 함수
-	window.closeModal = function() {
-	    document.getElementById("modal").style.display = "none";
-	}
-    // ✅ 모달 바깥 클릭 시 닫기
-    document.getElementById("modal").addEventListener("click", function(event) {
-        if (event.target === this) {
-            closeModal();
-        }
-    });
-	
-});
-</script>
 
 
 </body>
