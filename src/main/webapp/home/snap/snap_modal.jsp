@@ -39,7 +39,7 @@
 			<c:choose>
 				<c:when test="${loginUser != null }">
 		            <input type="text" id="comment_input" placeholder="댓글을 입력하세요...">
-		            <button id="comment_button" onclick="submitComment()">게시</button>
+		            <button id="comment_button" onclick="submitCheck()">게시</button>
 				</c:when>
 				<c:otherwise>
 		            <input type="text" id="comment_input" placeholder="로그인 후 이용가능합니다..." readonly="readonly">
@@ -57,9 +57,19 @@
 
 <script type="text/javascript">
 
+// 엔터키 처리
+const inputEvent = document.getElementById("comment_input");
+inputEvent.addEventListener("keyup", e => {
+	if(e.key == 'Enter') submitCheck(); 
+});
+
+function submitCheck() {
+	if(confirm("댓글을 작성하시겠습니까?")) submitComment();
+}
+
 function submitComment() {
     const commentContent = document.getElementById("comment_input").value;
-    const postId = document.getElementById("modal").getAttribute("data-post-id");/* 게시물 ID를 가져오는 로직 추가 */
+    const postId = document.getElementById("modal").getAttribute("data-post-id");/* 게시물 ID를 가져오는 로직 */
 
     if (!commentContent.trim()) {
         alert("댓글 내용을 입력해주세요.");
@@ -94,6 +104,8 @@ function submitComment() {
         }
     })
     .catch(error => console.error('Error:', error));
+    
+	alert("댓글 작성을 완료했습니다.");
 }
 </script>
 </body>
