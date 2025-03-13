@@ -65,9 +65,9 @@ async function openPostDetail(postId) {
     console.log("매개변수값확인: " + param);
     
     try {
-        const response = await fetch("/snap/getPostDetail.html?" + param);
+        const response = await fetch("/snap/getPostDetail.html?" + param); //AJAX 비동기 요청
         if (!response.ok) throw new Error('Network response was not ok');
-        const DATA = await response.json();
+        const DATA = await response.json(); // 서버응답을 JSON으로 변환
         
         // JSON 데이터에 에러 메시지가 있는 경우 처리
         if (DATA.error) { alert(DATA.error); return; }
@@ -130,7 +130,7 @@ async function openPostDetail(postId) {
             if(loginUser == comment.writer_id) { //로그인계정이 댓글작성자과 같은경우만 삭제버튼 보여주기
 	            deleteButton.className = "comment_delete";
 	            deleteButton.textContent = "삭제";
-	            deleteButton.onclick = () => deleteCheck(comment.comment_no);
+	            deleteButton.onclick = () => deleteCheck(comment.comment_no, comment.content);
 	            actionDiv.appendChild(deleteButton); 
 	            isWriter = true;
             } else 
@@ -160,15 +160,34 @@ async function openPostDetail(postId) {
         alert("게시물을 불러오지 못했습니다.");
     }
 }
-function deleteCheck(commentNo) {
-	if(confirm("정말 삭제하시겠습니까?")) {
+function deleteCheck(commentNo, txt) {
+	if(confirm("해당 댓글을 정말로 삭제하시겠습니까? \n\" "+txt+" \"")) {
 		deleteDo(commentNo);
-	} else {
-		return false;
-	}
+	} else return false;
 }
 function deleteDo(commentNo) {
-    alert("삭제 기능은 아직 구현되지 않았습니다. 댓글 번호: " + commentNo );
+	//AJAX 비동기 처리
+    fetch('/snap/deleteComment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+          'commentNo': commentNo
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if(data.error) {
+          alert(data.error);
+        } else {
+        	console.log("▶댓글삭제요청 서버응답: "+ data.success);
+        	alert("댓글이 삭제되었습니다.");
+        	const postId = document.getElementById("modal").getAttribute("data-post-id");
+        	openPostDetail(postId); // 모달창 다시 열기
+        }
+      })
+      .catch(error => console.error('Error:', error));
 }
 
 function confirmLogin() {

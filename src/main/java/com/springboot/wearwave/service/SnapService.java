@@ -20,6 +20,12 @@ public class SnapService {
 	
 	
 	//댓글관련========================
+	public Snap_comment getCommentByNo(Integer commNum) {
+		return this.snapMapper.getCommentByNo(commNum);
+	}
+	public void deleteComment(Integer commNum) {
+		this.snapMapper.deleteComment(commNum);
+	}
 	public void putComment(Snap_comment comment) {
 		Integer max = getMaxCommentNo(); 
 		comment.setComment_no(max + 1); //댓글PK 증가

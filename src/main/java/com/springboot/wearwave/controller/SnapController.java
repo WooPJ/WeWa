@@ -39,12 +39,43 @@ import jakarta.transaction.Transactional;
 public class SnapController {
 	@Autowired
 	private SnapService snapService;
-	@Autowired
-	private LoginService loginService;
 	
 	
+	// 댓글 삭제
+	@PostMapping("/snap/deleteComment")
+	@Transactional
+	@ResponseBody
+	public Map<String, Object> deleteComment(@RequestParam("commentNo") Integer commentNo,
+	                                        HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
+
+	    // 로그인 사용자 확인 (세션에서 사용자 정보 확인)
+	    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+	    if (loginUser == null) {
+	        response.put("error", "로그인이 필요합니다.");
+	        return response;
+	    }
+
+	    try {
+	        // 댓글 존재여부 확인
+	        Snap_comment comment = this.snapService.getCommentByNo(commentNo);
+	        if (comment == null) {
+	            response.put("error", "해당 댓글이 존재하지 않습니다.");
+	            return response;
+	        }
+	        this.snapService.deleteComment(commentNo); // 댓글 삭제 실행
+	        response.put("success", true);
+	        return response;
+
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	        response.put("error", "댓글 삭제에 실패했습니다.");
+	        return response;
+	    }
+	}
 	
-	//댓글업로드
+	
+	// 댓글업로드
 	@PostMapping("/snap/addComment")
 	@Transactional
 	@ResponseBody
@@ -78,10 +109,6 @@ public class SnapController {
 	        	this.snapService.putNickname(profile); // 스냅프로필 테이블에 insert
 	        } 
 	        this.snapService.putComment(newComment); //댓글정보 insert
-        
-	        // 댓글 목록 다시 불러오기
-	        List<Snap_comment> updatedComments = snapService.getCommentList(postId);
-	        response.put("comments", updatedComments);
 	        return response;
 	        
 	    } catch(Exception e){
@@ -104,8 +131,6 @@ public class SnapController {
 	    List<Post_tpo_tags> tpoTag = snapService.getAllTpoById(postId);
 	    List<Snap_comment> comment = snapService.getCommentList(postId);
 	    
-	    System.out.println("댓글 수: " + comment.size());
-	    System.out.println("매핑데이터: " + postId);
 	    if (postInfo == null) {
 	        response.put("error", "게시물을 찾을 수 없습니다.");
 	        return response; // JSON 형태로 에러 반환
@@ -113,17 +138,15 @@ public class SnapController {
 
 	    // JSON 데이터 형태로 구성
 	    response.put("postInfo", postInfo);
-
 	    // 태그,댓글 배열 추가
 	    response.put("style_tags", styleTag);
 	    response.put("tpo_tags", tpoTag);
 	    response.put("comments", comment);
-
 	    return response;
 	}
 	
 	
-    //게시물작성 수행
+    // 게시물작성 수행
 	@PostMapping("/snap/addPostWrite.html")
 	@Transactional
 	public ModelAndView inputPost(
@@ -260,7 +283,6 @@ public class SnapController {
 	    
 	    LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
 	    mav.addObject("loginUser", loginUser);
-	    
 	    return mav;
 	}
 }
