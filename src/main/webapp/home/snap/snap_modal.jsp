@@ -93,12 +93,7 @@ function submitComment() {
         } else {
 			alert("댓글 작성을 완료했습니다.");
             document.getElementById("comment_input").value = ''; // 댓글 입력창 초기화
-            
-            // 모달 닫기
-            document.getElementById("modal").style.display = "none";
-            document.body.classList.remove("modal-open");
-            // 모달 다시 열기
-            openPostDetail(postId);
+            openPostDetail(postId); // 모달창 다시 열기
         }
     })
     .catch(error => console.error('Error:', error));

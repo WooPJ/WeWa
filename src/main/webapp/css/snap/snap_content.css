@@ -2,6 +2,10 @@
 
 
 /* 게시글 해시태그 */
+.modal_tags {
+  display: flex;
+  flex-wrap: wrap; /* flex 컨테이너에서 줄바꿈 허용 */
+}
 .style-tag {
     background-color: #FFDDC1; /* 스타일 태그 배경색 */
     color: #333;
@@ -11,8 +15,8 @@
     margin-bottom: 5px; /* 줄바꿈 시 윗줄과 겹치지 않도록 마진 추가 */
     font-weight: bold;
     font-size: 15px;
-      display: inline-block; /* 블록 레벨 요소로 변경하여 '#'과 함께 줄바꿈 */
-  white-space: nowrap; /* 태그 내부에서는 줄바꿈 방지 */
+    display: inline-block; /* 블록 레벨 요소로 변경하여 '#'과 함께 줄바꿈 */
+  	white-space: nowrap; /* 태그 내부에서는 줄바꿈 방지 */
 }
 
 .tpo-tag {
@@ -26,10 +30,6 @@
     font-size: 15px;
     display: inline-block; /* 블록 레벨 요소로 변경하여 '#'과 함께 줄바꿈 */
   	white-space: nowrap; /* 태그 내부에서는 줄바꿈 방지 */
-}
-.modal_tags {
-  display: flex;
-  flex-wrap: wrap; /* flex 컨테이너에서 줄바꿈 허용 */
 }
 
 

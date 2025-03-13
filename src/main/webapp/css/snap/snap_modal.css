@@ -91,17 +91,9 @@ body.modal-open {
     font-weight: bold;
 }
 
-/* ◆하단: 댓글 입력 */
-.modal_comment_section {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-}
 
 
-
-
-/* 댓글창 섹션 */
+/* ◆하단: 댓글창 섹션 */
 .modal_comment_section {
     display: flex;
     align-items: center;
@@ -143,7 +135,7 @@ body.modal-open {
 }
 
 
-/* 댓글 */
+/* ✅ 댓글 */
 .modal_comment_list {
     max-height: 300px;
 /*     overflow-y: auto; */
@@ -181,6 +173,7 @@ body.modal-open {
 
 .comment_text {
     font-size: 14px;
+    word-break: break-all;
 }
 
 .comment_time {
@@ -188,6 +181,28 @@ body.modal-open {
     color: gray;
     margin-top: 3px;
 }
+
+
+.comment_actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 3px; /* 댓글 시간과 같은 높이에 배치 */
+}
+
+.comment_delete {
+    background-color: transparent;
+    border: none;
+    color: #1877f2;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 2px 1px;
+}
+
+.comment_delete:hover {
+    text-decoration: underline;
+}
+
 
 
 
