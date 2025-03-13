@@ -20,7 +20,7 @@
 <div class = "posting_page"> 
 	<div class = "posting_line">
          <c:forEach var="feed" items="${FeedList}">
-             <div class="posting_box" post-code="${feed.post_id}">
+             <div class="posting_box" onclick="openPostDetail('${feed.post_id}'); return false;" post-code="${feed.post_id}">
              <c:set var="images" value="${fn:split(feed.imagename, ',')}" />
 				<img class="posting_img" src="${images[0]}" alt="${feed.imagename}" />
              </div>
@@ -58,8 +58,89 @@ document.getElementById("modal").addEventListener("click", function(event) {
     }
 });
 
+//게시물 상세 정보를 불러오는 함수
+async function openPostDetail(postId) {
+    const inData = { postId: postId };
+    let param = new URLSearchParams(inData).toString();
+    console.log("매개변수값확인: " + param);
+    
+    try {
+        const response = await fetch("/snap/getPostDetail.html?" + param);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const DATA = await response.json();
+        
+        // JSON 데이터에 에러 메시지가 있는 경우 처리
+        if (DATA.error) { alert(DATA.error); return; }
+        
+        const POST = DATA.postInfo;
+        // 프로필이미지 없으면 기본이미지 할당
+        document.getElementById("modal_profile_img").src = 
+            POST.profile_img ? "/imgs/snap/"+ POST.user_id +"/"+ POST.profile_img : "/imgs/snap/image.png";
+        document.getElementById("modal_img").src = POST.imagename;
+        document.getElementById("modal_content").innerText = POST.content;
+        document.getElementById("modal_nickname").innerText = POST.nickname;
+        
+        // 댓글
+        const commentList = document.getElementById("modal_comment_list");
+        commentList.innerHTML = ""; // 기존 태그 초기화
+        
+        DATA.comments.forEach(comment => { // 댓글개수만큼 반복
+            console.log("댓글개수: " + comment.comment_no);
+            // 1. 댓글 컨테이너 생성
+            const commentDiv = document.createElement("div");
+            commentDiv.className = "modal_comment";
+            
+            // 2. 프로필 이미지 생성
+            const userImg = document.createElement("img");
+            userImg.className = "comment_user_img";
+            // 프로필이미지 없으면 기본이미지 할당
+            userImg.src = comment.profile_img ? "/imgs/snap/"+ comment.writer_id +"/"+ comment.profile_img : "/imgs/snap/image.png";
+            userImg.alt = "User";
+            
+            // 3. 댓글 내용 컨테이너 생성
+            const contentDiv = document.createElement("div");
+            contentDiv.className = "comment_content";
+            
+            // 4. 사용자 이름 생성
+            const usernameDiv = document.createElement("div");
+            usernameDiv.className = "comment_username";
+            usernameDiv.textContent = comment.nickname || comment.writer_id;
+            
+            // 5. 댓글 텍스트 생성
+            const textDiv = document.createElement("div");
+            textDiv.className = "comment_text";
+            textDiv.textContent = comment.content;
+            
+            // 6. 댓글 시간 생성
+            const timeDiv = document.createElement("div");
+            timeDiv.className = "comment_time";
+            timeDiv.textContent = comment.w_date;
+            
+            // 7. 요소들을 순서대로 조립
+            contentDiv.appendChild(usernameDiv);
+            contentDiv.appendChild(textDiv);
+            contentDiv.appendChild(timeDiv);
+            
+            commentDiv.appendChild(userImg);
+            commentDiv.appendChild(contentDiv);
+            
+            // 8. 최종 댓글을 modal_comments에 추가
+            commentList.appendChild(commentDiv);
+        });
+        
+        const modal = document.getElementById('modal');
+        modal.setAttribute('data-post-id', postId); // 모달에 게시물 ID 저장
+        document.getElementById("modal").style.display = "flex"; // 모달창 표시
+        document.body.classList.add("modal-open"); // 배경스크롤 막기
+        
+    } catch (error) {
+        console.error("Error fetching post detail:", error);
+        alert("게시물을 불러오지 못했습니다.");
+    }
+}
+
 //✅ 모달 열기
-const postingBoxs = document.querySelectorAll('.posting_box');
+/*const postingBoxs = document.querySelectorAll('.posting_box');
 postingBoxs.forEach(post => {
 	const postCode = post.getAttribute("post-code");
 	
@@ -188,6 +269,7 @@ postingBoxs.forEach(post => {
 		
 	}); //EventListener
 }); //forEach
+*/
 
 function confirmLogin() {
 	event.preventDefault(); // 기본 동작(폼 제출) 방지

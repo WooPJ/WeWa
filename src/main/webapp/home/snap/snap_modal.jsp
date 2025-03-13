@@ -91,21 +91,17 @@ function submitComment() {
         if (data.error) {
             alert(data.error);
         } else {
-            const commentList = document.getElementById('modal_comment_list');
-            commentList.innerHTML = ''; // 기존 댓글 초기화
-
-            data.comments.forEach(comment => {
-                const commentItem = document.createElement('div');
-                commentItem.textContent = comment.content;
-                commentList.appendChild(commentItem);
-            });
-
+			alert("댓글 작성을 완료했습니다.");
             document.getElementById("comment_input").value = ''; // 댓글 입력창 초기화
+            
+            // 모달 닫기
+            document.getElementById("modal").style.display = "none";
+            document.body.classList.remove("modal-open");
+            // 모달 다시 열기
+            openPostDetail(postId);
         }
     })
     .catch(error => console.error('Error:', error));
-    
-	alert("댓글 작성을 완료했습니다.");
 }
 </script>
 </body>
