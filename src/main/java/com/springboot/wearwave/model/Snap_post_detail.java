@@ -19,6 +19,9 @@ public class Snap_post_detail {
 	private String gender;
 	private String content;
 	
+	private String nickname;
+	private String profile_img;
+	
 	private Snap_profile profile;
 	private List<Post_style_tags> post_style_tags;
 	private List<Post_tpo_tags> post_tpo_tags;

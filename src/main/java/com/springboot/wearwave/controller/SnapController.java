@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.springboot.wearwave.model.LoginUser;
 import com.springboot.wearwave.model.Post_style_tags;
 import com.springboot.wearwave.model.Post_tpo_tags;
+import com.springboot.wearwave.model.Snap_comment;
 import com.springboot.wearwave.model.Snap_post_detail;
 import com.springboot.wearwave.model.Snap_profile;
 import com.springboot.wearwave.model.User_info;
@@ -38,101 +39,114 @@ import jakarta.transaction.Transactional;
 public class SnapController {
 	@Autowired
 	private SnapService snapService;
-	@Autowired
-	private LoginService loginService;
 	
 	
+	// 댓글 삭제
+	@PostMapping("/snap/deleteComment")
+	@Transactional
+	@ResponseBody
+	public Map<String, Object> deleteComment(@RequestParam("commentNo") Integer commentNo,
+	                                        HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
+
+	    // 로그인 사용자 확인 (세션에서 사용자 정보 확인)
+	    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+	    if (loginUser == null) {
+	        response.put("error", "로그인이 필요합니다.");
+	        return response;
+	    }
+
+	    try {
+	        // 댓글 존재여부 확인
+	        Snap_comment comment = this.snapService.getCommentByNo(commentNo);
+	        if (comment == null) {
+	            response.put("error", "해당 댓글이 존재하지 않습니다.");
+	            return response;
+	        }
+	        this.snapService.deleteComment(commentNo); // 댓글 삭제 실행
+	        response.put("success", true);
+	        return response;
+
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	        response.put("error", "댓글 삭제에 실패했습니다.");
+	        return response;
+	    }
+	}
+	
+	
+	// 댓글업로드
+	@PostMapping("/snap/addComment")
+	@Transactional
+	@ResponseBody
+	public Map<String, Object> addComment(@RequestParam("postId") Integer postId,
+	                                      @RequestParam("commentContent") String commentContent,
+	                                      HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
+
+	    // 로그인 사용자 확인 (세션에서 사용자 정보 확인)
+	    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+	    if (loginUser == null) {
+	        response.put("error", "로그인이 필요합니다.");
+	        return response;
+	    }
+
+	    try {
+		    // 댓글 객체 생성 및 데이터 삽입
+		    Snap_comment newComment = new Snap_comment();
+		    newComment.setPost_id(postId);
+		    newComment.setWriter_id(loginUser.getId()); // 로그인 사용자 ID 추가
+		    newComment.setContent(commentContent);
+	
+	        User_info userInfo = (User_info)session.getAttribute("userInfo");
+	        Snap_profile profile = this.snapService.getNicknameByUserId(loginUser.getId());
+	        
+	        //스냅프로필 테이블에 닉네임정보가 없는경우
+	        if(profile == null || profile.getNickname() == null) {
+	        	profile = new Snap_profile();
+	        	profile.setUser_id(loginUser.getId()); 
+	        	profile.setNickname(userInfo.getName()); // user_info의 이름으로 닉네임 초기화
+	        	this.snapService.putNickname(profile); // 스냅프로필 테이블에 insert
+	        } 
+	        this.snapService.putComment(newComment); //댓글정보 insert
+	        return response;
+	        
+	    } catch(Exception e){
+	    	e.printStackTrace();
+	    	//System.out.println("댓글작성중 문제발생: "+e);
+	    	response.put("error", "댓글 작성에 실패했습니다.");
+	    	return response;
+	    }
+	}
+	
+	
+	//📌 게시물 클릭시 게시물 모달창 띄우기
 	@GetMapping("/snap/getPostDetail.html")
 	@ResponseBody // JSON 데이터를 반환하도록 설정
 	public Map<String, Object> getPostDetail(@RequestParam("postId") Integer postId) {
 	    Map<String, Object> response = new HashMap<>();
 
-	    Snap_post_detail postDetail = snapService.getPostDetailById(postId);
-	    Snap_profile profileInfo = snapService.getNicknameByPost(postId);
+	    Snap_post_detail postInfo = snapService.getPostDetailByPostId(postId);
 	    List<Post_style_tags> styleTag = snapService.getAllStyleById(postId);
 	    List<Post_tpo_tags> tpoTag = snapService.getAllTpoById(postId);
-
-	    System.out.println("매핑데이터: " + postId);
-
-	    if (postDetail == null) {
+	    List<Snap_comment> comment = snapService.getCommentList(postId);
+	    
+	    if (postInfo == null) {
 	        response.put("error", "게시물을 찾을 수 없습니다.");
 	        return response; // JSON 형태로 에러 반환
 	    }
 
 	    // JSON 데이터 형태로 구성
-	    response.put("imagename", postDetail.getImagename());
-	    response.put("content", postDetail.getContent());
-	    response.put("profile", profileInfo);
-
-	    // 태그 배열 추가
+	    response.put("postInfo", postInfo);
+	    // 태그,댓글 배열 추가
 	    response.put("style_tags", styleTag);
 	    response.put("tpo_tags", tpoTag);
-
+	    response.put("comments", comment);
 	    return response;
 	}
-
-/*    @GetMapping("/snap/getPostDetail.html")
-    public String getPostDetail(@RequestParam("postId") Integer postId, Model model) {
-        Snap_post_detail postDetail = snapService.getPostDetailById(postId);
-        Snap_profile profileInfo = snapService.getNicknameByPost(postId);
-        
-        System.out.println("매핑데이터: "+postId);
-        if (postDetail == null) {
-            model.addAttribute("error", "게시물을 찾을 수 없습니다.");
-            return "errorPage"; // 에러 페이지로 리다이렉트
-        }
-
-        model.addAttribute("postDetail", postDetail);
-        model.addAttribute("nickname", profileInfo);
-
-        return "snap_modal"; // 모달창 JSP 페이지
-    }*/
-	
-/*    @GetMapping("/snap/getPostDetail.html")
-    public ResponseEntity<?> getPostDetail(@RequestParam("postId") Integer postId) {
-        Snap_post_detail postDetail = snapService.getPostDetailById(postId);
-
-        System.out.println("매핑완료!" + postId + postDetail);
-        if (postDetail == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Collections.singletonMap("error", "게시물을 찾을 수 없습니다."));
-        }
-
-        // DTO 데이터를 JSON으로 반환
-        Map<String, Object> response = new HashMap<>();
-        response.put("postDetail", postDetail);
-        response.put("styleTags", snapService.getAllStyleById(postId));
-        response.put("tpoTags", snapService.getAllTpoById(postId));
-
-        return ResponseEntity.ok(response);
-    }*/
 	
 	
-	
-/*    @GetMapping("/snap/getPostDetail.html")
-    public ModelAndView getPostDetail(@RequestParam("postId") Integer postId) {
-        Snap_post_detail postDetail = snapService.getPostDetailById(postId);
-        if (postDetail == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시물을 찾을 수 없습니다.");
-        }
-        ModelAndView mav = new ModelAndView("index");
-	    List<Snap_post_detail> FeedList = this.snapService.getFeedAll();
-		Snap_post_detail PostDetail = this.snapService.getPostDetailById(postId);
-		Post_style_tags StyleTag = this.snapService.getAllStyleById(postId);
-		Post_tpo_tags TpoTag = this.snapService.getAllTpoById(postId);
-	    
-		
-	    mav.addObject("FeedList", FeedList);
-	    mav.addObject("BODY", "snap/snap.jsp"); 
-	    mav.addObject("PostDetail", PostDetail);
-	    mav.addObject("StyleTag", StyleTag);
-        mav.addObject("TpoTag" ,TpoTag);
-        
-        return mav; 
-    }*/
-	
-	
-    //게시물작성 수행
+    // 게시물작성 수행
 	@PostMapping("/snap/addPostWrite.html")
 	@Transactional
 	public ModelAndView inputPost(
@@ -183,14 +197,14 @@ public class SnapController {
 	    post.setPost_id(maxId);
         post.setUser_id(loginUser.getId());
         
-        User_info name = (User_info)session.getAttribute("name");
+        User_info userInfo = (User_info)session.getAttribute("userInfo");
         Snap_profile profile = this.snapService.getNicknameByUserId(loginUser.getId());
         
         //스냅프로필 테이블에 닉네임정보가 없는경우
         if(profile == null || profile.getNickname() == null) {
         	profile = new Snap_profile();
         	profile.setUser_id(loginUser.getId()); 
-        	profile.setNickname(name.getName()); // user_info의 이름으로 닉네임 초기화
+        	profile.setNickname(userInfo.getName()); // user_info의 이름으로 닉네임 초기화
         	this.snapService.putNickname(profile); // 스냅프로필 테이블에 insert
         } 
         post.setProfile(profile);
@@ -269,7 +283,6 @@ public class SnapController {
 	    
 	    LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
 	    mav.addObject("loginUser", loginUser);
-	    
 	    return mav;
 	}
 }

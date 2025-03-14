@@ -6,6 +6,16 @@
 body.modal-open {
     overflow: hidden;
 }
+/* #modal { */
+/*     position: fixed;  화면 전체 고정 */
+/*     top: 0; */
+/*     left: 0; */
+/*     width: 100%; */
+/*     height: 100%;   */
+/*     display: none;  초기에는 숨김 */
+/*     background-color: rgba(0, 0, 0, 0.7); 배경 어둡게 */
+/*     overflow-y: auto; 🔥 모달 자체에 스크롤 추가 */
+/* } */
 .modal {
 /*팝업 배경*/
 	display: none; /*평소에는 보이지 않도록*/
@@ -30,6 +40,7 @@ body.modal-open {
     flex-direction: column;
     position: relative;
     overflow-y: auto; /* 내부 스크롤 활성화 */
+    
     border-radius: 10px;
     
 	/* 스크롤바 숨기기 */
@@ -70,8 +81,8 @@ body.modal-open {
 }
 
 .modal_profile_img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     margin-right: 10px;
 }
@@ -80,17 +91,9 @@ body.modal-open {
     font-weight: bold;
 }
 
-/* ◆하단: 댓글 입력 */
-.modal_comment_section {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-}
 
 
-
-
-/* 댓글창 섹션 */
+/* ◆하단: 댓글창 섹션 */
 .modal_comment_section {
     display: flex;
     align-items: center;
@@ -132,7 +135,7 @@ body.modal-open {
 }
 
 
-/* 댓글 */
+/* ✅ 댓글 */
 .modal_comment_list {
     max-height: 300px;
 /*     overflow-y: auto; */
@@ -170,6 +173,7 @@ body.modal-open {
 
 .comment_text {
     font-size: 14px;
+    word-break: break-all;
 }
 
 .comment_time {
@@ -177,6 +181,28 @@ body.modal-open {
     color: gray;
     margin-top: 3px;
 }
+
+
+.comment_actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 3px; /* 댓글 시간과 같은 높이에 배치 */
+}
+
+.comment_delete {
+    background-color: transparent;
+    border: none;
+    color: #1877f2;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 2px 1px;
+}
+
+.comment_delete:hover {
+    text-decoration: underline;
+}
+
 
 
 

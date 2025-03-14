@@ -158,9 +158,9 @@ public class LoginController {
 	        mav.setViewName("login/login"); // 로그인 화면 유지
 	        mav.addObject("errorMessage", "아이디 또는 비밀번호가 올바르지 않습니다.");
 	    } else { // 로그인 성공
-	    	User_info name = userService.getUserInfo(user.getId());
+	    	User_info userInfo = userService.getUserInfo(user.getId());
 	        session.setAttribute("loginUser", user);
-	        session.setAttribute("name", name);
+	        session.setAttribute("userInfo", userInfo);
 	        
 	        // 로그인한 사용자의 찜 목록을 DB에서 가져와서 세션에 저장
             List<Heart> heartList = heartService.getUserHeartList(user.getId());
