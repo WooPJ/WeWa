@@ -11,7 +11,7 @@
 </head>
 <body>
 <br/><br/><br/><br/><br/><br/><br/>
-<h2>스냅 화면</h2>
+<!-- <h2>스냅 화면</h2> -->
 
 
 <!-- 메인 페이지 -->
@@ -53,6 +53,13 @@ function setActiveTab(tabName) {
 function applyActiveTab() {
     let activeTab = localStorage.getItem("activeTab") || "posting"; // 기본값: posting
 
+    // 기본 스냅 페이지로 접근했을 경우 강제로 'posting'으로 설정
+    const isSnapPage = window.location.pathname.includes("/snap/snap.html");
+    if (isSnapPage) {
+        activeTab = "posting"; 
+        setActiveTab("posting"); // localStorage 값 덮어쓰기
+    }
+    
     document.querySelector(".navi_posting").style.borderTop = activeTab === "posting" ? "solid 1px black" : "none";
     document.querySelector(".navi_stored").style.borderTop = activeTab === "stored" ? "solid 1px black" : "none";
     document.querySelector(".navi_profile").style.borderTop = activeTab === "profile" ? "solid 1px black" : "none";

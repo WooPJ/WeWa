@@ -4,3 +4,95 @@
 .heart-list-container .product {
     width: calc(20% - 30px) !important; /* 가로 배치 */ 
 }
+#title {
+	position: absolute;
+	text-align: center; /* 가로 기준 가운데 정렬 */
+    width: 100%;        /* 전체 너비 사용 */
+    margin-top: -1%;   /* 상단 여백 추가 */
+    margin-bottom: 30px; /* 하단 여백 추가 */
+    z-index: 1;          /* 상품 목록보다 위에 표시 */
+/*    position: relative;  /* 상품과 겹치지 않도록 변경 */
+}
+
+/* 비회원 하트리스트창 */
+#color {
+    background-color: #FDE8EC; /* 밝은 파스텔 핑크 */
+}
+
+.not_logged {
+/* 	position: fixed; */
+	display: flex; /* 가로 정렬 */
+	position: absolute;
+	text-align: center;
+    flex-direction: column;
+    justify-content: center;
+	align-items: center;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    height: 600px;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 80px;
+    margin-left: 25%;
+}
+
+.login_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#stored_icon {
+    width: 300px;
+    height: 250px;
+    margin: 50px 60px;
+}
+
+.login_icon {
+/*     width: 400px; */
+/*     height: 400px; */
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+
+.login_info h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: -5px;
+    margin-top: auto;
+}
+
+.login_info p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.login_buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.login_btn,
+.signup_btn {
+    background-color: #4a90e2;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    width: 100px;
+}
+
+.signup_btn {
+    background-color: #5cb85c;
+}
+
+.login_btn:hover {
+    background-color: #357ab8;
+}
+
+.signup_btn:hover {
+    background-color: #4cae4c;
+}
