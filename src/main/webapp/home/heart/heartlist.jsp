@@ -16,7 +16,6 @@
 
 
 <h1 id="title">♥️상품 찜목록♥️</h1>
-<!-- 		<h2 align="center">♥ 찜하기 기능은 로그인 후 이용가능합니다</h2> -->
 <c:choose>
 	<c:when test="${sessionScope.loginUser == null}">
 		<div id="color" class="not_logged">
