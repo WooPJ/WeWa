@@ -15,10 +15,21 @@
 <br/><br/><br/><br/><br/><br/><br/>
 
 
-<h1 align="center">♥️상품 찜목록♥️</h1>
+<h1 id="title">♥️상품 찜목록♥️</h1>
+<!-- 		<h2 align="center">♥ 찜하기 기능은 로그인 후 이용가능합니다</h2> -->
 <c:choose>
 	<c:when test="${sessionScope.loginUser == null}">
-		<h2 align="center">♥ 찜하기 기능은 로그인 후 이용가능합니다</h2>
+		<div id="color" class="not_logged">
+		    <div class="login_info">
+		        <img src="/imgs/icon/heart-in-bubble.png" alt="하트아이콘" class="login_icon">
+		        <h2>상품찜하기 기능은 로그인이 필요합니다!</h2>
+		        <p>계정을 만들어 다양한 기능을 이용해 보세요!</p>
+		        <div class="login_buttons">
+		            <a href="/login/login.html" class="login_btn">로그인</a>
+		            <a href="/login/selectentry.html" class="signup_btn">회원가입</a>
+		        </div>
+		    </div>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<c:choose>

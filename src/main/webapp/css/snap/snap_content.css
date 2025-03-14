@@ -34,7 +34,7 @@
 
 
 
-/* 프로필 페이지*/
+/* ===== 프로필 페이지 ===== */
 .profile_page {
 	margin-top: 50px; /* 네비게이션 높이만큼 여백 추가 */
     height: calc(100vh - 10px); /* 화면 높이에서 네비게이션 높이 제외 */
@@ -44,7 +44,7 @@
 	position: fixed;
 	display: flex; /* 가로 정렬 */
 /* 	margin-top: 100px; 네비게이션 높이만큼 여백 추가 */
-    height: 40%;
+    height: 60%;
     padding-left: 10%;
 }
 .user_top {
@@ -76,6 +76,9 @@
 .user_name h2 {
     margin: 0; /* 기본 마진 제거 */
     font-size: 20px;
+}
+.user_detail .cm_kg {
+	color: gray;
 }
 
 /* 프로필 편집 */
@@ -123,4 +126,101 @@
 }
 .user_follow>li>span{
     font-weight: bold;
+}
+
+
+/* 비회원 프로필창 */
+#color_profile{
+    background-color: #EAF4FC; /* 밝은 파스텔 블루 */
+}
+#color_stored {
+    background-color: #FDE8EC; /* 밝은 파스텔 핑크 */
+}
+
+.profile_not_logged {
+/* 	position: fixed; */
+	display: flex; /* 가로 정렬 */
+	align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    height: 600px;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.login_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#stored_icon {
+    width: 300px;
+    height: 250px;
+    margin: 50px 60px;
+}
+
+.login_icon {
+    width: 400px;
+    height: 400px;
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+
+.login_info h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: -5px;
+    margin-top: auto;
+}
+
+.login_info p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.login_buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.login_btn,
+.signup_btn {
+    background-color: #4a90e2;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    width: 100px;
+}
+
+.signup_btn {
+    background-color: #5cb85c;
+}
+
+.login_btn:hover {
+    background-color: #357ab8;
+}
+
+.signup_btn:hover {
+    background-color: #4cae4c;
+}
+
+
+
+/* ~~~~ 반응형 ~~~~  */
+@media (min-width: 1024px) {
+	.profile {
+		height: 40%;
+	}
+}
+@media (max-width: 768px) {
+	.profile {
+		height: 70%;
+	    padding-left: 20%;
+	}
 }
