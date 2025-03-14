@@ -41,6 +41,16 @@ public class SnapController {
 	private SnapService snapService;
 	
 	
+	// 프로필편집 페이지로 이동
+	@GetMapping("/snap/editProfile.html")
+	public ModelAndView editProfile() {
+		ModelAndView mav = new ModelAndView("index");
+		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
+		mav.addObject("CONTENT", "posting_write_page.jsp");
+		mav.addObject("Posting", new Snap_post_detail()); //폼페이지로 이동전 객체추가
+		return mav;
+	}
+	
 	// 댓글 삭제
 	@PostMapping("/snap/deleteComment")
 	@Transactional

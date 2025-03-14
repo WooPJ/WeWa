@@ -203,6 +203,14 @@ body.modal-open {
     text-decoration: underline;
 }
 
+.no_comment_notice {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    padding: 20px 0;
+    width: 100%;
+}
+
 
 
 

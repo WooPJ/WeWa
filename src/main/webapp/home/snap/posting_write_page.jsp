@@ -15,7 +15,7 @@
 <body>
     <div class="posting-form-container">
         <h2 class="posting-title">게시물 작성</h2>
-        <form:form modelAttribute="Posting" action="/snap/addPostWrite.html" method="post" enctype="multipart/form-data" name="postFrm" id="postingForm" class="posting-form">
+        <form:form modelAttribute="Posting" action="/snap/addPostWrite.html" method="post" onsubmit="return validateForm()" enctype="multipart/form-data" name="postFrm" id="postingForm" class="posting-form">
             
             <label for="photo" class="posting-label">사진 첨부</label>
             <input type="file" name="files" id="photo" class="posting-input-file" accept="image/*" multiple required/>
@@ -24,17 +24,13 @@
             <form:textarea path="content" id="content" class="posting-textarea" placeholder="내용을 입력하세요..." required="true"/>
             
             <label class="posting-label">체형 정보</label>
-            <form:input path="height" type="text" id="height" class="posting-input" placeholder="키 (cm)"/>
-            <form:input path="weight" type="text" id="weight" class="posting-input" placeholder="몸무게 (kg)"/>
+            <form:input path="height" type="number" id="height" class="posting-input" placeholder="키 (cm)" required="true"/>
+            <form:input path="weight" type="number" id="weight" class="posting-input" placeholder="몸무게 (kg)" required="true"/>
             
             <label class="posting-label">성별</label>
             <div class="posting-radio-group">
-<%--             <form:select path="gender"> --%>
-<%--                 <form:option value="male">남성</form:option> --%>
-<%--                 <form:option value="female">여성</form:option> --%>
-<%--             </form:select> --%>
-                <form:radiobutton path="gender" value="male" label="남성"/>
-    			<form:radiobutton path="gender" value="female" label="여성"/>
+                <form:radiobutton path="gender" value="male" id="gender_male" label="남성"/>
+    			<form:radiobutton path="gender" value="female" id="gender_female" label="여성"/>
             </div>
             
             <label class="posting-label">스타일 태그</label>
@@ -67,6 +63,19 @@
 
 
 <script type="text/javascript">
+
+function validateForm() {
+    const maleChecked = document.getElementById("gender_male").checked;
+    const femaleChecked = document.getElementById("gender_female").checked;
+
+    if (!maleChecked && !femaleChecked) {
+        alert("성별을 선택해주세요.");
+        return false; // 폼 제출 방지
+    }else {
+	    return true; // 정상 제출
+    }
+}
+
 function confirmLogin() {
     if (confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?")) {
         // '확인' 클릭 시 로그인 페이지로 이동
