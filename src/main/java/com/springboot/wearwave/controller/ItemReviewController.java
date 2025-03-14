@@ -30,6 +30,47 @@ public class ItemReviewController {
 	@Autowired
 	private ReviewService reviewService;
 	
+
+	@GetMapping(value = "/item/reviewSortedAtWrite.html")//리뷰 작성 화면에서 리뷰 목록 정렬 메서드
+	public ModelAndView goReviewSortedAtWrite(@RequestParam("item_code") String item_code,
+	                                   @RequestParam("sort") String sortOption) {
+	    Item item = itemService.getItemCodePage(item_code);
+	    List<String> sizeList = sizeService.sizeList(item_code);
+	    List<String> colorList = colorService.colorList(item_code);
+
+	    // 정렬된 리뷰 목록을 서비스에서 받아옴
+	    List<Review> reviews = reviewService.getSortedReviews(item_code, sortOption);
+
+	    // ModelAndView 설정
+	    ModelAndView mav = new ModelAndView("index");
+	    mav.addObject("BODY", "item/itemReviewAndWrite.jsp");
+	    mav.addObject("item", item);
+	    mav.addObject("sizeList", sizeList);
+	    mav.addObject("colorList", colorList);
+	    mav.addObject("reviews", reviews);
+	    return mav;
+	}
+	
+	@GetMapping(value = "/item/reviewSorted.html")//리뷰 목록 화면에서 리뷰 목록 정렬 메서드
+	public ModelAndView goReviewSorted(@RequestParam("item_code") String item_code,
+	                                   @RequestParam("sort") String sortOption) {
+	    Item item = itemService.getItemCodePage(item_code);
+	    List<String> sizeList = sizeService.sizeList(item_code);
+	    List<String> colorList = colorService.colorList(item_code);
+
+	    // 정렬된 리뷰 목록을 서비스에서 받아옴
+	    List<Review> reviews = reviewService.getSortedReviews(item_code, sortOption);
+
+	    // ModelAndView 설정
+	    ModelAndView mav = new ModelAndView("index");
+	    mav.addObject("BODY", "item/itemReview.jsp");
+	    mav.addObject("item", item);
+	    mav.addObject("sizeList", sizeList);
+	    mav.addObject("colorList", colorList);
+	    mav.addObject("reviews", reviews);
+	    return mav;
+	}
+	
 	@PostMapping(value = "/review/delete.html")//리뷰목록에서 삭제
 	public ModelAndView deleteReview(@RequestParam("seqno") Integer seqno,
 									@RequestParam("item_code") String item_code,
