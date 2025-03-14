@@ -7,11 +7,9 @@
 </delete>
 <insert id="insertReview" parameterType="com.springboot.wearwave.model.Review">
     INSERT INTO review_bbs (
-        seqno, writer, title, item_code, content, w_date, order_no, 
-        parent_id, group_id, imagename, pwd, item_rate
+        seqno, writer, title, item_code, content, w_date, item_rate
     ) VALUES (
-        review_bbs_seqno.NEXTVAL, #{writer}, #{title}, #{item_code}, #{content}, SYSDATE, null,
-         null, null, null, null, #{item_rate}
+        review_bbs_seqno.NEXTVAL, #{writer}, #{title}, #{item_code}, #{content}, SYSDATE, #{item_rate}
     )
 </insert>
 <select id="getReviewList" parameterType="String"

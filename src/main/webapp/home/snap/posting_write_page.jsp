@@ -22,6 +22,9 @@
             
             <label for="content" class="posting-label">본문 입력</label>
             <form:textarea path="content" id="content" class="posting-textarea" placeholder="내용을 입력하세요..." required="true"/>
+          
+            <label for="item_code"  class="posting-label">상품코드: <button type="button" class="btn btn-primary" onclick="findProduct()">상품 찾기</button></label>
+            <form:input path="item_code" id="item_code" value="" class="posting-input" placeholder="관련 상품이 있으면 입력해주세요"/> 
             
             <label class="posting-label">체형 정보</label>
             <form:input path="height" type="text" id="height" class="posting-input" placeholder="키 (cm)"/>
@@ -74,6 +77,10 @@ function confirmLogin() {
     } else {
     	return false; //아무동작도 안함
     }
+}
+function findProduct() {
+    var url = "/qna/finditem_code.html";
+    window.open(url, "_blank", "width=550,height=300");
 }
 </script>
 </body>

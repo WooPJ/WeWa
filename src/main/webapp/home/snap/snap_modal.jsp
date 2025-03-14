@@ -33,6 +33,10 @@
 			<div id="modal_tags" class="modal_tags">
 	            <!-- 태그가 동적으로 추가될 공간 -->
 	        </div>
+	        <h3>관련 상품</h3>
+			<div id="related_products" class="related-products">
+			 <!-- 서버에서 가져온 상품들이 여기에 표시될 예정 -->
+    		</div>
         </div>
         
 		<div class="modal_comment_section">

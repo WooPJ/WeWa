@@ -26,6 +26,8 @@ public class Snap_post_detail {
 	private List<Post_style_tags> post_style_tags;
 	private List<Post_tpo_tags> post_tpo_tags;
 	private List<MultipartFile> files;
+	
+	private String item_code;
 //	private Integer start;
 //	private Integer end;
 }

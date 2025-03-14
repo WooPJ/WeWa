@@ -223,7 +223,7 @@ html, body {
 	    max-width: 600px;
 	}
 	.snap_navi{
-    	top: 210px;
+    	/*top: 210px;*/
     	left: 40px; /* 왼쪽 여백 */
     	width: calc(100% - 80px);
 	}
@@ -240,7 +240,7 @@ html, body {
 /* 모바일 환경 (768px 이하) */
 @media (max-width: 768px) {
 	.snap_navi {
-    	top: 260px;
+    	/*  top: 260px;*/
     	left: 0; width: 100%; /* 네비바 여백없애기 */
 	}
 	.posting_page {
