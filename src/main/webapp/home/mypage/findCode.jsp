@@ -16,7 +16,7 @@
   <table id="myItem-table" class="table">
             <thead>
                 <tr>
-                    <th>상품코드</th>
+                    <th>코드</th>
                     <th>상호명</th>
                     <th>상품명</th>
                 </tr>
@@ -26,18 +26,21 @@
                     <tr>
                         <td>${item.item_code}</td>
                         <td>${item.user_id}</td>
-                        <td>${item.item_title}</td>                   
+                        <td>${item.item_title}</td>        
+                        <td>
+                       		<button type="button" onclick="selectItemCode('${item.item_code}')">사용</button>
+                    	</td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-<script type="text/javascript">
-function idOk(userId){
-	opener.document.frm.user_id.value = userId;
-	opener.document.frm.user_id.readOnly = true;//편집이 안되게 속성을 readOnly로 바꾼다.
-	opener.document.frm.idChecked.value = "yes";//ID중복검사용 파라미터(idChecked)에 값을 넣는다.
-	self.close();
-}
+<script>
+    function selectItemCode(itemCode) {
+        if (window.opener) {
+            window.opener.document.getElementById("item_code").value = itemCode;
+            window.close(); // 창 닫기
+        }
+    }
 </script>
 </body>
 </html>
