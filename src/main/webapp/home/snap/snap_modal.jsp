@@ -53,6 +53,7 @@
         </div>
 		    
 		<div id="modal_comment_list" class="modal_comment_list">
+			<p>댓글 없음</p>
 			<!-- 서버에서 받아온 댓글데이터를 동적으로 추가 -->
 		</div>
 
