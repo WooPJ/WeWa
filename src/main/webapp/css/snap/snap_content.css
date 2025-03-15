@@ -77,8 +77,10 @@
     margin: 0; /* 기본 마진 제거 */
     font-size: 20px;
 }
-.user_detail .cm_kg {
+.user_detail 
+.gender_cm_kg {
 	color: gray;
+	margin-top: 10px;
 }
 
 /* 프로필 편집 */
@@ -99,21 +101,6 @@
 .profile_modify:hover {
     background-color: lightgray;
 }
-.setting{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-/*     width: 40px; */
-    height: 40px;
-}
-.setting_img{
-    width: 15px;
-    height: 15px;
-    display: flex;
-    align-items: center;
-    color: black;
-}
-
 
 .user_follow{
     padding-left: 0px;

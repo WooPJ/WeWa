@@ -3,6 +3,19 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springboot.wearwave.mapper.SnapMapper">
 
+
+<!-- ===프로필관련=== -->
+<select id="getCountPostByUserId" parameterType="string" resultType="Integer">
+	select count(*) from snap_post_detail where user_id = #{userId}
+</select>
+
+<!-- 사용자 ID로 프로필정보 조회(게시물작성시, 댓글작성시, 프로필조회시 사용) -->
+<select id="getProfileByUserId" parameterType="string" resultType="com.springboot.wearwave.model.Snap_profile">
+	SELECT user_id, nickname, intro, profile_img, height, weight, gender 
+	FROM snap_profile 
+    WHERE user_id = #{userId}
+</select>
+
 <!-- ===댓글관련=== -->
 <!-- 댓글 존재여부 확인 -->
 <select id="getCommentByNo" parameterType="Integer" resultType="com.springboot.wearwave.model.Snap_comment">
@@ -35,13 +48,7 @@
 </select>
 
 
-
 <!-- ===게시물관련=== -->
-<!-- 사용자 ID로 닉네임 조회, 프로필테이블에 닉네임 있는지 조회 -->
-<select id="getNicknameByUserId" parameterType="string" resultType="com.springboot.wearwave.model.Snap_profile">
-    SELECT user_id, nickname FROM snap_profile 
-    WHERE user_id = #{userId}
-</select>
 <insert id="putNickname" parameterType="com.springboot.wearwave.model.Snap_profile">
 	insert into snap_profile (user_id, nickname) values(#{user_id}, #{nickname})
 </insert>
@@ -53,8 +60,8 @@
 	INSERT INTO post_style_tags VALUES (#{post_id}, #{style_tag})
 </insert>
 <insert id="putFeedPost" parameterType="com.springboot.wearwave.model.Snap_post_detail">
-	INSERT INTO snap_post_detail (post_id, user_id, reg_date, imagename, height, weight, gender, content) VALUES 
-	(#{post_id}, #{user_id}, sysdate, #{imagename}, #{height}, #{weight}, #{gender}, #{content})
+	INSERT INTO snap_post_detail (post_id, user_id, reg_date, imagename, height, weight, gender_style, content) VALUES 
+	(#{post_id}, #{user_id}, sysdate, #{imagename}, #{height}, #{weight}, #{gender_style}, #{content})
 </insert>
 <select id="getMaxPostId" resultType="Integer"> <!-- post_id 최대값찾아서 +1 해주기 -->
 	select max(post_id) from snap_post_detail
@@ -64,10 +71,11 @@
 <select id="getPostDetailByPostId" parameterType="Integer" resultType="com.springboot.wearwave.model.Snap_post_detail">
     SELECT d.post_id, 
            d.user_id, 
+           d.reg_date,
            d.imagename, 
            d.height, 
            d.weight, 
-           d.gender, 
+           d.gender_style,
            d.content,
            p.nickname,
            p.profile_img
@@ -82,7 +90,7 @@
 	select post_id, tpo_tag from Post_tpo_tags where post_id = #{postId}
 </select>	
 <select id="getFeedAll" resultType="com.springboot.wearwave.model.Snap_post_detail">
-	select post_id, user_id, imagename, height, weight, gender, content
+	select post_id, user_id, imagename, height, weight, gender_style, content
 	from Snap_post_detail order by post_id DESC
 </select>
 

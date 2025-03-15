@@ -211,6 +211,7 @@ async function openPostDetail(postId) {
         alert("게시물을 불러오지 못했습니다.");
     }
 }
+
 function deleteCheck(commentNo, txt) {
 	if(confirm("해당 댓글을 정말로 삭제하시겠습니까? \n\" "+txt+" \"")) {
 		deleteDo(commentNo);

@@ -19,6 +19,16 @@ public class SnapService {
 	private SnapMapper snapMapper;
 	
 	
+	//프로필관련=====================
+	public Integer getCountPostByUserId(String userId) {
+		return this.snapMapper.getCountPostByUserId(userId);
+	}
+	
+	
+	public Snap_profile getProfileByUserId(String userId) {
+		return this.snapMapper.getProfileByUserId(userId);
+	}
+	
 	//댓글관련========================
 	public Snap_comment getCommentByNo(Integer commNum) {
 		return this.snapMapper.getCommentByNo(commNum);

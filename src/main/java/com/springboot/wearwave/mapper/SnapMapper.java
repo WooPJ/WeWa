@@ -13,6 +13,12 @@ import com.springboot.wearwave.model.Snapshot_board;
 
 @Mapper
 public interface SnapMapper {
+	
+	//프로필관련
+	Integer getCountPostByUserId(String userId);
+	
+	Snap_profile getProfileByUserId(String userId);
+	
 	//댓글관련
 	Snap_comment getCommentByNo(Integer commNum);
 	void deleteComment(Integer commNum);
