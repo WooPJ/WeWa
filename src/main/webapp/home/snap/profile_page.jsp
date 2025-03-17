@@ -13,6 +13,10 @@
     width: 935px;
     flex-direction: column;
 }
+.snap_content{
+	margin-top: 100px;
+}
+
 </style>
 </head>
 <body>
@@ -66,7 +70,13 @@
 		            </div>
 				</section>
 			</div>
+			<div class="snap_content">
+            <c:if test="${not empty CONTENT2}">
+	        	<jsp:include page="${CONTENT2}" />
+	    	</c:if>	
+	    </div>
 		</div>
+			
 	</c:otherwise>
 </c:choose>
 </body>

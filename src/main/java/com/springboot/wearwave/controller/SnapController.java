@@ -308,9 +308,13 @@ public class SnapController {
         } 
         //해당ID가 작성한 게시물수 조회결과 할당
         profile.setCountPostNum(this.snapService.getCountPostByUserId(loginUser.getId())); 
+        List<Snap_post_detail> FeedList = this.snapService.getMyFeedAll(loginUser.getId());
+       
 		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
 		mav.addObject("CONTENT", "profile_page.jsp");
+		mav.addObject("FeedList", FeedList);
 		mav.addObject("EditProfile", profile); //객체주입
+		mav.addObject("CONTENT2", "posting_page.jsp");
 		return mav;
 	}
 	// 2.저장페이지

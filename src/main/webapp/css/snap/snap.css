@@ -46,11 +46,14 @@ html, body {
     max-width: 800px;
 }
 .snap_content_box{
+	
 	display: flex;
+	
     flex-direction: column;
     align-items: center;
     width: 100%;
     max-width: 600px;
+    gap: 20px;
 }
 
 
