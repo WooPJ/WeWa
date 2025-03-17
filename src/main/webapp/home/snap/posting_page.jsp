@@ -80,6 +80,44 @@ async function openPostDetail(postId) {
         document.getElementById("modal_content").innerText = POST.content;
         document.getElementById("modal_nickname").innerText = POST.nickname;
         
+     // 태그
+        const modalTags = document.getElementById("modal_tags");
+        modalTags.innerHTML = ""; // 기존 태그 초기화
+        
+        DATA.style_tags.forEach(tag => { //스타일 태그 추가
+            const tagElement = document.createElement("span");
+            tagElement.classList.add("tag", "style-tag"); // 스타일 태그에 고유 클래스 추가
+            let tagValue = "";
+            switch(tag.style_tag) {
+                case "casual": tagValue = "#캐주얼"; break;
+                case "minimal": tagValue = "#미니멀"; break;
+                case "chic": tagValue = "#시크"; break;
+                case "retro": tagValue = "#레트로"; break;
+                case "street": tagValue = "#스트릿"; break;
+            }
+            tagElement.textContent = tagValue;
+            modalTags.appendChild(tagElement);
+        });
+        DATA.tpo_tags.forEach(tag => { // TPO 태그 추가
+            const tagElement = document.createElement("span");
+            tagElement.classList.add("tag", "tpo-tag"); // TPO 태그에 고유 클래스 추가
+            let tagValue = "";
+            switch(tag.tpo_tag) {
+                case "daily": tagValue = "#데일리"; break;
+                case "date": tagValue = "#데이트"; break;
+                case "campus": tagValue = "#캠퍼스"; break;
+                case "trip": tagValue = "#여행"; break;
+                case "camping": tagValue = "#캠핑"; break;
+                case "cafe": tagValue = "#카페"; break;
+                case "beach": tagValue = "#바다"; break;
+                case "festival": tagValue = "#페스티벌"; break;
+                case "work": tagValue = "#출근"; break;
+                case "wedding": tagValue = "#결혼식"; break;
+            }
+            tagElement.textContent = tagValue;
+            modalTags.appendChild(tagElement);
+        });
+        
      	//관련 상품 정보 추가
         const productContainer = document.getElementById("related_products");
 		productContainer.innerHTML = ""; // 기존 상품 정보 초기화
