@@ -12,7 +12,6 @@
 </head>
 <body>
 
-<body>
     <div class="posting-form-container">
         <h2 class="posting-title">게시물 작성</h2>
         <form:form modelAttribute="Posting" action="/snap/addPostWrite.html" method="post" onsubmit="return validateForm()" enctype="multipart/form-data" name="postFrm" id="postingForm" class="posting-form">
@@ -94,5 +93,5 @@ function findProduct() {
     window.open(url, "_blank", "width=550,height=300");
 }
 </script>
-</body>
+
 </html>

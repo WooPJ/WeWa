@@ -347,4 +347,18 @@ public class SnapController {
 	    mav.addObject("loginUser", loginUser);
 	    return mav;
 	}
+
+	//작성한 게시글 보기
+	@GetMapping("/snap/mysnap.html") 
+	public ModelAndView mysnap(HttpSession session) {
+	    ModelAndView mav = new ModelAndView("index"); 
+	    LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
+	    List<Snap_post_detail> FeedList = this.snapService.getMyFeedAll(loginUser.getId());
+	    mav.addObject("FeedList", FeedList);
+	    mav.addObject("BODY", "snap/snap.jsp"); 
+	    
+	    
+	    mav.addObject("loginUser", loginUser);
+	    return mav;
+	}
 }

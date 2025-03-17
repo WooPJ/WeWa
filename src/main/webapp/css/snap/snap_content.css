@@ -114,7 +114,13 @@
 .user_follow>li>span{
     font-weight: bold;
 }
-
+.user_follow a{
+	color: black;
+	text-decoration: none; /* 밑줄 제거 */
+}
+.user_follow  a:visited {
+    color: inherit;
+}
 
 /* 비회원 프로필창 */
 #color_profile{

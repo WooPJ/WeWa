@@ -12,7 +12,6 @@
 </head>
 <body>
 
-<body>
     <div class="edit-form-container">
         <h2 class="edit-title">프로필 편집</h2>
         
@@ -108,5 +107,4 @@ function validateForm() {
     }
 }*/
 </script>
-</body>
 </html>

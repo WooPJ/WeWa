@@ -41,7 +41,7 @@ public interface SnapMapper {
 	List<Post_tpo_tags> getAllTpoById(Integer postId);
 	List<Snap_post_detail> getFeedAll();
 	
-	
+	List<Snap_post_detail> getMyFeedAll(String id);
 	
 	List<Snapshot_board> getFeedList();
 }
