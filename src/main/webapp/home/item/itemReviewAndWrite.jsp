@@ -11,6 +11,7 @@
 <title>상품 리뷰 작성</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/items.css">
 <link rel="stylesheet" type="text/css" href="/css/itemReviewAndWrite.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <br/><br/><br/><br/><br/><br/><br/><br/>	
@@ -30,7 +31,22 @@
        <!-- 다음 버튼 -->
        <a class="next" onclick="plusSlides(1)">&#10095;</a>
    </div>	
+
 <div class="product-name"><h3>${item.item_title}</h3></div>
+	<div class="sort-container">
+		<label for="sort">정렬:</label> <select id="sort"
+			onchange="sortProducts()">
+			<option value="default" ${param.sort == 'default' ? 'selected' : ''}>기본</option>
+			<option value="starpoint-desc"
+				${param.sort == 'starpoint-desc' ? 'selected' : ''}>별점 높은순</option>
+			<option value="starpoint-asc"
+				${param.sort == 'starpoint-asc' ? 'selected' : ''}>별점 낮은순</option>
+			<option value="date-desc"
+				${param.sort == 'date-desc' ? 'selected' : ''}>최근 날짜순</option>
+			<option value="date-asc"
+				${param.sort == 'date-asc' ? 'selected' : ''}>오래된 날짜순</option>
+		</select>
+	</div>
 
 <table>
     <tr>
@@ -134,6 +150,35 @@
     </c:choose>
 </div>
 <script type="text/javascript">
+
+function sortProducts() {
+    var sortOption = document.getElementById("sort").value;
+    var itemCode = "${param.item_code}";  // JSP에서 item_code 값을 받아옴
+    window.location.href = "/item/reviewSortedAtWrite.html?item_code=" + itemCode + "&sort=" + sortOption;
+}
+
+// 리뷰 목록 업데이트 함수
+function updateReviewTable(reviews) {
+    var tableBody = document.querySelector("table tbody");
+    tableBody.innerHTML = ""; // 기존 테이블 내용 비우기
+
+    // 새로운 리뷰 데이터를 테이블에 추가
+    reviews.forEach(function(review) {
+        var row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${review.writer}</td>
+            <td>${review.title}</td>
+            <td>${review.content}</td>
+            <td>${review.w_date}</td>
+            <td>
+                <div class="starpoint_box">
+                    <div class="starpoint_bg" style="width: ${review.item_rate * 20}%"></div>
+                </div>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
 // 리뷰 제출 전에 확인 메시지를 띄우는 함수
 function confirmReview() {
     var confirmation = confirm("리뷰를 등록하시겠습니까?");

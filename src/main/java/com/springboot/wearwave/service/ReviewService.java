@@ -22,4 +22,35 @@ public class ReviewService {
 	public void deleteReview(Integer seqno) {
 		this.reviewMapper.deleteReview(seqno);
 	}
+	public List<Review> sortStarPointDesc(String item_code){
+		return this.reviewMapper.sortStarPointDesc(item_code);
+	}
+	List<Review> sortStarPointAsc(String item_code){
+		return this.reviewMapper.sortStarPointAsc(item_code);
+	}
+	List<Review> sortByDateDesc(String item_code){
+		return this.reviewMapper.sortByDateDesc(item_code);
+	}
+	List<Review> sortByDateAsc(String item_code){
+		return this.reviewMapper.sortByDateAsc(item_code);
+	}
+	
+	public List<Review> getSortedReviews(String itemCode, String sortOption) {
+	    List<Review> reviews;
+	    
+	    // 정렬 옵션에 따른 분기 처리
+	    if ("starpoint-desc".equals(sortOption)) {
+	        reviews = reviewMapper.sortStarPointDesc(itemCode); // 별점 높은 순
+	    } else if ("starpoint-asc".equals(sortOption)) {
+	        reviews = reviewMapper.sortStarPointAsc(itemCode); // 별점 낮은 순
+	    } else if ("date-desc".equals(sortOption)) {
+	        reviews = reviewMapper.sortByDateDesc(itemCode); // 최신 순
+	    } else if ("date-asc".equals(sortOption)) {
+	        reviews = reviewMapper.sortByDateAsc(itemCode); // 오래된 순
+	    } else {
+	        reviews = reviewMapper.getReviewList(itemCode); // 기본 정렬
+	    }
+
+	    return reviews;
+	}
 }
