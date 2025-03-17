@@ -20,6 +20,15 @@ public class SnapService {
 	
 	
 	//프로필관련=====================
+	public Integer lengthNickname(String nickname) {
+		return this.snapMapper.lengthNickname(nickname);
+	}
+	public Integer duplicateNickname(String nickname) {
+		return this.snapMapper.duplicateNickname(nickname);
+	}
+	public void updateProfile(Snap_profile profile) {
+		this.snapMapper.updateProfile(profile);
+	}
 	public Integer getCountPostByUserId(String userId) {
 		return this.snapMapper.getCountPostByUserId(userId);
 	}

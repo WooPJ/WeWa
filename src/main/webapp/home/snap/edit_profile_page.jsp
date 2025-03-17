@@ -20,17 +20,24 @@
             <div class="error-message">
 				<script type="text/javascript">
 					alert("${error}");
+					location.href = "/snap/profileContent.html";
 				</script>
             </div>
         </c:if>
         
-        <form:form modelAttribute="EditProfile" action="/snap/editProfile.html" method="post" onsubmit="return frmCheck()" enctype="multipart/form-data" name="postFrm" id="editForm" class="editing-form">
+        <form:form modelAttribute="EditProfile" action="/snap/editProfile.html" method="post" 
+        	onsubmit="return frmCheck()" enctype="multipart/form-data" name="postFrm" id="editForm" class="editing-form">
+            <input type="hidden" name="nicknameChecked"/>
             
             <label for="photo" class="edit-label">프로필 사진 첨부</label>
             <input type="file" name="files" id="photo" class="edit-input-file" accept="image/*"/>
             
+            <!-- 닉네임입력 & 중복검사 -->
             <label class="edit-label">닉네임 입력</label>
-            <form:input path="nickname" type="text" value="${EditProfile.nickname}" id="nickname" class="edit-input" placeholder="닉네임"/>
+            <div class="input-with-button">
+	            <form:input path="nickname" type="text" value="${EditProfile.nickname}" id="nickname" class="edit-input" placeholder="닉네임을 입력하세요..." required="true"/>
+	            <input type="button" value="중복 확인" class="check-button" onclick="nicknameCheck()">
+            </div>
             
             <label for="intro" class="edit-label">소개말 입력</label>
             <form:textarea path="intro" id="intro" class="edit-textarea" placeholder="소개말 내용을 입력하세요..."/>
@@ -58,11 +65,32 @@
 
 <script type="text/javascript">
 
-function frmCheck() {
-    const isValid = validateForm();  // 성별 체크 검증
-    if (!isValid) return false;     // 성별 미선택 시 제출 방지
+function nicknameCheck() {
+	const userNickname = document.getElementById("nickname");
+    if (userNickname.value.trim() === '') {
+        alert("닉네임을 입력하세요.");
+        userNickname.focus();
+        return false;
+    } else {
+        if (userNickname.value.length < 1 || userNickname.value.length > 20) {
+            alert("닉네임은 1자 이상, 20자 이하로 입력하세요.");
+            userNickname.focus();
+            return false;
+        }
+    }
+   	const url = "/snap/nicknameCheck.html?nickname=" + userNickname.value;
+    window.open(url, "_blank_", "width=450,height=200");
+}
 
-    return confirmForm();           // 성별 선택 완료 후, 저장 확인창
+function frmCheck() {
+	if(document.postFrm.nicknameChecked.value == ""){
+		alert("닉네임 중복검사를 해야합니다.");
+		return false;
+	}
+    const isValid = validateForm(); // 성별 체크 검증
+    if (!isValid) return false; // 성별 미선택 시 제출 방지
+
+    return confirmForm(); // 성별 선택 완료 후, 저장 확인창
 }
 
 function confirmForm() {

@@ -5,6 +5,17 @@
 
 
 <!-- ===프로필관련=== -->
+<select id="lengthNickname" parameterType="string" resultType="Integer">
+	SELECT LENGTH(#{nickname}) FROM dual
+</select>
+<select id="duplicateNickname" parameterType="string" resultType="Integer">
+	select count(*) from snap_profile where nickname = #{nickname}
+</select>
+<update id="updateProfile" parameterType="com.springboot.wearwave.model.Snap_profile">
+	UPDATE snap_profile 
+	SET nickname= #{nickname}, intro= #{intro}, profile_img= #{profile_img}, height= #{height}, weight=#{weight}, gender=#{gender} 
+	WHERE user_id=#{user_id}
+</update>
 <select id="getCountPostByUserId" parameterType="string" resultType="Integer">
 	select count(*) from snap_post_detail where user_id = #{userId}
 </select>

@@ -15,6 +15,9 @@ import com.springboot.wearwave.model.Snapshot_board;
 public interface SnapMapper {
 	
 	//프로필관련
+	Integer lengthNickname(String nickname);
+	Integer duplicateNickname(String nickname);
+	void updateProfile(Snap_profile profile);
 	Integer getCountPostByUserId(String userId);
 	
 	Snap_profile getProfileByUserId(String userId);
