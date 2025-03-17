@@ -101,12 +101,12 @@ public class ItemReviewController {
         review.setW_date(w_date);
         review.setItem_rate(item_rate);
         this.reviewService.insertReview(review);
-        mav.setViewName("redirect:/item/reviewWrite.html?item_code="+review.getItem_code());
+        mav.setViewName("redirect:/review/reviewWrite.html?item_code="+review.getItem_code());
         return mav;
     }
 
     
-    @GetMapping(value = "/item/reviewWrite.html")
+    @GetMapping(value = "/review/reviewWrite.html")
     public ModelAndView reviewWrite(@RequestParam("item_code") String item_code) {
 		Item item = itemService.getItemCodePage(item_code); 
         List<String> sizeList = sizeService.sizeList(item_code); // `size` 대신 `sizeList`
@@ -121,7 +121,7 @@ public class ItemReviewController {
 		return mav;
     }
     
-	@GetMapping(value = "/item/review.html") //상품 리뷰 목록 이동
+	@GetMapping(value = "/review/review.html") //상품 리뷰 목록 이동
 	public ModelAndView goReview(@RequestParam("item_code") String item_code) {
 		Item item = itemService.getItemCodePage(item_code); 
         List<String> sizeList = sizeService.sizeList(item_code); // `size` 대신 `sizeList`

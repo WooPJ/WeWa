@@ -18,7 +18,7 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 	
-	@GetMapping("/notice/write.html")
+	@GetMapping("/notice/write.html") //공지사항 작성 폼 이동
 	public ModelAndView write() {
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("BODY", "mypage/mypage.jsp");
@@ -27,7 +27,7 @@ public class NoticeController {
         return mav;
 	}
 	
-	@PostMapping("/notice/input.html")
+	@PostMapping("/notice/input.html") //공지사항 DB 주입
 	public ModelAndView input(Notice notice, HttpSession session) {
 		int num = this.noticeService.getMaxNum() + 1;
 		LoginUser user = (LoginUser)session.getAttribute("loginUser");
@@ -38,14 +38,14 @@ public class NoticeController {
 		return new ModelAndView("redirect:/mypage/notice.html");
 	}
 	
-	@GetMapping("/notice/delete.html")
+	@GetMapping("/notice/delete.html") //공지사항 삭제
 	public ModelAndView deleteNotice(@RequestParam("seqno") int seqno) {
 	    this.noticeService.deleteNotice(seqno);
 	    this.noticeService.updateseqno(seqno);
 	    return new ModelAndView("redirect:/mypage/notice.html");
 	}
 	
-	@GetMapping("/notice/update.html")
+	@GetMapping("/notice/update.html") //공지사항 수정 폼 이동
 	public ModelAndView showUpdatePage(@RequestParam("seqno") int seqno) {
 	    Notice notice = noticeService.getNotice(seqno);
 	    ModelAndView mav = new ModelAndView("index");
@@ -55,7 +55,7 @@ public class NoticeController {
         return mav;
 	}
 	
-	@PostMapping("/notice/update.html")
+	@PostMapping("/notice/update.html") //공지사항 수정 DB 주입
 	public ModelAndView updateNotice(Notice notice) {	
 	   this.noticeService.updateNotice(notice);
 	   return new ModelAndView("redirect:/mypage/notice.html");

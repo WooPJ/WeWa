@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -14,16 +16,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.springboot.wearwave.model.Items_tbl;
 import com.springboot.wearwave.model.LoginUser;
 import com.springboot.wearwave.model.Post_style_tags;
 import com.springboot.wearwave.model.Post_tpo_tags;
+import com.springboot.wearwave.model.Snap_comment;
 import com.springboot.wearwave.model.Snap_post_detail;
 import com.springboot.wearwave.model.Snap_profile;
-import com.springboot.wearwave.model.Snapshot_board;
 import com.springboot.wearwave.model.User_info;
+import com.springboot.wearwave.service.ItemsService;
 import com.springboot.wearwave.service.LoginService;
 import com.springboot.wearwave.service.SnapService;
 
@@ -37,10 +42,148 @@ public class SnapController {
 	@Autowired
 	private SnapService snapService;
 	@Autowired
-	private LoginService loginService;
+	private ItemsService itemsService;
+	
+	// 프로필편집 페이지로 이동
+	@GetMapping("/snap/editProfile.html")
+	public ModelAndView editProfile(HttpSession session) {
+		ModelAndView mav = new ModelAndView("index");
+		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
+		mav.addObject("CONTENT", "edit_profile_page.jsp");
+		
+		// 로그인예외처리:  사용자확인 (세션에서 사용자 정보 확인) 
+		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
+	    if (loginUser == null) {
+	    	mav.addObject("EditProfile", new Snap_profile());
+	        mav.addObject("error", "로그인이 필요합니다."); // 에러 메시지 추가
+	        return mav;
+	    }
+		Snap_profile profile = this.snapService.getProfileByUserId(loginUser.getId());
+		
+		//스냅프로필에 해당ID의 프로필정보가 없는경우
+        if(profile == null) {
+        	profile = new Snap_profile();
+        	profile.setUser_id(loginUser.getId()); 
+        }
+		mav.addObject("EditProfile", profile); //폼페이지로 이동전 객체추가
+		return mav;
+	}
+	
+	// 댓글 삭제
+	@PostMapping("/snap/deleteComment")
+	@Transactional
+	@ResponseBody
+	public Map<String, Object> deleteComment(@RequestParam("commentNo") Integer commentNo,
+	                                        HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
+
+	    // 로그인예외처리: 사용자확인 (세션에서 사용자 정보 확인)
+	    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+	    if (loginUser == null) {
+	        response.put("error", "로그인이 필요합니다.");
+	        return response;
+	    }
+
+	    try {
+	        // 댓글 존재여부 확인
+	        Snap_comment comment = this.snapService.getCommentByNo(commentNo);
+	        if (comment == null) {
+	            response.put("error", "해당 댓글이 존재하지 않습니다.");
+	            return response;
+	        }
+	        this.snapService.deleteComment(commentNo); // 댓글 삭제 실행
+	        response.put("success", true);
+	        return response;
+
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	        response.put("error", "댓글 삭제에 실패했습니다.");
+	        return response;
+	    }
+	}
 	
 	
+	// 댓글업로드
+	@PostMapping("/snap/addComment")
+	@Transactional
+	@ResponseBody
+	public Map<String, Object> addComment(@RequestParam("postId") Integer postId,
+	                                      @RequestParam("commentContent") String commentContent,
+	                                      HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
+
+	    // 로그인예외처리: 사용자확인 (세션에서 사용자 정보 확인)
+	    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+	    if (loginUser == null) {
+	        response.put("error", "로그인이 필요합니다.");
+	        return response;
+	    }
+
+	    try {
+		    // 댓글 객체 생성 및 데이터 삽입
+		    Snap_comment newComment = new Snap_comment();
+		    newComment.setPost_id(postId);
+		    newComment.setWriter_id(loginUser.getId()); // 로그인 사용자 ID 추가
+		    newComment.setContent(commentContent);
 	
+	        User_info userInfo = (User_info)session.getAttribute("userInfo");
+	        Snap_profile profile = this.snapService.getProfileByUserId(loginUser.getId());
+	        
+	        //스냅프로필에 해당ID의 프로필정보나 닉네임이 없는경우
+	        if(profile == null || profile.getNickname() == null) {
+	        	profile = new Snap_profile();
+	        	profile.setUser_id(loginUser.getId()); 
+	        	profile.setNickname(userInfo.getName()); // user_info의 이름으로 닉네임 초기화
+	        	this.snapService.putNickname(profile); // 스냅프로필 테이블에 insert
+	        } 
+	        this.snapService.putComment(newComment); //댓글정보 insert
+	        return response;
+	        
+	    } catch(Exception e){
+	    	e.printStackTrace();
+	    	//System.out.println("댓글작성중 문제발생: "+e);
+	    	response.put("error", "댓글 작성에 실패했습니다.");
+	    	return response;
+	    }
+	}
+	
+	
+	//📌 게시물 클릭시 게시물 모달창 띄우기
+	@GetMapping("/snap/getPostDetail.html")
+	@ResponseBody // JSON 데이터를 반환하도록 설정
+	public Map<String, Object> getPostDetail(@RequestParam("postId") Integer postId) {
+	    Map<String, Object> response = new HashMap<>();
+
+	    Snap_post_detail postInfo = snapService.getPostDetailByPostId(postId);
+	    List<Post_style_tags> styleTag = snapService.getAllStyleById(postId);
+	    List<Post_tpo_tags> tpoTag = snapService.getAllTpoById(postId);
+	    List<Snap_comment> comment = snapService.getCommentList(postId);
+	    
+	    if (postInfo == null) {
+	        response.put("error", "서버응답: 게시물을 찾을 수 없습니다.");
+	        return response; // JSON 형태로 에러 반환
+	    }
+	    String itemCode = postInfo.getItem_code();
+	    System.out.println("상품코드: " + itemCode); // 디버깅 로그
+
+	    Items_tbl item = null; // 기본값 설정
+	    if (itemCode != null && !itemCode.isEmpty()) { // NULL 체크 추가
+	        item = itemsService.getMyItem(itemCode);
+	    }
+	  
+	    		
+	    // JSON 데이터 형태로 구성
+	    response.put("postInfo", postInfo);
+	    // 태그,댓글 배열 추가
+	    response.put("style_tags", styleTag);
+	    response.put("tpo_tags", tpoTag);
+	    response.put("comments", comment);
+	    response.put("related_products", (item != null) ? item : null);
+	    return response;
+	}
+	
+	
+    // 게시물작성 수행
 	@PostMapping("/snap/addPostWrite.html")
 	@Transactional
 	public ModelAndView inputPost(
@@ -91,14 +234,14 @@ public class SnapController {
 	    post.setPost_id(maxId);
         post.setUser_id(loginUser.getId());
         
-        User_info name = (User_info)session.getAttribute("name");
-        Snap_profile profile = this.snapService.getNicknameByUserId(loginUser.getId());
+        User_info userInfo = (User_info)session.getAttribute("userInfo");
+        Snap_profile profile = this.snapService.getProfileByUserId(loginUser.getId());
         
-        //스냅프로필 테이블에 닉네임정보가 없는경우
+        //스냅프로필에 해당ID의 프로필정보나 닉네임이 없는경우
         if(profile == null || profile.getNickname() == null) {
         	profile = new Snap_profile();
         	profile.setUser_id(loginUser.getId()); 
-        	profile.setNickname(name.getName()); // user_info의 이름으로 닉네임 초기화
+        	profile.setNickname(userInfo.getName()); // user_info의 이름으로 닉네임 초기화
         	this.snapService.putNickname(profile); // 스냅프로필 테이블에 insert
         } 
         post.setProfile(profile);
@@ -128,7 +271,6 @@ public class SnapController {
         }
         return new ModelAndView("redirect:/snap/postingContent.html");
 	}
-	
 	// 게시물작성 페이지로 이동
 	@GetMapping("/snap/addPostWrite.html")
 	public ModelAndView postWrite() {
@@ -139,28 +281,55 @@ public class SnapController {
 		return mav;
 	}
 	
-	// 스냅네비 페이지 3가지(포스팅,저장,프로필)페이지
-	@GetMapping("/snap/profileContent.html")
-	public ModelAndView profile() {
+	
+	// ====== 스냅네비 페이지 3가지(포스팅,저장,프로필)페이지 이동 ======
+	// 3.프로필페이지
+	@GetMapping("/snap/profileContent.html") 
+	public ModelAndView profile(HttpSession session) {
 		ModelAndView mav = new ModelAndView("index");
+ 
+		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
+		//로그인 풀린경우 예외처리
+	    if (loginUser == null) { 
+	    	mav.addObject("EditProfile", new Snap_profile());
+			mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
+			mav.addObject("CONTENT", "profile_page.jsp");
+	        return mav;
+	    }
+		User_info userInfo = (User_info)session.getAttribute("userInfo");
+        Snap_profile profile = this.snapService.getProfileByUserId(loginUser.getId());
+        
+		//스냅프로필에 해당ID의 프로필정보나 닉네임이 없는경우
+        if(profile == null || profile.getNickname() == null) {
+        	profile = new Snap_profile();
+        	profile.setUser_id(loginUser.getId()); 
+        	profile.setNickname(userInfo.getName()); // user_info의 이름으로 닉네임 초기화
+        	this.snapService.putNickname(profile); // 스냅프로필 테이블에 insert
+        } 
+        //해당ID가 작성한 게시물수 조회결과 할당
+        profile.setCountPostNum(this.snapService.getCountPostByUserId(loginUser.getId())); 
 		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
 		mav.addObject("CONTENT", "profile_page.jsp");
+		mav.addObject("EditProfile", profile); //객체주입
 		return mav;
 	}
-	@GetMapping("/snap/storedContent.html") //네비클릭
+	// 2.저장페이지
+	@GetMapping("/snap/storedContent.html") 
 	public ModelAndView stored() {
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
 		mav.addObject("CONTENT", "stored_page.jsp");
 		return mav;
 	}
-	@GetMapping("/snap/postingContent.html")
+	// 1.포스팅페이지
+	@GetMapping("/snap/postingContent.html") 
 	public ModelAndView posting(HttpSession session) {
 		ModelAndView mav = new ModelAndView("index");
-		List<Snapshot_board> FeedList = this.snapService.getFeedList();
-		session.setAttribute("FeedList", FeedList);
-//		mav.addObject("FeedList", FeedList);
+		List<Snap_post_detail> FeedList = this.snapService.getFeedAll();
+//		List<Snapshot_board> FeedList = this.snapService.getFeedList();
+//		session.setAttribute("FeedList", FeedList);
 		
+		mav.addObject("FeedList", FeedList);
 		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
 		mav.addObject("CONTENT", "posting_page.jsp");
 		return mav;
@@ -170,7 +339,10 @@ public class SnapController {
 	@GetMapping("/snap/snap.html") 
 	public ModelAndView snap(HttpSession session) {
 	    ModelAndView mav = new ModelAndView("index"); 
+	    List<Snap_post_detail> FeedList = this.snapService.getFeedAll();
+	    mav.addObject("FeedList", FeedList);
 	    mav.addObject("BODY", "snap/snap.jsp"); 
+	    
 	    LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
 	    mav.addObject("loginUser", loginUser);
 	    return mav;

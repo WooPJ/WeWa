@@ -17,7 +17,7 @@
         
     <h2>사업자 회원가입</h2>
 
-    <form:form action="/signup/businessprocess.html" method="post" name="frm" modelAttribute="user">
+    <form:form action="/entry/businessprocess.html" method="post" name="frm" modelAttribute="user">
         <form:hidden path="idChecked"/>
 
         <!-- 아이디 입력 & 중복 검사 -->

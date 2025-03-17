@@ -127,7 +127,7 @@ th {
 		</span>
 
 		<!-- <button type="button" class="cart-button">결제하기</button> -->
-		<form action="/item/order.html" method="post">
+		<form action="/order/order.html" method="post">
 			<c:forEach var="cart" items="${cartList}">
 				<input type="hidden" name="order_user_id"
 					value="${sessionScope.loginUser.id}">

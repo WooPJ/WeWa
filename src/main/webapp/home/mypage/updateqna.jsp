@@ -13,7 +13,7 @@
 <body>
     <div class="faq-container">
         <h2>문의 사항 수정</h2>
-        <form:form action="/qna/update.html" modelAttribute="qnabbs" method="post">
+        <form:form action="/qna/update.html" modelAttribute="qnabbs" method="post" enctype="multipart/form-data">
         <form:hidden path="seqno" value="${qnabbs.seqno }" />
             <div class="form-group">
                 <label for="title">제목:</label>
@@ -25,8 +25,8 @@
                 <form:input path="item_code" id="item_code"/> 
             </div>
             <div class="form-group">
-                <label for="title">이미지:</label>
-                 <input type="file" name="file" accept="image/*">
+                <label for="file">이미지:</label>
+                <form:input type="file" path="image" id="image" accept="image/*"/>
             </div>
             <div class="form-group">
                 <label for="content">내용:</label>

@@ -37,7 +37,6 @@ html, body {
 }
 
 
-
 /* 중앙 정렬된 컨텐츠 박스 */
 #snap_container{
 	display: flex;
@@ -56,7 +55,6 @@ html, body {
 
 
 
-
 /* 게시물, 저장됨, 프로필 선택 메뉴 */
 .snap_navi{
 	position: fixed; /* snap_navi 상단 고정 */
@@ -68,7 +66,7 @@ html, body {
     display: flex;
     justify-content: center;
     padding: 10px 0;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* 살짝 그림자 추가 */
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1); /* 살짝 그림자 추가 */
     
 /*     border-top: solid 1px #efefef; */
 /*     align-items: center; */
@@ -185,8 +183,6 @@ html, body {
 
 
 
-
-
 /* 한 줄에 3개씩 배치하고 자동 줄바꿈 */
 .profile_posting_line {
     display: grid;
@@ -214,8 +210,6 @@ html, body {
 
 
 
-
-
 /* ~~~~ 반응형 ~~~~  */
 @media (min-width: 1024px) {
 	.floating_btn {
@@ -229,24 +223,24 @@ html, body {
 	    max-width: 600px;
 	}
 	.snap_navi{
-    	top: 220px;
+    	/*top: 210px;*/
     	left: 40px; /* 왼쪽 여백 */
     	width: calc(100% - 80px);
 	}
 	.posting_page {
 		margin-top: 350px;
 	}
-	.profile {
-	    height: 50%;
-	    padding-left: 50px;
-		padding-top: 100px;
-		padding-left: 100px;
-	}
+/* 	.profile { */
+/* 	    height: 50%; */
+/* 	    padding-left: 50px; */
+/* 		padding-top: 100px; */
+/* 		padding-left: 100px; */
+/* 	} */
 }
 /* 모바일 환경 (768px 이하) */
 @media (max-width: 768px) {
 	.snap_navi {
-    	top: 270px;
+    	/*  top: 260px;*/
     	left: 0; width: 100%; /* 네비바 여백없애기 */
 	}
 	.posting_page {
@@ -256,8 +250,8 @@ html, body {
 	    grid-template-columns: repeat(3, minmax(150px, 1fr)); /* 가로 3개씩 */
 	    max-width: 450px;
 	}
-	.profile {
-		padding-top: 150px;
-		padding-left: 200px;
-	}
+/* 	.profile { */
+/* 		padding-top: 150px; */
+/* 		padding-left: 200px; */
+/* 	} */
 }

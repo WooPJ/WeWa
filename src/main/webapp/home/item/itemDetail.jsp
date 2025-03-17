@@ -34,7 +34,10 @@
 				        <!-- 다음 버튼 -->
 				        <a class="next" onclick="plusSlides(1)">&#10095;</a>
 				    </div>	
-				<div class="product-descriptions">${item.user_id}</div>    
+			
+				<div class="product-description">
+				    <a href="javascript:void(0);" onclick="submitSearchForm('${item.name}')">${item.name}</a>
+				</div>
 				<div class="product-name">${item.item_title}</div>
 				<div class="product-descriptions">${item.content}</div>
 				<div class="product-price">
@@ -120,7 +123,7 @@
 						<c:when
 							test="${sessionScope.loginUser != null && sessionScope.loginUser.grade != 0}">
 							<!-- 장바구니 담기 버튼 -->
-							<form action="../item/cart.html" method="post" onsubmit="return validateForm()">
+							<form action="../cart/cart.html" method="post" onsubmit="return validateForm()">
 							    <input type="hidden" name="item_code" value="${item.item_code}" />
 							    <input type="hidden" name="selectedSize" id="selectedSizePost"  />
 							    <input type="hidden" name="selectedColor" id="selectedColorPost" />
@@ -155,6 +158,11 @@
 			</div>
 		</div>
 	</div>
+		<!-- 동적으로 생성되는 폼 -->
+	<form id="searchForm" action="/home/search.html" method="post" style="display:none;">
+	    <input type="hidden" name="NAME" id="searchName" />
+	    <input type="hidden" name="pageno" value="1" />
+	</form>
 	<script>
 		//찜하트기능 ----------
 		const heartIcon = document.querySelector('.heart-icon');
@@ -185,7 +193,7 @@
 		
 		//리뷰 작성 및 보러가는 버튼 기능 함수
 		function goToReview(itemCode) {
-		    window.location.href = `/item/review.html?item_code=${item_code}`;
+		    window.location.href = `/review/review.html?item_code=${item_code}`;
 		}	
 		//사이즈, 색상, 수량 미선택 시, 띄우는 메시지 함수
 		function validateForm() {
@@ -288,6 +296,14 @@
         if (confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?")) {
             window.location.href = "/login/login.html"; // 로그인 페이지로 이동
         }
+    }
+    // 링크 클릭 시, 해당 이름으로 검색 요청을 보내는 함수
+    function submitSearchForm(name) {
+        // 폼에 name 값을 설정
+        document.getElementById('searchName').value = name;
+        
+        // 폼 제출
+        document.getElementById('searchForm').submit();
     }
     </script>
 </body>

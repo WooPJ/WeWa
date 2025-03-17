@@ -105,6 +105,9 @@ function editComment(comment_no) {
     // 수정할 텍스트를 텍스트 영역에 넣음
     var textarea = document.createElement('textarea');
     textarea.value = content;
+    textarea.rows = 4;  // 텍스트 영역의 행 수
+    textarea.cols = 50; // 텍스트 영역의 열 수
+
     commentContent.innerHTML = ''; // 기존 내용을 지우고 텍스트 영역을 삽입
     commentContent.appendChild(textarea);
 
@@ -113,6 +116,7 @@ function editComment(comment_no) {
     editButton.innerText = '저장';
     editButton.setAttribute('onclick', 'saveComment(' + comment_no + ')'); // 클릭 시 저장 호출
 }
+
 
 function saveComment(comment_no) {
     var commentContent = document.getElementById('commentContent-' + comment_no);

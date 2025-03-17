@@ -5,8 +5,9 @@
 
 	<!-- item_code를 사용하여 해당 상품 조회 -->
     <select id="getItemCodePage" parameterType="String" resultType="com.springboot.wearwave.model.Item">
-        SELECT item_code, item_title, price, content, imagename, user_id
-        FROM items_tbl
-        WHERE item_code = #{item_code}
+        SELECT i.*, u.name
+        FROM items_tbl i
+	    JOIN user_info u ON i.user_id = u.user_id
+        WHERE i.item_code = #{item_code}
     </select>
 </mapper>

@@ -16,13 +16,19 @@ public class Snap_post_detail {
 	private String imagename;
 	private Integer height;
 	private Integer weight;
-	private String gender;
+	private String gender_style;
 	private String content;
+	
+	private String nickname;
+	private String profile_img;
+	
 	
 	private Snap_profile profile;
 	private List<Post_style_tags> post_style_tags;
 	private List<Post_tpo_tags> post_tpo_tags;
 	private List<MultipartFile> files;
+	
+	private String item_code;
 //	private Integer start;
 //	private Integer end;
 }

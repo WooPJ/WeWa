@@ -101,16 +101,18 @@ h2 {
 }
 
 .comment-content {
+	white-space:pre-line;	
     display: inline-block;
-    width: 70%; /* 댓글 내용 영역 */
+    width: 80%; /* 댓글 내용 영역 */
     word-wrap: break-word; /* 자동 줄 바꿈 */
     font-size: 16px;
     margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .comment-date {
     display: inline-block;
-    width: 25%; /* 작성일 영역 */
+    width: 15%; /* 작성일 영역 */
     text-align: right; /* 오른쪽 정렬 */
     font-size: 14px;
     color: gray;

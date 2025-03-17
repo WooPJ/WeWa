@@ -48,7 +48,7 @@ public class LoginController {
 	    return mav;
 	}
 	
-	@PostMapping("/login/findidbyphone.html")
+	@PostMapping("/login/findidbyphone.html") //핸드폰 번호로 아이디 찾기
 	public ModelAndView findidbyphone(User_info user_info) {
 	    ModelAndView mav = new ModelAndView("login/findidresult"); 
 	    String id = findService.findIdbyPhone(user_info);
@@ -62,7 +62,7 @@ public class LoginController {
 	}
 
 	
-	@PostMapping("/login/findidbyemail.html")
+	@PostMapping("/login/findidbyemail.html") //이메일로 아이디 찾기
 	public ModelAndView findidbyemail(User_info user_info){
 		ModelAndView mav = new ModelAndView("login/findidresult"); 
 	    String id = findService.findIdbyEmail(user_info);
@@ -82,7 +82,7 @@ public class LoginController {
 	    return mav;
 	}
 	
-	@PostMapping("/login/findpwdbyphone.html")
+	@PostMapping("/login/findpwdbyphone.html") //핸드폰 번호로 비밀번호 찾기
 	public ModelAndView findpwdbyphone(User_info user_info){
 		ModelAndView mav = new ModelAndView("login/findpwdresult"); 
 	    Integer count = findService.findPwdbyPhone(user_info);
@@ -95,7 +95,7 @@ public class LoginController {
 	    return mav;
 	}
 	
-	@PostMapping("/login/findpwdbyemail.html")
+	@PostMapping("/login/findpwdbyemail.html")//이메일로 비밀번호 찾기
 	public ModelAndView findpwdbyemail(User_info user_info){
 		ModelAndView mav = new ModelAndView("login/findpwdresult"); 
 	    Integer count = findService.findPwdbyEmail(user_info);
@@ -108,7 +108,7 @@ public class LoginController {
 	    return mav;
 	}
 	
-	@PostMapping("/login/updatepwd.html")
+	@PostMapping("/login/updatepwd.html") //비밀번호 수정
 	public ModelAndView updatepwd(String user_id, String new_pwd) {
 		  ModelAndView mav = new ModelAndView("login/findpwdresult");
 		    User_info user_info = new User_info();
@@ -158,9 +158,9 @@ public class LoginController {
 	        mav.setViewName("login/login"); // 로그인 화면 유지
 	        mav.addObject("errorMessage", "아이디 또는 비밀번호가 올바르지 않습니다.");
 	    } else { // 로그인 성공
-	    	User_info name = userService.getUserInfo(user.getId());
+	    	User_info userInfo = userService.getUserInfo(user.getId());
 	        session.setAttribute("loginUser", user);
-	        session.setAttribute("name", name);
+	        session.setAttribute("userInfo", userInfo);
 	        
 	        // 로그인한 사용자의 찜 목록을 DB에서 가져와서 세션에 저장
             List<Heart> heartList = heartService.getUserHeartList(user.getId());
@@ -171,7 +171,7 @@ public class LoginController {
 	    return mav;
 	}
 
-	@GetMapping(value="/login/logout.html")
+	@GetMapping(value="/login/logout.html") //로그아웃
 	public ModelAndView logout(HttpSession session) {
 		session.invalidate();
 		ModelAndView mav = new ModelAndView("redirect:/home/index.html");

@@ -40,9 +40,9 @@
                         </svg>
                     </div>
                 </div>
-                <div class="product-name">${item.item_title}</div>
-                <div class="product-description">${item.content}</div>
-                <div class="product-price"><fmt:formatNumber value="${item.price}" groupingUsed="true"/>원</div>
+                <div class="product-name">${item.name}</div>
+	            <div class="product-description">${item.item_title}</div>
+	            <div class="product-price"><fmt:formatNumber value="${item.price}" groupingUsed="true"/>원</div>
             </a>
         </div>
     </c:forEach>

@@ -35,9 +35,8 @@
     </div>
     <script>
     function findProduct() {
-        const itemCode = document.getElementById("item_code").value;
-        var url = "/qna/finditem_code.html"
-        window.open(url, "_blank_", "width=450,height=200");
+        var url = "/qna/finditem_code.html";
+        window.open(url, "_blank", "width=550,height=300");
     }
 </script>
 </body>

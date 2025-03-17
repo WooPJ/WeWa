@@ -16,5 +16,6 @@ public class Item {
 	private String imagename;
 	private String content;
 	private String user_id;
+	private String name;
 	
 }

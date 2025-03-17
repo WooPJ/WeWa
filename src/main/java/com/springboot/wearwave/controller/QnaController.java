@@ -34,7 +34,7 @@ public class QnaController {
 	@Autowired
 	private ItemsService itemsService;
 	
-	@GetMapping(value="/qna/qnaWrite.html")
+	@GetMapping(value="/qna/qnaWrite.html") //Q&A 작성 폼 이동
 	public ModelAndView writeform(@RequestParam(value = "item_code", required = false) String itemCode) {
 	ModelAndView mav = new ModelAndView("index");
 	    if (itemCode != null) {
@@ -46,7 +46,7 @@ public class QnaController {
 	    return mav;
 	}
 	
-	@GetMapping(value = "/qna/finditem_code.html")
+	@GetMapping(value = "/qna/finditem_code.html") //상품 코드 찾기
 	public ModelAndView findCode() {
 		ModelAndView mav = new ModelAndView("mypage/findCode");
 		List<Items_tbl> itemList = this.itemsService.getItemList();
@@ -54,7 +54,7 @@ public class QnaController {
 		return mav;
 	}
 	
-	@GetMapping(value = "/qna/finditem_codeResult.html")
+	@GetMapping(value = "/qna/finditem_codeResult.html") //상품 코드 검색
 	public ModelAndView findCodeResult(String NAME) {
 		List<Items_tbl> itemList = this.itemsService.getItemByName(NAME);
 		ModelAndView mav = new ModelAndView("mypage/findCodeResult");
@@ -64,12 +64,12 @@ public class QnaController {
 	}
 	
 	
-	@PostMapping(value="/qna/write.html")
+	@PostMapping(value="/qna/write.html") //Q&A 작성 내용 DB 주입
 	public ModelAndView write(@Valid @ModelAttribute("qnabbs") Qna_bbs qnabbs,  
 			 HttpSession session) {
 		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
 		MultipartFile multipart = qnabbs.getImage();//선택한 파일을 불러온다.
-	
+		System.out.println(qnabbs.getImage());
 		if (multipart != null && !multipart.isEmpty()) {  // 파일이 업로드된 경우에만 처리
 	        String fileName = multipart.getOriginalFilename();  // 선택한 파일의 이름을 찾는다.
 	        ServletContext ctx = session.getServletContext();  // ServletContext 생성
@@ -80,7 +80,6 @@ public class QnaController {
 	            dir.mkdirs();  // 폴더가 없으면 생성
 	        }
 	        String path = userFolder + fileName;
-	        
 	        try (OutputStream os = new FileOutputStream(path);
 	             BufferedInputStream bis = new BufferedInputStream(multipart.getInputStream())) {
 	             
@@ -109,7 +108,7 @@ public class QnaController {
 		return new ModelAndView("redirect:/mypage/qnalist.html");
 	}
 	
-	@GetMapping("/qna/update.html")
+	@GetMapping("/qna/update.html") //Q&A 수정 폼 이동
 	public ModelAndView update(@RequestParam("seqno") int seqno) {
 	    Qna_bbs qnabbs = qnaService.getQnaDetail(seqno);
 	    ModelAndView mav = new ModelAndView("index");
@@ -119,32 +118,34 @@ public class QnaController {
         return mav;
 	}
 	
-	@PostMapping("/qna/update.html")
+	@PostMapping("/qna/update.html") //Q&A 수정 내용 DB 주입
 	public ModelAndView updateQna(Qna_bbs qna_bbs, HttpSession session) {	
 		 LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
 		 MultipartFile multiFile = qna_bbs.getImage();
 		 if (multiFile != null && !multiFile.getOriginalFilename().equals("")) {
-		        String fileName = multiFile.getOriginalFilename();
-		        ServletContext ctx = session.getServletContext();
+			 String fileName = multiFile.getOriginalFilename();  // 선택한 파일의 이름을 찾는다.
+		        ServletContext ctx = session.getServletContext();  // ServletContext 생성
 		        String userFolder = ctx.getRealPath("/imgs/qna/" + loginUser.getId() + "/");
+		        
+		        File dir = new File(userFolder);
+		        if (!dir.exists()) {
+		            dir.mkdirs();  // 폴더가 없으면 생성
+		        }
 		        String path = userFolder + fileName;
-		        OutputStream os = null;
-
-		        try {
-		            os = new FileOutputStream(path);
-		            BufferedInputStream bis = new BufferedInputStream(multiFile.getInputStream());
-		            byte[] buffer = new byte[8156];
+		        
+		        try (OutputStream os = new FileOutputStream(path);
+		             BufferedInputStream bis = new BufferedInputStream(multiFile.getInputStream())) {
+		             
+		            byte[] buffer = new byte[8156];  // 8K 크기로 배열을 생성한다.
 		            int read;
 		            while ((read = bis.read(buffer)) > 0) {
-		                os.write(buffer, 0, read);
+		                os.write(buffer, 0, read);  // 생성된 파일에 출력
 		            }
-		            qna_bbs.setImagename("/imgs/qna/" + loginUser.getId() + "/" + fileName);
+		            qna_bbs.setImagename("/imgs/qna/"+ loginUser.getId() + "/"+fileName);
 		        } catch (Exception e) {
-		            System.out.println("변경된 이미지 업로드 중 문제 발생!");
-		        } finally {
-		            try {
-		                if (os != null) os.close();
-		            } catch (Exception ignored) {}
+		            // 로그를 사용하여 에러 처리
+		            e.printStackTrace(); // 또는 logger.error("파일 업로드 중 오류 발생", e);
+		            return new ModelAndView("redirect:/errorPage.html");  // 에러 페이지로 리다이렉트
 		        }
 		    } else {
 		        // 기존 값 유지 (현재 DB에 있는 값으로 설정)
@@ -164,14 +165,14 @@ public class QnaController {
 		 return new ModelAndView("redirect:/mypage/qnalist.html");
 	}
 	
-	@GetMapping("/qna/delete.html")
+	@GetMapping("/qna/delete.html") //Q&A 삭제
 	public ModelAndView deleteQna(@RequestParam("seqno") int seqno) {
 	    this.qnaService.deleteQna(seqno);
 	    this.qnaService.updateseqno(seqno);
 		return new ModelAndView("redirect:/mypage/qnalist.html");
 	}
 	
-	@GetMapping(value="/qna/readqna.html")
+	@GetMapping(value="/qna/readqna.html") //Q&A 내용 출력
 	public ModelAndView readqna(Integer seqno) {
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("BODY", "mypage/mypage.jsp");
@@ -185,7 +186,7 @@ public class QnaController {
 		return mav;
 	}
 	
-	@PostMapping(value = "/qna/addComment.html")
+	@PostMapping(value = "/qna/addComment.html") //Q&A 댓글 작성
 	public ModelAndView addComment(@RequestParam int qna_seqno,
             @RequestParam String content, HttpSession session) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
@@ -200,7 +201,7 @@ public class QnaController {
 		return new ModelAndView("redirect:/qna/readqna.html?seqno=" + qna_seqno);
 	}
 	
-	@PostMapping("/qna/updateComment.html")
+	@PostMapping("/qna/updateComment.html") //Q&A 댓글 수정
 	public ModelAndView updateComment(@RequestParam("comment_no") int comment_no,
 	                                  @RequestParam("content") String content, 
 	                                  @RequestParam("qna_seqno") int qna_seqno) {
@@ -214,8 +215,7 @@ public class QnaController {
 	    return new ModelAndView("redirect:/qna/readqna.html?seqno=" + qna_seqno);
 	}
 
-	    // 댓글 삭제 처리
-	    @PostMapping("/qna/deleteComment.html")
+	    @PostMapping("/qna/deleteComment.html") // 댓글 삭제 처리
 	    public ModelAndView deleteComment(@RequestParam("comment_no") int comment_no, @RequestParam int qna_seqno) {
 	    	this.qnaService.deleteComment(comment_no);
 	    	return new ModelAndView("redirect:/qna/readqna.html?seqno=" + qna_seqno);

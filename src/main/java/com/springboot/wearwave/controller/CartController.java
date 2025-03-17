@@ -51,7 +51,7 @@ public class CartController {
 
 	
 	// 장바구니에 추가
-	@PostMapping(value = "/item/cart.html")
+	@PostMapping(value = "/cart/cart.html")
 	public ModelAndView addCart(HttpSession session, String item_code, String selectedSize, String selectedQuantity,
 	        String selectedColor, Cart cart) throws java.sql.SQLIntegrityConstraintViolationException {
 	    ModelAndView mav = new ModelAndView("index");
