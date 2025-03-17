@@ -43,11 +43,12 @@
 	
 	<!-- 고객의 주문한 상품 주문/배송내역 확인-->
 	<select id="getOrderList" parameterType="String" resultType="com.springboot.wearwave.model.Order">
-		select order_no, user_id, item_code, quantity, item_color, item_size, order_date, order_status
-		from order_tbl
-		where user_id = #{user_id} 
-		and (order_status = 0 or order_status = 1 or order_status = 2)
-		order by order_status
+		select o.order_no, o.user_id, o.item_code, o.quantity, o.item_color, o.item_size, o.order_date, o.order_status, i.imagename
+		from order_tbl o
+		join items_tbl i on o.item_code = i.item_code
+		where o.user_id = #{user_id} 
+		and (o.order_status = 0 or o.order_status = 1 or o.order_status = 2)
+		order by o.order_status
 	</select>
 	<!-- 주문하기 -->
 	<insert id="putOrder" parameterType="com.springboot.wearwave.model.Order">

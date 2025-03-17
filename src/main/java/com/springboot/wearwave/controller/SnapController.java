@@ -170,7 +170,7 @@ public class SnapController {
 	    if (itemCode != null && !itemCode.isEmpty()) { // NULL 체크 추가
 	        item = itemsService.getMyItem(itemCode);
 	    }
-
+	  
 	    		
 	    // JSON 데이터 형태로 구성
 	    response.put("postInfo", postInfo);
