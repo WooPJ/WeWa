@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.springboot.wearwave.model.Items_tbl;
 import com.springboot.wearwave.model.LoginUser;
 import com.springboot.wearwave.model.Post_style_tags;
 import com.springboot.wearwave.model.Post_tpo_tags;
@@ -27,6 +28,7 @@ import com.springboot.wearwave.model.Snap_comment;
 import com.springboot.wearwave.model.Snap_post_detail;
 import com.springboot.wearwave.model.Snap_profile;
 import com.springboot.wearwave.model.User_info;
+import com.springboot.wearwave.service.ItemsService;
 import com.springboot.wearwave.service.LoginService;
 import com.springboot.wearwave.service.SnapService;
 
@@ -39,7 +41,8 @@ import jakarta.transaction.Transactional;
 public class SnapController {
 	@Autowired
 	private SnapService snapService;
-	
+	@Autowired
+	private ItemsService itemsService;
 	
 	// 프로필편집 페이지로 이동
 	@GetMapping("/snap/editProfile.html")
@@ -145,13 +148,22 @@ public class SnapController {
 	        response.put("error", "게시물을 찾을 수 없습니다.");
 	        return response; // JSON 형태로 에러 반환
 	    }
-
+	    String itemCode = postInfo.getItem_code();
+	    Items_tbl item = itemsService.getMyItem(itemCode);
+	    		
 	    // JSON 데이터 형태로 구성
 	    response.put("postInfo", postInfo);
 	    // 태그,댓글 배열 추가
 	    response.put("style_tags", styleTag);
 	    response.put("tpo_tags", tpoTag);
 	    response.put("comments", comment);
+	    
+	    if (item != null) {
+	        response.put("related_products", item);
+	    } else {
+	        response.put("related_products", "상품 정보가 없습니다.");
+	    }
+
 	    return response;
 	}
 	
