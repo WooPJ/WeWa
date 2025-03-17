@@ -164,7 +164,13 @@ public class SnapController {
 	        return response; // JSON 형태로 에러 반환
 	    }
 	    String itemCode = postInfo.getItem_code();
-	    Items_tbl item = itemsService.getMyItem(itemCode);
+	    System.out.println("상품코드: " + itemCode); // 디버깅 로그
+
+	    Items_tbl item = null; // 기본값 설정
+	    if (itemCode != null && !itemCode.isEmpty()) { // NULL 체크 추가
+	        item = itemsService.getMyItem(itemCode);
+	    }
+
 	    		
 	    // JSON 데이터 형태로 구성
 	    response.put("postInfo", postInfo);
@@ -172,13 +178,7 @@ public class SnapController {
 	    response.put("style_tags", styleTag);
 	    response.put("tpo_tags", tpoTag);
 	    response.put("comments", comment);
-	    
-	    if (item != null) {
-	        response.put("related_products", item);
-	    } else {
-	        response.put("related_products", "상품 정보가 없습니다.");
-	    }
-
+	    response.put("related_products", (item != null) ? item : null);
 	    return response;
 	}
 	

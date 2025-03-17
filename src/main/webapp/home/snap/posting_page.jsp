@@ -80,6 +80,46 @@ async function openPostDetail(postId) {
         document.getElementById("modal_content").innerText = POST.content;
         document.getElementById("modal_nickname").innerText = POST.nickname;
         
+     	//관련 상품 정보 추가
+        const productContainer = document.getElementById("related_products");
+		productContainer.innerHTML = ""; // 기존 상품 정보 초기화
+		
+		if (DATA.related_products && typeof DATA.related_products === "object") {  
+		    const product = DATA.related_products; // 상품 객체
+		
+		    const productDiv = document.createElement("div");
+		    productDiv.className = "modal_product_item";
+		
+		    // 상품 이미지
+		    const productImg = document.createElement("img");
+		    productImg.className = "product_img";
+		    productImg.src = product.image_url || "/imgs/no_image.png"; // 상품 이미지 없으면 기본 이미지
+		    
+		    // 상품명
+		    const productName = document.createElement("div");
+		    productName.className = "product_name";
+		    productName.textContent = product.name || "상품명 없음";
+		    
+		    // 상품 가격
+		    const productPrice = document.createElement("div");
+		    productPrice.className = "product_price";
+		    productPrice.textContent = product.price ? `${product.price.toLocaleString()}원` : "가격 정보 없음";
+		
+		    // 상품 상세 페이지 링크
+		    const productLink = document.createElement("a");
+		    productLink.href = `/product/${product.item_code}`; // 상품 상세 페이지 링크
+		    productLink.target = "_blank"; // 새 창에서 열기
+		    productLink.appendChild(productImg);
+		    productLink.appendChild(productName);
+		    productLink.appendChild(productPrice);
+		
+		    productDiv.appendChild(productLink);
+		    productContainer.appendChild(productDiv);
+		} else {
+		    productContainer.innerText = "관련 상품 정보 없음"; // 상품이 없을 경우 메시지 출력
+		}
+
+        
         // 댓글
         let isWriter = false;
         const loginUser = "${loginUser.id}";
