@@ -30,10 +30,11 @@
             <form:input path="height" type="number" id="height" class="posting-input" placeholder="키 (cm)" required="true"/>
             <form:input path="weight" type="number" id="weight" class="posting-input" placeholder="몸무게 (kg)" required="true"/>
             
-            <label class="posting-label">성별</label>
+            <label class="posting-label">성별코디</label>
             <div class="posting-radio-group">
-                <form:radiobutton path="gender" value="male" id="gender_male" label="남성"/>
-    			<form:radiobutton path="gender" value="female" id="gender_female" label="여성"/>
+                <form:radiobutton path="gender_style" value="male" id="gender_male" label="남성코디"/>
+    			<form:radiobutton path="gender_style" value="female" id="gender_female" label="여성코디"/>
+    			<form:radiobutton path="gender_style" value="genderless" id="gender_less" label="젠더리스"/>
             </div>
             
             <label class="posting-label">스타일 태그</label>
@@ -70,9 +71,10 @@
 function validateForm() {
     const maleChecked = document.getElementById("gender_male").checked;
     const femaleChecked = document.getElementById("gender_female").checked;
+    const genderlessChecked = document.getElementById("gender_less").checked;
 
-    if (!maleChecked && !femaleChecked) {
-        alert("성별을 선택해주세요.");
+    if (!maleChecked && !femaleChecked && !genderlessChecked) {
+        alert("성별 스타일을 선택해주세요.");
         return false; // 폼 제출 방지
     }else {
 	    return true; // 정상 제출

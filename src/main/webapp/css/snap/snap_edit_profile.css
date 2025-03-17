@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 
 /* 전체 배경 색상 적용 */
 body {
@@ -5,7 +7,7 @@ body {
 }
 
 /* 포스팅 폼 컨테이너 */
-.posting-form-container {
+.edit-form-container {
     width: 100%;
     max-width: 600px;
     margin: 20px auto;
@@ -16,7 +18,7 @@ body {
 }
 
 /* 제목 스타일 */
-.posting-title {
+.edit-title {
     text-align: center;
     color: #333;
     font-size: 24px;
@@ -24,7 +26,7 @@ body {
 }
 
 /* 라벨 스타일 */
-.posting-label {
+.edit-label {
     display: block;
     font-weight: bold;
     margin: 20px 0 5px;
@@ -33,9 +35,9 @@ body {
 }
 
 /* 텍스트 입력 필드 */
-.posting-input,
-.posting-input-file,
-.posting-textarea {
+.edit-input,
+.edit-input-file,
+.edit-textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -45,26 +47,24 @@ body {
     margin-bottom: 10px;
 }
 
-.posting-textarea {
+.edit-textarea {
     height: 150px;
 }
 
-/* 라디오 및 체크박스 그룹 */
-.posting-radio-group,
-.posting-checkbox-group {
+/* 라디오 그룹 */
+.edit-radio-group {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
 
-/* 체크박스 및 라디오 버튼 */
-.posting-radio,
-.posting-checkbox {
+/* 라디오 버튼 */
+.edit-radio {
     margin-right: 5px;
 }
 
 /* 제출 버튼 */
-.posting-submit-btn {
+.edit-submit-btn {
     width: 100%;
     padding: 12px;
     background-color: #4CAF50;
@@ -76,12 +76,12 @@ body {
     margin-top: 20px;
 }
 
-.posting-submit-btn:hover {
+.edit-submit-btn:hover {
     background-color: #45a049;
 }
 
 @media (max-width: 1024px) {
-	.posting-form-container {
+	.edit-form-container {
 		margin-top: 30%;
 	}
 }
