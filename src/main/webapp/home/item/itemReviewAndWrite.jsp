@@ -78,15 +78,15 @@
 				</div>
 			</td>
 			<td>
-				<!-- 조건: 현재 로그인한 사용자와 리뷰 작성자가 같을 때만 수정/삭제 버튼 표시 -->
-				<c:if test="${sessionScope.loginUser.id == review.writer}">
-					<!-- 삭제 버튼 -->
-					<form action="/review/delete.html" method="post">
-						<input type="hidden" name="seqno" value="${review.seqno }">
-						<input type="hidden" name="item_code" value="${item.item_code }">
-						<input type="submit" value="삭제">
-					</form>
-				</c:if>
+			    <!-- 조건: 현재 로그인한 사용자와 리뷰 작성자가 같을 때만 수정/삭제 버튼 표시 -->
+			    <c:if test="${sessionScope.loginUser.id == review.writer}">
+			        <!-- 삭제 버튼 -->
+			        <form action="/review/delete.html" method="post" onsubmit="return confirmDelete()">
+			            <input type="hidden" name="seqno" value="${review.seqno }">
+			            <input type="hidden" name="item_code" value="${item.item_code }">
+			            <input type="submit" value="삭제">
+			        </form>
+			    </c:if>
 			</td>
 			</tr>
     </c:forEach>
@@ -151,6 +151,12 @@
 </div>
 <script type="text/javascript">
 
+//삭제 버튼 클릭 시 확인 메시지 띄우기
+function confirmDelete() {
+    var confirmation = confirm("정말 삭제하시겠습니까?");
+    return confirmation; // 확인을 누르면 true, 취소를 누르면 false
+}
+//리뷰 목록 정렬
 function sortProducts() {
     var sortOption = document.getElementById("sort").value;
     var itemCode = "${param.item_code}";  // JSP에서 item_code 값을 받아옴
