@@ -233,7 +233,7 @@ body.modal-open {
     justify-content: space-between;
 }
 
-.related-product-card {
+.modal_product_item {
     width: 30%;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -243,20 +243,27 @@ body.modal-open {
     background-color: #fff;
 }
 
-.related-product-card .productImg {
+.modal_product_item .product_img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
 }
 
-.related-product-card .productName {
-    font-size: 1.1em;
+.modal_product_item .product_name {
+    font-size: 0.8em;
     font-weight: bold;
     margin-top: 10px;
+    text-overflow: ellipsis;
 }
 
-.related-product-card .productPrice {
+.modal_product_item .product_price {
+	font-size: 0.8em;
     color: #d9534f;
     margin-top: 5px;
 }
-
+.modal_product_item a{
+	 text-decoration: none; /* 밑줄 제거 */
+}
+.modal_product_item a:visited {
+    color: inherit;
+}

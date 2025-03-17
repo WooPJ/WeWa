@@ -91,22 +91,30 @@ async function openPostDetail(postId) {
 		    productDiv.className = "modal_product_item";
 		
 		    // 상품 이미지
-		    
-		    const productImg = document.createElement("img");
-		    productImg.className = "product_img";
-		    productImg.src = product.imagename || "/imgs/no_image.png"; // 상품 이미지 없으면 기본 이미지
-		    console.log(DATA.related_products);
-		    // 상품명
+		   const productImg = document.createElement("img");
+			productImg.className = "product_img";
+			
+			// product.imagename이 있으면 ','로 구분하여 첫 번째 이미지를, 없으면 기본 이미지로 설정
+			const imageUrl = product.imagename ? product.imagename.split(",")[0] : "/imgs/no_image.png";
+			
+			productImg.src = imageUrl;	
+			
 		    const productName = document.createElement("div");
 		    productName.className = "product_name";
-		    productName.textContent = product.title || "상품명 없음";
-		    
+		    productName.textContent = product.item_title || "상품명 없음";
+		    console.log(product.title); 
 		    // 상품 가격
 		    const productPrice = document.createElement("div");
-		    productPrice.className = "product_price";
-		    productPrice.textContent = product.price ? `${product.price.toLocaleString()}원` : "가격 정보 없음";
-		    console.log(product.price);
-		    console.log(productPrice); 
+			productPrice.className = "product_price";
+			
+			// 가격이 존재하면 천 단위 구분자를 추가하고, 없으면 "가격 정보 없음" 표시
+			if (product.price) {
+			    const formattedPrice = product.price.toLocaleString(); // 천 단위 구분자 추가
+			    console.log(formattedPrice);
+			    productPrice.textContent = formattedPrice + "원";
+			} else {
+			    productPrice.textContent = "가격 정보 없음";
+			}
 		    // 상품 상세 페이지 링크
 		    const productLink = document.createElement("a");
 		    productLink.href = `/item/itemDetail.html?item_code=` + product.item_code; // 상품 상세 페이지 링크
