@@ -1,5 +1,6 @@
 package com.springboot.wearwave.model;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 

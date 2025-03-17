@@ -12,6 +12,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,12 +30,12 @@ import com.springboot.wearwave.model.Snap_post_detail;
 import com.springboot.wearwave.model.Snap_profile;
 import com.springboot.wearwave.model.User_info;
 import com.springboot.wearwave.service.ItemsService;
-import com.springboot.wearwave.service.LoginService;
 import com.springboot.wearwave.service.SnapService;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @Controller
 @Scope("session")
@@ -43,6 +44,60 @@ public class SnapController {
 	private SnapService snapService;
 	@Autowired
 	private ItemsService itemsService;
+	
+	
+	
+	//닉네임 중복검사 수행
+	@GetMapping("/snap/nicknameCheck.html")
+	public ModelAndView nicknameCheck(String nickname) {
+		ModelAndView mav = new ModelAndView("snap/nicknameCheckResult");
+		Integer nickDuplicate = this.snapService.duplicateNickname(nickname);
+		Integer nickLength = this.snapService.lengthNickname(nickname);
+		
+		if(nickDuplicate > 0) {//이미 계정이 존재하는 경우, 즉 계정 중복
+			mav.addObject("DUP","useNo_duplicate");
+			
+		}else {//계정이 존재하지 않는 경우, 즉 사용 가능
+			if(nickLength == null) {
+				mav.addObject("DUP","useNo_length_null"); //빈칸
+			} else if(nickLength > 20) {
+				mav.addObject("DUP","useNo_length_over"); //길이가 범위를 벗어남
+			} else {
+				mav.addObject("DUP","useYes"); //사용가능
+			}
+		}
+		mav.addObject("NICKNAME", nickname);
+		return mav;
+	}
+	
+	//프로필편집 수행
+	@PostMapping("/snap/editProfile.html")
+	public ModelAndView editDoProfile(
+			@ModelAttribute("EditProfile") Snap_profile profile, 
+	        @RequestParam("files") MultipartFile file,
+	        HttpSession session) {
+		
+		LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+		if(loginUser == null) {
+			ModelAndView mav = new ModelAndView("index");
+	    	mav.addObject("EditProfile", new Snap_profile());
+	        mav.addObject("error", "로그인이 필요합니다."); // 에러 메시지 추가
+	        return mav;
+		}
+		try {
+			profile.setUser_id(loginUser.getId());
+			this.snapService.updateProfile(profile);
+			return new ModelAndView("redirect:/snap/profileContent.html");
+					
+		} catch(Exception e) {
+			e.printStackTrace(); //에러 상세메세지
+			ModelAndView mav = new ModelAndView("index");
+			mav.addObject("BODY", "snap/snap.jsp");
+			mav.addObject("CONTENT", "edit_profile_page.jsp"); //프로필편집 페이지 유지
+			mav.addObject("error", "프로필편집 저장 중 오류가 발생했습니다.");
+			return mav;
+		}
+	}
 	
 	// 프로필편집 페이지로 이동
 	@GetMapping("/snap/editProfile.html")
@@ -83,7 +138,6 @@ public class SnapController {
 	        response.put("error", "로그인이 필요합니다.");
 	        return response;
 	    }
-
 	    try {
 	        // 댓글 존재여부 확인
 	        Snap_comment comment = this.snapService.getCommentByNo(commentNo);
