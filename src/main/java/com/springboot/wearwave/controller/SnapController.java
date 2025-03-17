@@ -73,24 +73,24 @@ public class SnapController {
 	//프로필편집 수행
 	@PostMapping("/snap/editProfile.html")
 	public ModelAndView editDoProfile(
-			@ModelAttribute("EditProfile") @Valid Snap_profile profile, 
-	        BindingResult br,
-	        @RequestParam("files") MultipartFile file) {
+			@ModelAttribute("EditProfile") Snap_profile profile, 
+	        @RequestParam("files") MultipartFile file,
+	        HttpSession session) {
 		
-		//유효성 검사
-        if (br.hasErrors()) {
-        	ModelAndView mav = new ModelAndView("index");
-        	mav.addObject("BODY", "snap/snap.jsp");
-            mav.addObject("CONTENT", "edit_profile_page.jsp"); //프로필편집 페이지 유지
-            mav.getModel().putAll(br.getModel());
-            return mav;
-        }
+		LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+		if(loginUser == null) {
+			ModelAndView mav = new ModelAndView("index");
+	    	mav.addObject("EditProfile", new Snap_profile());
+	        mav.addObject("error", "로그인이 필요합니다."); // 에러 메시지 추가
+	        return mav;
+		}
 		try {
+			profile.setUser_id(loginUser.getId());
 			this.snapService.updateProfile(profile);
 			return new ModelAndView("redirect:/snap/profileContent.html");
 					
 		} catch(Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(); //에러 상세메세지
 			ModelAndView mav = new ModelAndView("index");
 			mav.addObject("BODY", "snap/snap.jsp");
 			mav.addObject("CONTENT", "edit_profile_page.jsp"); //프로필편집 페이지 유지
@@ -138,7 +138,6 @@ public class SnapController {
 	        response.put("error", "로그인이 필요합니다.");
 	        return response;
 	    }
-
 	    try {
 	        // 댓글 존재여부 확인
 	        Snap_comment comment = this.snapService.getCommentByNo(commentNo);

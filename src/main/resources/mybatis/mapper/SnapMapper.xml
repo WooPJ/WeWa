@@ -13,7 +13,14 @@
 </select>
 <update id="updateProfile" parameterType="com.springboot.wearwave.model.Snap_profile">
 	UPDATE snap_profile 
-	SET nickname= #{nickname}, intro= #{intro}, profile_img= #{profile_img}, height= #{height}, weight=#{weight}, gender=#{gender} 
+	<set>
+        <if test="nickname != null">nickname = #{nickname},</if>
+        <if test="intro != null">intro = #{intro},</if>
+        <if test="profile_img != null">profile_img = #{profile_img},</if>
+        <if test="height != null">height = #{height},</if>
+        <if test="weight != null">weight = #{weight},</if>
+        <if test="gender != null">gender = #{gender},</if>
+    </set>
 	WHERE user_id=#{user_id}
 </update>
 <select id="getCountPostByUserId" parameterType="string" resultType="Integer">

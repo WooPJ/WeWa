@@ -79,7 +79,7 @@ function nicknameCheck() {
         }
     }
    	const url = "/snap/nicknameCheck.html?nickname=" + userNickname.value;
-    window.open(url, "_blank_", "width=450,height=200");
+    window.open(url, "_blank_", "width=500,height=300");
 }
 
 function frmCheck() {

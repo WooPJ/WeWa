@@ -22,11 +22,11 @@
 		닉네임은 1자 이상, 20자 이하로 입력하세요.
 	</c:when>
 	<c:when test="${DUP == 'useNo_length_over' }">
-		닉네임 "${NICKNAME}"의 길이가 부적합 합니다.<br/>
+		닉네임 "${NICKNAME}" 의 길이가 부적합 합니다.<br/>
 		닉네임은 1자 이상, 20자 이하로 입력하세요.
 	</c:when>
 	<c:otherwise>
-		${NICKNAME}은(는) 사용 가능합니다. <input type="button" value="사용" onclick="nicknameOk('${NICKNAME}')"/>
+		"${NICKNAME}" 은(는) 사용 가능합니다. <input type="button" value="사용" onclick="nicknameOk('${NICKNAME}')"/>
 	</c:otherwise>
 </c:choose>
 <script type="text/javascript">
