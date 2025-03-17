@@ -15,4 +15,5 @@ public class Order {
 	private String order_date;
 	private Integer order_status;
 	private String imagename;
+	private String item_title;
 }

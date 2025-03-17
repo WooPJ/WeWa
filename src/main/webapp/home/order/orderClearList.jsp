@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +21,7 @@
 			<tr>
 				<th>주문고객</th>
 				<th>상품코드</th>
+				<th>이미지</th>
 				<th>수량</th>
 				<th>색상</th>
 				<th>사이즈</th>
@@ -30,6 +32,11 @@
 				<tr>
 					<td>${orderClear.user_id }</td>
 					<td>${orderClear.item_code}</td>
+					<td>
+	                   <c:set var="imageList" value="${fn:split(orderClear.imagename, ',')}" />
+	                   <c:set var="lastIndex" value="${fn:length(imageList) - 1}" />
+	                   <img src="${imageList[lastIndex]}" class="myItem-image" width="100" height="100"/>
+	               </td>
 					<td>${orderClear.quantity}</td>
 					<td>${orderClear.item_color}</td>
 					<td>${orderClear.item_size}</td>

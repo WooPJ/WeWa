@@ -19,6 +19,7 @@
 	<h2>${sessionScope.loginUser.id}님의주문 목록</h2>
 	<table class="order-table">
 		<tr>
+			<th>상품명</th>
 			<th>이미지</th>
 			<th>수량</th>
 			<th>색상</th>
@@ -31,10 +32,13 @@
 		<c:forEach var="order" items="${orderList}">
 			<tr>
 				<td>
+					${order.item_title }
+				</td>
+				<td>
 	                   <c:set var="imageList" value="${fn:split(order.imagename, ',')}" />
 	                   <c:set var="lastIndex" value="${fn:length(imageList) - 1}" />
-	                   <img src="${imageList[lastIndex]}" class="myItem-image" />
-	               </td>
+	                   <img src="${imageList[lastIndex]}" class="myItem-image" width="100" height="100"/>
+	            </td>
 				<td>
 					<div class="order-quantity">${order.quantity }</div>
 				</td>
