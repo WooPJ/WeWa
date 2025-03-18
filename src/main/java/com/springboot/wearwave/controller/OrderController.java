@@ -121,6 +121,7 @@ public class OrderController {
         
         String userId = user.getId();
         List<Order> orderList = orderService.getOrderList(userId);  // 해당 사용자의 주문 목록 조회
+        
         mav.addObject("orderList", orderList);  // 주문 목록을 mav에 추가
         mav.addObject("CONTENT", "../order/orders.jsp");  // orders.jsp 화면 설정
         

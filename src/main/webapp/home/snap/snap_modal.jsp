@@ -35,7 +35,7 @@
 	        </div>
 	        <h3>관련 상품</h3>
 			<div id="related_products" class="related-products">
-			 <!-- 서버에서 가져온 상품들이 여기에 표시될 예정 -->
+				
     		</div>
         </div>
         

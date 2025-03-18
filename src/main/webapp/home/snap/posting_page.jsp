@@ -121,6 +121,58 @@ async function openPostDetail(postId) {
         });
         
         
+     	//관련 상품 정보 추가
+        const productContainer = document.getElementById("related_products");
+		productContainer.innerHTML = ""; // 기존 상품 정보 초기화
+		
+		if (DATA.related_products) {  
+		    const product = DATA.related_products; // 상품 객체
+		
+		    const productDiv = document.createElement("div");
+		    productDiv.className = "modal_product_item";
+		
+		    // 상품 이미지
+		   const productImg = document.createElement("img");
+			productImg.className = "product_img";
+			
+			// product.imagename이 있으면 ','로 구분하여 첫 번째 이미지를, 없으면 기본 이미지로 설정
+			const imageUrl = product.imagename ? product.imagename.split(",")[0] : "/imgs/no_image.png";
+			
+			productImg.src = imageUrl;	
+			
+		    const productName = document.createElement("div");
+		    productName.className = "product_name";
+		    productName.textContent = product.item_title || "상품명 없음";
+		    console.log(product.title); 
+		    // 상품 가격
+		    const productPrice = document.createElement("div");
+			productPrice.className = "product_price";
+			
+			// 가격이 존재하면 천 단위 구분자를 추가하고, 없으면 "가격 정보 없음" 표시
+			if (product.price) {
+			    const formattedPrice = product.price.toLocaleString(); // 천 단위 구분자 추가
+			    console.log(formattedPrice);
+			    productPrice.textContent = formattedPrice + "원";
+			} else {
+			    productPrice.textContent = "가격 정보 없음";
+			}
+		    // 상품 상세 페이지 링크
+		    const productLink = document.createElement("a");
+		    productLink.href = `/item/itemDetail.html?item_code=` + product.item_code; // 상품 상세 페이지 링크
+
+		    console.log(productLink.href);
+		    productLink.target = "_blank"; // 새 창에서 열기
+		    productLink.appendChild(productImg);
+		    productLink.appendChild(productName);
+		    productLink.appendChild(productPrice);
+		
+		    productDiv.appendChild(productLink);
+		    productContainer.appendChild(productDiv);
+		} else {
+		    productContainer.innerText = "관련 상품 정보 없음"; // 상품이 없을 경우 메시지 출력
+		}
+
+        
         // 댓글
         let isWriter = false;
         const loginUser = "${loginUser.id}";

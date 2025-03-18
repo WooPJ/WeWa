@@ -99,7 +99,9 @@ public class SnapService {
 		return this.snapMapper.getFeedAll();
 	}
 	
-	
+	public List<Snap_post_detail> getMyFeedAll(String id) {
+		return this.snapMapper.getMyFeedAll(id);
+	}
 	
 	public List<Snapshot_board> getFeedList() {
 		return this.snapMapper.getFeedList();

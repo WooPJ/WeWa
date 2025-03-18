@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +19,8 @@
 	<h2>${sessionScope.loginUser.id}님의주문 목록</h2>
 	<table class="order-table">
 		<tr>
-			<th>상품 코드</th>
+			<th>상품명</th>
+			<th>이미지</th>
 			<th>수량</th>
 			<th>색상</th>
 			<th>사이즈</th>
@@ -30,8 +32,13 @@
 		<c:forEach var="order" items="${orderList}">
 			<tr>
 				<td>
-					<div class="order-itemcode">${order.item_code }</div>
+					${order.item_title }
 				</td>
+				<td>
+	                   <c:set var="imageList" value="${fn:split(order.imagename, ',')}" />
+	                   <c:set var="lastIndex" value="${fn:length(imageList) - 1}" />
+	                   <img src="${imageList[lastIndex]}" class="myItem-image" width="100" height="100"/>
+	            </td>
 				<td>
 					<div class="order-quantity">${order.quantity }</div>
 				</td>

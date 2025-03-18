@@ -320,7 +320,7 @@ public class SnapController {
 	    if (itemCode != null && !itemCode.isEmpty()) { // NULL 체크 추가
 	        item = itemsService.getMyItem(itemCode);
 	    }
-
+	  
 	    		
 	    // JSON 데이터 형태로 구성
 	    response.put("postInfo", postInfo);
@@ -456,11 +456,26 @@ public class SnapController {
         	profile.setNickname(userInfo.getName()); // user_info의 이름으로 닉네임 초기화
         	this.snapService.putNickname(profile); // 스냅프로필 테이블에 insert
         } 
+        //성별정보
+        String putGenderName = "";
+        if(profile.getGender() != null) {
+        	switch (profile.getGender()){
+	        	case "male": putGenderName = "남성"; break;
+	        	case "female": putGenderName = "여성"; break;
+	        	case "private": putGenderName = "비공개"; break;
+        	}
+        	profile.setGender(putGenderName);
+        }
+        
         //해당ID가 작성한 게시물수 조회결과 할당
         profile.setCountPostNum(this.snapService.getCountPostByUserId(loginUser.getId())); 
+        List<Snap_post_detail> FeedList = this.snapService.getMyFeedAll(loginUser.getId());
+       
 		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
 		mav.addObject("CONTENT", "profile_page.jsp");
-		mav.addObject("EditProfile", profile); //객체주입
+		mav.addObject("FeedList", FeedList); //게시물정보 객체주입
+		mav.addObject("EditProfile", profile); //프로필정보 객체주입
+		mav.addObject("CONTENT2", "posting_page.jsp");
 		return mav;
 	}
 	// 2.저장페이지
@@ -494,6 +509,20 @@ public class SnapController {
 	    mav.addObject("BODY", "snap/snap.jsp"); 
 	    
 	    LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
+	    mav.addObject("loginUser", loginUser);
+	    return mav;
+	}
+
+	//작성한 게시글 보기
+	@GetMapping("/snap/mysnap.html") 
+	public ModelAndView mysnap(HttpSession session) {
+	    ModelAndView mav = new ModelAndView("index"); 
+	    LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
+	    List<Snap_post_detail> FeedList = this.snapService.getMyFeedAll(loginUser.getId());
+	    mav.addObject("FeedList", FeedList);
+	    mav.addObject("BODY", "snap/snap.jsp"); 
+	    
+	    
 	    mav.addObject("loginUser", loginUser);
 	    return mav;
 	}

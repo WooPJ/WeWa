@@ -13,9 +13,14 @@
     width: 935px;
     flex-direction: column;
 }
+.snap_content{
+	margin-top: 100px;
+}
+
 </style>
 </head>
 <body>
+
 <!-- 프로필 및 작성게시글----------------------- -->  				                
 <c:choose>
 	<c:when test="${loginUser == null }">
@@ -44,7 +49,7 @@
 		                <a class="profile_modify" href="/snap/editProfile.html">프로필 편집</a>
 					</div>
 		            <ul class="user_follow">
-		               <li>작성한 게시물 <span>${EditProfile.countPostNum}개</span></li>
+		               <li><a href="/snap/mysnap.html">작성한 게시물 <span>${EditProfile.countPostNum}개</span></a></li>
 <!-- 		               <li>팔로워 <span>123</span></li> -->
 <!-- 		               <li>팔로우 <span>456</span></li> -->
 		            </ul>
@@ -65,7 +70,13 @@
 		            </div>
 				</section>
 			</div>
+			<div class="snap_content">
+            <c:if test="${not empty CONTENT2}">
+	        	<jsp:include page="${CONTENT2}" />
+	    	</c:if>	
+	    </div>
 		</div>
+			
 	</c:otherwise>
 </c:choose>
 </body>
