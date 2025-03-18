@@ -4,15 +4,18 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +38,6 @@ import com.springboot.wearwave.service.SnapService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 
 @Controller
 @Scope("session")
@@ -49,6 +51,7 @@ public class SnapController {
 	
 	//닉네임 중복검사 수행
 	@GetMapping("/snap/nicknameCheck.html")
+	@Transactional
 	public ModelAndView nicknameCheck(String nickname) {
 		ModelAndView mav = new ModelAndView("snap/nicknameCheckResult");
 		Integer nickDuplicate = this.snapService.duplicateNickname(nickname);
@@ -70,6 +73,7 @@ public class SnapController {
 		return mav;
 	}
 	
+	
 	//프로필편집 수행
 	@PostMapping("/snap/editProfile.html")
 	public ModelAndView editDoProfile(
@@ -84,8 +88,100 @@ public class SnapController {
 	        mav.addObject("error", "로그인이 필요합니다."); // 에러 메시지 추가
 	        return mav;
 		}
+		
 		try {
-			profile.setUser_id(loginUser.getId());
+			profile.setUser_id(loginUser.getId()); //계정정보 할당
+			
+			// 📂저장 경로 설정
+		    ServletContext ctx = session.getServletContext();
+		    String userFolder = ctx.getRealPath("/imgs/snap/" + loginUser.getId() + "/");
+		    
+		    File dir = new File(userFolder);
+		    if (!dir.exists()) {
+		    	dir.mkdirs(); // 폴더가 없으면 생성
+		    }
+		    
+		    // 기존 프로필 이미지 삭제 로직 
+		    Snap_profile existingProfile = this.snapService.getProfileByUserId(loginUser.getId()); // 기존 데이터 조회
+		    String currentProfileImg = existingProfile != null ? existingProfile.getProfile_img() : null;
+		    if (currentProfileImg != null && !currentProfileImg.isEmpty()) {
+		        File oldFile = new File(ctx.getRealPath(currentProfileImg));
+		        if (oldFile.exists()) {
+		            oldFile.delete(); // 기존 파일 삭제
+		        }
+		    }
+		    
+	        if (!file.isEmpty()) {
+	        	String originalFileName = file.getOriginalFilename();
+	        	String fileExtension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 확장자 추출
+	           
+	            // 중복되지 않는 파일명 생성
+	            String newFileName;
+	            File newFile;
+	            do {
+	            	String shortUUID = UUID.randomUUID().toString().substring(0, 8); // UUID 앞 8자리만 사용
+	            	newFileName = shortUUID + fileExtension; // UUID + 확장자만 남기고 파일명 제거
+	            	newFile = new File(userFolder + newFileName);
+	            	
+	            } while (newFile.exists()); // 중복체크 (파일명이 존재하면 파일명 새로생성)
+//	            String filePath = userFolder + newFileName;
+	            
+	        	// 📂파일저장
+	            try (OutputStream os = new FileOutputStream(newFile);
+	                 BufferedInputStream bis = new BufferedInputStream(file.getInputStream())) {
+	                
+	                byte[] buffer = new byte[8192]; // 8K 크기
+	                int read;
+	                while ((read = bis.read(buffer)) > 0) {
+	                    os.write(buffer, 0, read);
+	                }
+	                // 이미지 경로 저장
+	                profile.setProfile_img("/imgs/snap/" + loginUser.getId() + "/" + newFileName);
+	                
+	            } catch (Exception e) {
+	                System.out.println("파일 업로드 중 문제 발생: " + e.getMessage());
+	            }
+	        }
+			
+	        // 파일 업로드 처리
+	        /*	        if(!file.isEmpty()) {
+	            // 저장할 경로 설정 (실제 경로로 변경 필요)
+	            String uploadDir = "/imgs/snap/profile/";
+	            Path uploadPath = Paths.get(uploadDir);
+	            
+	            // 디렉토리 생성 (없으면 생성)
+	            if (!Files.exists(uploadPath)) {
+	                Files.createDirectories(uploadPath); // 폴더 생성
+	            }
+	            
+	            if (!file.isEmpty()) {
+	                String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+	                Path filePath = uploadPath.resolve(fileName);
+	                file.transferTo(filePath.toFile()); // 파일 저장
+
+	                profile.setProfile_img(fileName);  // 저장된 파일명을 DB에 저장
+	            }
+	            
+	            
+	            // 파일 이름이 중복되지 않도록 현재 시간을 포함한 파일명 생성
+	            String originalFileName = file.getOriginalFilename();
+	            String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+	            String newFileName = loginUser.getId() + "_" + System.currentTimeMillis() + fileExtension;
+	            
+	            // 디렉토리가 없으면 생성
+	            File directory = new File(uploadDir);
+	            if (!directory.exists()) {
+	                directory.mkdirs();
+	            }
+	            
+	            // 파일 저장
+	            File saveFile = new File(uploadDir + newFileName);
+	            file.transferTo(saveFile);
+	            
+	            // 데이터베이스에 저장할 이미지 경로 설정
+	            String imageUrl = "/imgs/profile/" + newFileName;
+	            profile.setProfile_img(imageUrl);*/
+			
 			this.snapService.updateProfile(profile);
 			return new ModelAndView("redirect:/snap/profileContent.html");
 					

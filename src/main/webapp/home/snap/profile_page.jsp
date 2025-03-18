@@ -35,7 +35,7 @@
 		<div class = "profile_page">
 			<div class="profile">
 				<div class = "user_top">
-					<img class = "user_img" src="/imgs/icon/profile.png" width="100" height="100">
+					<img class = "user_img" src="${empty EditProfile.profile_img ? '/imgs/icon/profile.png' : EditProfile.profile_img}" width="100" height="100">
 				</div>
 		
 				<section class="user_section">
