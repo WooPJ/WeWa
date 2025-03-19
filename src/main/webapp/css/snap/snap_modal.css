@@ -91,6 +91,40 @@ body.modal-open {
     font-weight: bold;
 }
 
+/* 북마크 */
+.bookmark-container {
+    width: 100%;          /* 모달 전체 너비 차지 */
+    display: flex;         /* 내부 요소 정렬을 위해 Flex 사용 */
+    justify-content: flex-end; /* 아이콘을 오른쪽 끝으로 이동 */
+    padding: 10px 15px;    /* 상하 10px, 좌우 15px 여백 추가 */
+    box-sizing: border-box; /* 패딩 포함 너비 유지 */
+}
+.bookmark-container svg {
+    width: 24px;           /* 아이콘 크기 */
+    height: 24px;
+    fill: #aaa;            /* 기본 색상(회색) */
+    cursor: pointer;       /* 클릭 가능한 모양으로 변경 */
+    transition: fill 0.3s ease; /* 색상 전환 부드럽게 */
+}
+/* 버튼 기본스타일 지우기 */
+.bookmark-btn {
+	border: 0;
+	background-color: transparent;
+}
+
+/* 비활성화된 북마크 스타일 */
+.bookmark-btn svg {
+  fill: #ccc;
+}
+/* 활성화된 북마크 스타일 */
+.bookmark-btn.filled svg {
+	fill: #3498db;
+}
+
+
+
+
+
 
 
 /* ◆하단: 댓글창 섹션 */
