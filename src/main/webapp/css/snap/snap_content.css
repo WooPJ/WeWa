@@ -44,8 +44,8 @@
 	position: fixed;
 	display: flex; /* 가로 정렬 */
 /* 	margin-top: 100px; 네비게이션 높이만큼 여백 추가 */
-    height: 60%;
-    width: 50%;
+    height: 32%;
+    width: 100%;
     padding-left: 10%;
     background-color: white;
 	background-size: contain;
@@ -56,7 +56,8 @@
 	margin-right: 30px;
     display: flex; /* 가로 정렬을 위한 flexbox */
     justify-content: center;
-    align-items: center; /* 세로 중앙 정렬 */
+    align-items: end; /* 세로 중앙 정렬 ==> 세로바닥정렬 */  
+    padding-bottom: 30px;
 }
 
 .user_img {
@@ -69,7 +70,8 @@
 .user_section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: end;
+    padding-bottom: 50px;
     margin: 0;
 }
 .user_info_box {
@@ -210,15 +212,14 @@
 
 
 /* ~~~~ 반응형 ~~~~  */
-@media (min-width: 1024px) {
+/*@media (min-width: 1024px) {
 	.profile {
-		height: 40%;
+		height: 32%;
 	}
-
-}
+}*/
 @media (max-width: 768px) {
 	.profile {
-		height: 70%;
-	    padding-left: 20%;
+/* 		height: 70%; */
+	    padding-left: 30%;
 	}
 }

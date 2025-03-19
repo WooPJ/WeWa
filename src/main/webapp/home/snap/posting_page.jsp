@@ -65,22 +65,24 @@ async function openPostDetail(postId) {
     console.log("매개변수값확인: " + param);
     
     try {
-        const response = await fetch("/snap/getPostDetail.html?" + param); //AJAX 비동기 요청
+    	//AJAX 비동기 요청
+        const response = await fetch("/snap/getPostDetail.html?" + param); 
         if (!response.ok) throw new Error('Network response was not ok');
         const DATA = await response.json(); // 서버응답을 JSON으로 변환
         
         // JSON 데이터에 에러 메시지가 있는 경우 처리
         if (DATA.error) { alert(DATA.error); return; }
-        
         const POST = DATA.postInfo;
+        
         // 프로필이미지 없으면 기본이미지 할당
         document.getElementById("modal_profile_img").src = 
-            POST.profile_img ? "/imgs/snap/"+ POST.user_id +"/"+ POST.profile_img : "/imgs/snap/image.png";
+            POST.profile_img ? POST.profile_img : "/imgs/snap/image.png";
         document.getElementById("modal_img").src = POST.imagename;
         document.getElementById("modal_content").innerText = POST.content;
         document.getElementById("modal_nickname").innerText = POST.nickname;
         
-     // 태그
+        
+        // 태그
         const modalTags = document.getElementById("modal_tags");
         modalTags.innerHTML = ""; // 기존 태그 초기화
         
@@ -117,6 +119,7 @@ async function openPostDetail(postId) {
             tagElement.textContent = tagValue;
             modalTags.appendChild(tagElement);
         });
+        
         
      	//관련 상품 정보 추가
         const productContainer = document.getElementById("related_products");
@@ -176,69 +179,79 @@ async function openPostDetail(postId) {
         const commentList = document.getElementById("modal_comment_list");
         commentList.innerHTML = ""; // 기존 태그 초기화
         
-        DATA.comments.forEach(comment => { // 댓글개수만큼 반복
-            console.log("댓글번호: " + comment.comment_no);
-            // 1. 댓글 컨테이너 생성
-            const commentDiv = document.createElement("div");
-            commentDiv.className = "modal_comment";
+        
+        if(DATA.comments.length == 0) { //댓글이 없는경우
+            commentList.innerHTML = ""; // 기존 태그 초기화
+            const noCommentDiv = document.createElement("div");
+            noCommentDiv.className = "no_comment_notice";
+            noCommentDiv.textContent = "아직 댓글이 없습니다. 첫 댓글을 달아보세요!";
+            commentList.appendChild(noCommentDiv); // 안내 메시지 추가
             
-            // 2. 프로필 이미지 생성
-            const userImg = document.createElement("img");
-            userImg.className = "comment_user_img";
-            // 프로필이미지 없으면 기본이미지 할당
-            userImg.src = comment.profile_img ? "/imgs/snap/"+ comment.writer_id +"/"+ comment.profile_img : "/imgs/snap/image.png";
-            userImg.alt = "User";
-            
-            // 3. 댓글 내용 컨테이너 생성
-            const contentDiv = document.createElement("div");
-            contentDiv.className = "comment_content";
-            
-            // 4. 닉네임 생성
-            const usernameDiv = document.createElement("div");
-            usernameDiv.className = "comment_username";
-            usernameDiv.textContent = comment.nickname || comment.writer_id;
-            
-            // 5. 댓글 텍스트 생성
-            const textDiv = document.createElement("div");
-            textDiv.className = "comment_text";
-            textDiv.textContent = comment.content;
-            
-            // 6. 시간표시 | 삭제버튼 컨테이너
-            const actionDiv = document.createElement("div");
-            actionDiv.className = "comment_actions";
-            
-            // 7. 댓글 시간 생성
-            const timeDiv = document.createElement("div");
-            timeDiv.className = "comment_time";
-            timeDiv.textContent = comment.w_date;
-
-            // 8. 삭제 버튼 생성
-            console.log("로그인계정: "+loginUser);
-            console.log("댓글작성자: "+comment.writer_id);
-            
-            const deleteButton = document.createElement("button");
-            if(loginUser == comment.writer_id) { //로그인계정이 댓글작성자과 같은경우만 삭제버튼 보여주기
-	            deleteButton.className = "comment_delete";
-	            deleteButton.textContent = "삭제";
-	            deleteButton.onclick = () => deleteCheck(comment.comment_no, comment.content);
-	            actionDiv.appendChild(deleteButton); 
-	            isWriter = true;
-            } else 
-            	deleteButton.style.display = "none"; //아니면 버튼태그 숨김
-            
-            // 9. 요소들을 순서대로 조립
-            actionDiv.appendChild(timeDiv);
-            if(isWriter && deleteButton) actionDiv.appendChild(deleteButton);            
-            
-            contentDiv.appendChild(usernameDiv);
-            contentDiv.appendChild(textDiv);
-            contentDiv.appendChild(actionDiv);
-            commentDiv.appendChild(userImg);
-            commentDiv.appendChild(contentDiv);
-            
-            // 10. 최종 댓글을 modal_comments에 추가
-            commentList.appendChild(commentDiv);
-        });
+        } else {
+	        DATA.comments.forEach(comment => { // 댓글개수만큼 반복
+	            console.log("댓글번호: " + comment.comment_no);
+	            // 1. 댓글 컨테이너 생성
+	            const commentDiv = document.createElement("div");
+	            commentDiv.className = "modal_comment";
+	            
+	            // 2. 프로필 이미지 생성
+	            const userImg = document.createElement("img");
+	            userImg.className = "comment_user_img";
+	            // 프로필이미지 없으면 기본이미지 할당
+	            userImg.src = comment.profile_img ? comment.profile_img : "/imgs/snap/image.png";
+	            userImg.alt = "User";
+	            
+	            // 3. 댓글 내용 컨테이너 생성
+	            const contentDiv = document.createElement("div");
+	            contentDiv.className = "comment_content";
+	            
+	            // 4. 닉네임 생성
+	            const usernameDiv = document.createElement("div");
+	            usernameDiv.className = "comment_username";
+	            usernameDiv.textContent = comment.nickname || comment.writer_id;
+	            
+	            // 5. 댓글 텍스트 생성
+	            const textDiv = document.createElement("div");
+	            textDiv.className = "comment_text";
+	            textDiv.textContent = comment.content;
+	            
+	            // 6. 시간표시 | 삭제버튼 컨테이너
+	            const actionDiv = document.createElement("div");
+	            actionDiv.className = "comment_actions";
+	            
+	            // 7. 댓글 시간 생성
+	            const timeDiv = document.createElement("div");
+	            timeDiv.className = "comment_time";
+	            timeDiv.textContent = comment.w_date;
+	
+	            // 8. 삭제 버튼 생성
+	            console.log("로그인계정: "+loginUser);
+	            console.log("댓글작성자: "+comment.writer_id);
+	            
+	            const deleteButton = document.createElement("button");
+	            if(loginUser == comment.writer_id) { //로그인계정이 댓글작성자과 같은경우만 삭제버튼 보여주기
+		            deleteButton.className = "comment_delete";
+		            deleteButton.textContent = "삭제";
+		            deleteButton.onclick = () => deleteCheck(comment.comment_no, comment.content);
+		            actionDiv.appendChild(deleteButton); 
+		            isWriter = true;
+	            } else 
+	            	deleteButton.style.display = "none"; //아니면 버튼태그 숨김
+	            
+	            // 9. 요소들을 순서대로 조립
+	            actionDiv.appendChild(timeDiv);
+	            if(isWriter && deleteButton) actionDiv.appendChild(deleteButton);            
+	            
+	            contentDiv.appendChild(usernameDiv);
+	            contentDiv.appendChild(textDiv);
+	            contentDiv.appendChild(actionDiv);
+	            commentDiv.appendChild(userImg);
+	            commentDiv.appendChild(contentDiv);
+	            
+	            // 10. 최종 댓글을 modal_comments에 추가
+	            commentList.appendChild(commentDiv);
+	        }); //forEach
+        }// else
         
         const modal = document.getElementById('modal');
         modal.setAttribute('data-post-id', postId); // 모달에 게시물 ID 저장

@@ -28,8 +28,11 @@
         	onsubmit="return frmCheck()" enctype="multipart/form-data" name="postFrm" id="editForm" class="editing-form">
             <input type="hidden" name="nicknameChecked"/>
             
+            <label class="edit-label">기존 프로필 사진</label>
+            <img alt="profile" src="${empty EditProfile.profile_img ? '/imgs/icon/profile.png' : EditProfile.profile_img}" width="60px">
+            
             <label for="photo" class="edit-label">프로필 사진 첨부</label>
-            <input type="file" name="files" id="photo" class="edit-input-file" accept="image/*"/>
+	        <input type="file" name="files" id="photo" class="edit-input-file" accept="image/*"/>
             
             <!-- 닉네임입력 & 중복검사 -->
             <label class="edit-label">닉네임 입력</label>
