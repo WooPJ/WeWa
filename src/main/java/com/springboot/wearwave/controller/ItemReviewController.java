@@ -106,7 +106,7 @@ public class ItemReviewController {
     }
 
     
-    @GetMapping(value = "/review/reviewWrite.html")
+    @GetMapping(value = "/item/reviewWrite.html")
     public ModelAndView reviewWrite(@RequestParam("item_code") String item_code) {
 		Item item = itemService.getItemCodePage(item_code); 
         List<String> sizeList = sizeService.sizeList(item_code); // `size` 대신 `sizeList`
