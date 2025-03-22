@@ -90,15 +90,42 @@ body.modal-open {
 .modal_username {
     font-weight: bold;
 }
-
-/* 북마크 */
-.bookmark-container {
-    width: 100%;          /* 모달 전체 너비 차지 */
-    display: flex;         /* 내부 요소 정렬을 위해 Flex 사용 */
-    justify-content: flex-end; /* 아이콘을 오른쪽 끝으로 이동 */
-    padding: 10px 15px;    /* 상하 10px, 좌우 15px 여백 추가 */
-    box-sizing: border-box; /* 패딩 포함 너비 유지 */
+/* 아이콘 컨테이너 */
+.icon-container{
+	display: flex;
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    align-items: center;  /* 수직 중앙 정렬 */
+    gap: 10px; /* 아이콘 간 간격 조절 */
+    padding: 10px 15px;
 }
+
+/* 수정 */
+.update-container svg {
+    width: 24px;           /* 아이콘 크기 */
+    height: 24px;
+    fill: #eee;            /* 기본 색상(회색) */
+    cursor: pointer;       /* 클릭 가능한 모양으로 변경 */
+    transition: fill 0.3s ease; /* 색상 전환 부드럽게 */
+}
+/* 버튼 기본스타일 지우기 */
+.update-btn {
+	border: 0;
+	background-color: transparent;
+}
+/* 삭제 */
+.delete-container svg {
+    width: 24px;           /* 아이콘 크기 */
+    height: 24px;
+    fill: #eee;            /* 기본 색상(회색) */
+    cursor: pointer;       /* 클릭 가능한 모양으로 변경 */
+    transition: fill 0.3s ease; /* 색상 전환 부드럽게 */
+}
+/* 버튼 기본스타일 지우기 */
+.delete-btn {
+	border: 0;
+	background-color: transparent;
+}
+/* 북마크 */
 .bookmark-container svg {
     width: 24px;           /* 아이콘 크기 */
     height: 24px;
