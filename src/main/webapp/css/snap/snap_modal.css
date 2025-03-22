@@ -125,6 +125,7 @@ body.modal-open {
 	border: 0;
 	background-color: transparent;
 }
+
 /* 북마크 */
 .bookmark-container svg {
     width: 24px;           /* 아이콘 크기 */
