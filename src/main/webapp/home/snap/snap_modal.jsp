@@ -27,6 +27,13 @@
 	            	<img id="modal_img" src="" alt="image">
 	            </div>
 	        </div>
+	        <div class="bookmark-container">
+	        	<button class="bookmark-btn" onclick="bookmarkCheck('${loginUser.id}')" title="북마크 저장하기">
+	             	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+	             	<path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z"/>
+	             	</svg>
+	        	</button>
+            </div>
             <p id="modal_content" class="modal_text">
             	<!-- 서버에서 받아온 피드 내용을 여기에 표시 -->
             </p>
@@ -60,6 +67,29 @@
 </div>
 
 <script type="text/javascript">
+
+function bookmarkCheck(isLogin) {
+	if(isLogin == null) confirmLogin(); //로그인 안되어있으면
+	else {
+		// 현재 열려있는 모달에서 게시물 ID 가져오기
+		const postId = document.getElementById('modal').getAttribute('data-post-id');
+	    const bookmarkBtn = event.currentTarget; // 현재 버튼 요소 가져오기
+	    bookmarkBtn.classList.toggle('filled'); // filled 클래스 토글
+	    
+	    // 북마크 상태 확인 => .filled 있으면 true, 없으면 false
+	    const isBookmarked = bookmarkBtn.classList.contains('filled');
+		
+	    if(isBookmarked) {
+	      // 북마크 추가 로직
+// 	      addBookmark(isLogin);
+	      console.log("북마크 추가됨");
+	    } else {
+	      // 북마크 삭제 로직
+// 	      removeBookmark(isLogin);
+	      console.log("북마크 제거됨");
+	    }
+	}
+}
 
 // 엔터키 처리
 const inputEvent = document.getElementById("comment_input");
