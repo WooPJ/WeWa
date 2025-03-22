@@ -68,8 +68,40 @@
 
 <script type="text/javascript">
 
-function bookmarkCheck(isLogin) {
-	if(isLogin == null) confirmLogin(); //로그인 안되어있으면
+async function bookmarkCheck(isLogin) {
+	if(!isLogin) { //로그인 안된경우 `null`, `undefined`, `""` 모두 포함
+		confirmLogin();
+		return; //종료
+	}
+	
+    const postId = document.getElementById('modal').getAttribute('data-post-id');
+    const bookmarkBtn = event.currentTarget;
+    const isBookmarked = bookmarkBtn.classList.contains('filled');
+    const action = isBookmarked ? "remove" : "add";
+	
+    try {
+    	console.log("북마크 클릭한 포스트ID: ", postId);
+        const response = await fetch(`/snap/toggleBookmark?postId=\${postId}&userId=${loginUser.id}&action=\${action}`, {
+            method: 'POST'
+        });
+
+        if (!response.ok) throw new Error('북마크 처리 실패');
+        const data = await response.json();
+
+        if (data.status === "added") {
+            bookmarkBtn.classList.add('filled');
+            console.log("북마크 추가됨");
+        } else if (data.status === "removed") {
+            bookmarkBtn.classList.remove('filled');
+            console.log("북마크 제거됨");
+        }
+
+    } catch (error) {
+        console.error("북마크 처리 중 오류 발생:", error);
+        alert("북마크 처리 중 문제가 발생했습니다.");
+    }
+	
+/*	레거시
 	else {
 		// 현재 열려있는 모달에서 게시물 ID 가져오기
 		const postId = document.getElementById('modal').getAttribute('data-post-id');
@@ -88,7 +120,10 @@ function bookmarkCheck(isLogin) {
 // 	      removeBookmark(isLogin);
 	      console.log("북마크 제거됨");
 	    }
-	}
+	}*/
+	
+	
+	
 }
 
 // 엔터키 처리

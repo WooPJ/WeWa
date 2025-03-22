@@ -82,6 +82,15 @@ async function openPostDetail(postId) {
         document.getElementById("modal_nickname").innerText = POST.nickname;
         
         
+        //북마크
+        const bookmarkStatusRes = await fetch(`/snap/getBookmarkStatus?postId=\${postId}&userId=${loginUser.id}`);
+        const bookmarkData = await bookmarkStatusRes.json();
+        const bookmarkBtn = document.querySelector('.bookmark-btn');
+        
+        if (bookmarkData.isBookmarked) bookmarkBtn.classList.add('filled');
+        else bookmarkBtn.classList.remove('filled');
+        
+        
         // 태그
         const modalTags = document.getElementById("modal_tags");
         modalTags.innerHTML = ""; // 기존 태그 초기화

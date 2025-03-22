@@ -4,6 +4,21 @@
 <mapper namespace="com.springboot.wearwave.mapper.SnapMapper">
 
 
+<!-- === 북마크관련 === -->
+<!-- 북마크 유무확인 -->
+<select id="getIsBookmarked" parameterType="com.springboot.wearwave.model.Snap_bookmark" resultType="Integer">
+	select count(*) from snap_bookmark where user_id = #{user_id} and post_id = #{post_id}
+</select>
+<select id="getMaxBookmarkNo" resultType="Integer">
+	select max(bookmark_id) from snap_bookmark
+</select>
+<insert id="putBookmark" parameterType="com.springboot.wearwave.model.Snap_bookmark">
+	insert into snap_bookmark values(#{bookmark_id}, #{user_id}, #{post_id})
+</insert>
+<delete id="deleteBookmark" parameterType="com.springboot.wearwave.model.Snap_bookmark">
+	delete from snap_bookmark where user_id = #{user_id} and post_id = #{post_id}
+</delete>
+
 <!-- ===프로필관련=== -->
 <select id="lengthNickname" parameterType="string" resultType="Integer">
 	SELECT LENGTH(#{nickname}) FROM dual

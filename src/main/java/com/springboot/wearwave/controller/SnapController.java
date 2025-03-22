@@ -49,6 +49,8 @@ public class SnapController {
 	
 	
 	
+	
+	
 	//닉네임 중복검사 수행
 	@GetMapping("/snap/nicknameCheck.html")
 	@Transactional

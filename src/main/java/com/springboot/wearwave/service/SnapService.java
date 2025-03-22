@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.springboot.wearwave.mapper.SnapMapper;
 import com.springboot.wearwave.model.Post_style_tags;
 import com.springboot.wearwave.model.Post_tpo_tags;
+import com.springboot.wearwave.model.Snap_bookmark;
 import com.springboot.wearwave.model.Snap_comment;
 import com.springboot.wearwave.model.Snap_post_detail;
 import com.springboot.wearwave.model.Snap_profile;
@@ -18,6 +19,24 @@ public class SnapService {
 	@Autowired
 	private SnapMapper snapMapper;
 	
+	
+	//북마크관련=====================
+	public Integer getIsBookmarked(Snap_bookmark bookmark) {
+		return this.snapMapper.getIsBookmarked(bookmark);
+	}
+	public Integer getMaxBookmarkNo() {
+		Integer max = this.snapMapper.getMaxBookmarkNo();
+		if(max == null) max = 0;
+		return max;
+	}
+	public void putBookmark(Snap_bookmark bookmark) {
+		Integer max = this.getMaxBookmarkNo();
+		bookmark.setBookmark_id(max + 1); //북마크PK 증가
+		this.snapMapper.putBookmark(bookmark);
+	}
+	public void deleteBookmark(Snap_bookmark bookmark) {
+		this.snapMapper.deleteBookmark(bookmark);
+	}
 	
 	//프로필관련=====================
 	public Integer lengthNickname(String nickname) {

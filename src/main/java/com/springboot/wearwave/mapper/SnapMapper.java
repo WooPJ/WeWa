@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.springboot.wearwave.model.Post_style_tags;
 import com.springboot.wearwave.model.Post_tpo_tags;
+import com.springboot.wearwave.model.Snap_bookmark;
 import com.springboot.wearwave.model.Snap_comment;
 import com.springboot.wearwave.model.Snap_post_detail;
 import com.springboot.wearwave.model.Snap_profile;
@@ -13,6 +14,12 @@ import com.springboot.wearwave.model.Snapshot_board;
 
 @Mapper
 public interface SnapMapper {
+	
+	//북마크관련
+	Integer getIsBookmarked(Snap_bookmark bookmark);
+	Integer getMaxBookmarkNo();
+	void putBookmark(Snap_bookmark bookmark);
+	void deleteBookmark(Snap_bookmark bookmark);
 	
 	//프로필관련
 	Integer lengthNickname(String nickname);
