@@ -12,7 +12,6 @@ import com.springboot.wearwave.model.Snap_bookmark;
 import com.springboot.wearwave.model.Snap_comment;
 import com.springboot.wearwave.model.Snap_post_detail;
 import com.springboot.wearwave.model.Snap_profile;
-import com.springboot.wearwave.model.Snapshot_board;
 
 @Service
 public class SnapService {
@@ -120,9 +119,5 @@ public class SnapService {
 	
 	public List<Snap_post_detail> getMyFeedAll(String id) {
 		return this.snapMapper.getMyFeedAll(id);
-	}
-	
-	public List<Snapshot_board> getFeedList() {
-		return this.snapMapper.getFeedList();
 	}
 }

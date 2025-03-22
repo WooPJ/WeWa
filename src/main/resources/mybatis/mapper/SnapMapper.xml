@@ -135,9 +135,4 @@
 	order by post_id DESC
 </select>
 
-<select id="getFeedList" resultType="com.springboot.wearwave.model.Snapshot_board">
-	select seqno, writer, content, to_char(w_date,'YYYY/MM/DD HH24:MI:SS') AS w_date, like_count, imagename, pwd 
-	from snapshot_board
-</select><!-- 테스트코드 -->
-
 </mapper>

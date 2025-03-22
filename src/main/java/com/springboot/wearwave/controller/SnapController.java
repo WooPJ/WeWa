@@ -48,9 +48,6 @@ public class SnapController {
 	private ItemsService itemsService;
 	
 	
-	
-	
-	
 	//닉네임 중복검사 수행
 	@GetMapping("/snap/nicknameCheck.html")
 	@Transactional
@@ -144,46 +141,6 @@ public class SnapController {
 	                System.out.println("파일 업로드 중 문제 발생: " + e.getMessage());
 	            }
 	        }
-			
-	        // 파일 업로드 처리
-	        /*	        if(!file.isEmpty()) {
-	            // 저장할 경로 설정 (실제 경로로 변경 필요)
-	            String uploadDir = "/imgs/snap/profile/";
-	            Path uploadPath = Paths.get(uploadDir);
-	            
-	            // 디렉토리 생성 (없으면 생성)
-	            if (!Files.exists(uploadPath)) {
-	                Files.createDirectories(uploadPath); // 폴더 생성
-	            }
-	            
-	            if (!file.isEmpty()) {
-	                String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-	                Path filePath = uploadPath.resolve(fileName);
-	                file.transferTo(filePath.toFile()); // 파일 저장
-
-	                profile.setProfile_img(fileName);  // 저장된 파일명을 DB에 저장
-	            }
-	            
-	            
-	            // 파일 이름이 중복되지 않도록 현재 시간을 포함한 파일명 생성
-	            String originalFileName = file.getOriginalFilename();
-	            String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-	            String newFileName = loginUser.getId() + "_" + System.currentTimeMillis() + fileExtension;
-	            
-	            // 디렉토리가 없으면 생성
-	            File directory = new File(uploadDir);
-	            if (!directory.exists()) {
-	                directory.mkdirs();
-	            }
-	            
-	            // 파일 저장
-	            File saveFile = new File(uploadDir + newFileName);
-	            file.transferTo(saveFile);
-	            
-	            // 데이터베이스에 저장할 이미지 경로 설정
-	            String imageUrl = "/imgs/profile/" + newFileName;
-	            profile.setProfile_img(imageUrl);*/
-			
 			this.snapService.updateProfile(profile);
 			return new ModelAndView("redirect:/snap/profileContent.html");
 					
@@ -493,8 +450,6 @@ public class SnapController {
 	public ModelAndView posting(HttpSession session) {
 		ModelAndView mav = new ModelAndView("index");
 		List<Snap_post_detail> FeedList = this.snapService.getFeedAll();
-//		List<Snapshot_board> FeedList = this.snapService.getFeedList();
-//		session.setAttribute("FeedList", FeedList);
 		
 		mav.addObject("FeedList", FeedList);
 		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)

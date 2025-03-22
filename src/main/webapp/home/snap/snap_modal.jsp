@@ -80,7 +80,6 @@ async function bookmarkCheck(isLogin) {
     const action = isBookmarked ? "remove" : "add";
 	
     try {
-    	console.log("북마크 클릭한 포스트ID: ", postId);
         const response = await fetch(`/snap/toggleBookmark?postId=\${postId}&userId=${loginUser.id}&action=\${action}`, {
             method: 'POST'
         });
@@ -90,40 +89,14 @@ async function bookmarkCheck(isLogin) {
 
         if (data.status === "added") {
             bookmarkBtn.classList.add('filled');
-            console.log("북마크 추가됨");
         } else if (data.status === "removed") {
             bookmarkBtn.classList.remove('filled');
-            console.log("북마크 제거됨");
         }
 
     } catch (error) {
         console.error("북마크 처리 중 오류 발생:", error);
         alert("북마크 처리 중 문제가 발생했습니다.");
     }
-	
-/*	레거시
-	else {
-		// 현재 열려있는 모달에서 게시물 ID 가져오기
-		const postId = document.getElementById('modal').getAttribute('data-post-id');
-	    const bookmarkBtn = event.currentTarget; // 현재 버튼 요소 가져오기
-	    bookmarkBtn.classList.toggle('filled'); // filled 클래스 토글
-	    
-	    // 북마크 상태 확인 => .filled 있으면 true, 없으면 false
-	    const isBookmarked = bookmarkBtn.classList.contains('filled');
-		
-	    if(isBookmarked) {
-	      // 북마크 추가 로직
-// 	      addBookmark(isLogin);
-	      console.log("북마크 추가됨");
-	    } else {
-	      // 북마크 삭제 로직
-// 	      removeBookmark(isLogin);
-	      console.log("북마크 제거됨");
-	    }
-	}*/
-	
-	
-	
 }
 
 // 엔터키 처리
