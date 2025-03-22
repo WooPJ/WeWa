@@ -38,13 +38,20 @@ public interface SnapMapper {
 	void putStyleTag(Post_style_tags styleTag);
 	void putFeedPost(Snap_post_detail snap_post_detail);
 	Integer getMaxPostId();
+	void deletePost(Integer post_id);
 	
 	Snap_post_detail getPostDetailByPostId(Integer postId);
 	List<Post_style_tags> getAllStyleById(Integer postId);
 	List<Post_tpo_tags> getAllTpoById(Integer postId);
+	List<String> getStyleById(Integer postId);
+	List<String> getTpoById(Integer postId);
 	List<Snap_post_detail> getFeedAll();
 	
 	List<Snap_post_detail> getMyFeedAll(String id);
 	
 	List<Snapshot_board> getFeedList();
+	
+	void updateFeedPost(Snap_post_detail snap_post_detail);
+	void deleteTpo(Integer postId);
+	void deleteStyle(Integer postId);
 }

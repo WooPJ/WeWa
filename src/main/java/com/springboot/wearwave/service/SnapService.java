@@ -84,7 +84,16 @@ public class SnapService {
 		if(max == null) max = 0;
 		return max;
 	}
+	public void deletePost(Integer post_id) {
+		this.snapMapper.deletePost(post_id);
+	}
 	
+	public List<String> getTpoById(Integer postId) {
+		return this.snapMapper.getTpoById(postId);
+	}
+	public List<String> getStyleById(Integer postId) {
+		return this.snapMapper.getStyleById(postId);
+	}
 	
 	public List<Post_tpo_tags> getAllTpoById(Integer postId) {
 		return this.snapMapper.getAllTpoById(postId);
@@ -105,5 +114,17 @@ public class SnapService {
 	
 	public List<Snapshot_board> getFeedList() {
 		return this.snapMapper.getFeedList();
+	}
+	
+	public void updateFeedPost(Snap_post_detail snap_post_detail) {
+		this.snapMapper.updateFeedPost(snap_post_detail);
+	}
+	
+	public void deleteTpo(Integer postId) {
+		this.snapMapper.deleteTpo(postId);
+	}
+	
+	public void deleteStyle(Integer postId) {
+		this.snapMapper.deleteStyle(postId);
 	}
 }

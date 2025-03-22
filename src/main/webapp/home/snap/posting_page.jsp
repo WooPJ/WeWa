@@ -62,7 +62,6 @@ document.getElementById("modal").addEventListener("click", function(event) {
 async function openPostDetail(postId) {
     const inData = { postId: postId };
     let param = new URLSearchParams(inData).toString();
-    console.log("매개변수값확인: " + param);
     
     try {
     	//AJAX 비동기 요청
@@ -74,6 +73,7 @@ async function openPostDetail(postId) {
         if (DATA.error) { alert(DATA.error); return; }
         const POST = DATA.postInfo;
         
+        sessionStorage.setItem("postWriter", POST.user_id);	
         // 프로필이미지 없으면 기본이미지 할당
         document.getElementById("modal_profile_img").src = 
             POST.profile_img ? POST.profile_img : "/imgs/snap/image.png";
@@ -171,7 +171,6 @@ async function openPostDetail(postId) {
 		} else {
 		    productContainer.innerText = "관련 상품 정보 없음"; // 상품이 없을 경우 메시지 출력
 		}
-
         
         // 댓글
         let isWriter = false;
@@ -253,11 +252,20 @@ async function openPostDetail(postId) {
 	        }); //forEach
         }// else
         
+       	//수정, 삭제 아이콘 출력
+		const postWriter = POST.user_id;
+		if (loginUser == postWriter) {
+		    document.getElementById("editButtons").style.display = "block";
+		    document.getElementById("deleteButtons").style.display = "block";
+		}else{
+			document.getElementById("editButtons").style.display = "none";
+			document.getElementById("deleteButtons").style.display = "none";
+		}
+		
         const modal = document.getElementById('modal');
         modal.setAttribute('data-post-id', postId); // 모달에 게시물 ID 저장
         document.getElementById("modal").style.display = "flex"; // 모달창 표시
         document.body.classList.add("modal-open"); // 배경스크롤 막기
-        
     } catch (error) {
         console.error("Error fetching post detail:", error);
         alert("게시물을 불러오지 못했습니다.");

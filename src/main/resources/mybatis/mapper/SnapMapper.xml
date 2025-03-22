@@ -79,12 +79,15 @@
 </insert>
 <insert id="putFeedPost" parameterType="com.springboot.wearwave.model.Snap_post_detail">
 	INSERT INTO snap_post_detail (post_id, user_id, reg_date, imagename, height, weight, gender_style, content, item_code) VALUES 
-	(#{post_id}, #{user_id}, sysdate, #{imagename}, #{height}, #{weight}, #{gender}, #{content}, #{item_code})
+	(#{post_id}, #{user_id}, sysdate, #{imagename}, #{height}, #{weight}, #{gender_style}, #{content}, #{item_code})
 </insert>
 <select id="getMaxPostId" resultType="Integer"> <!-- post_id 최대값찾아서 +1 해주기 -->
 	select max(post_id) from snap_post_detail
 </select>
-
+<!-- 게시글 삭제 -->
+<delete id="deletePost" parameterType="Integer">
+    DELETE FROM snap_post_detail WHERE post_id = #{post_id}
+</delete>
 <!-- 게시물 상세정보 -->
 <select id="getPostDetailByPostId" parameterType="Integer" resultType="com.springboot.wearwave.model.Snap_post_detail">
     SELECT d.post_id, 
@@ -107,11 +110,29 @@
 </select>	
 <select id="getAllTpoById" parameterType="Integer" resultType="com.springboot.wearwave.model.Post_tpo_tags">
 	select post_id, tpo_tag from Post_tpo_tags where post_id = #{postId}
+</select>
+<select id="getStyleById" parameterType="Integer" resultType="String">
+	select style_tag from Post_style_tags where post_id = #{postId}
 </select>	
+<select id="getTpoById" parameterType="Integer" resultType="String">
+	select tpo_tag from Post_tpo_tags where post_id = #{postId}
+</select>
+<delete id="deleteTpo" parameterType="Integer">
+	delete from Post_tpo_tags where post_id = #{postId}
+</delete>
+<delete id="deleteStyle" parameterType="Integer">
+	delete from Post_style_tags where post_id = #{postId}
+</delete>
+		
 <select id="getFeedAll" resultType="com.springboot.wearwave.model.Snap_post_detail">
 	select post_id, user_id, imagename, height, weight, gender_style, content
 	from Snap_post_detail order by post_id DESC
 </select>
+<!-- 수정  -->
+<update id="updateFeedPost" parameterType="com.springboot.wearwave.model.Snap_post_detail">
+	update snap_post_detail set imagename = #{imagename}, height = #{height}, weight = #{weight},
+	 gender_style = #{gender_style}, content = #{content}, item_code = #{item_code} where post_id = #{post_id}
+</update>
 <!--작성한 게시글 보기  -->
 <select id="getMyFeedAll" parameterType="String" resultType="com.springboot.wearwave.model.Snap_post_detail">
 	select post_id, user_id, imagename, height, weight, gender_style, content
