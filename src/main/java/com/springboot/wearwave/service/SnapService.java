@@ -20,6 +20,9 @@ public class SnapService {
 	
 	
 	//북마크관련=====================
+	public List<Snap_post_detail> getMyBookmarkAll(String userId) {
+		return this.snapMapper.getMyBookmarkAll(userId);
+	}
 	public Integer getIsBookmarked(Snap_bookmark bookmark) {
 		return this.snapMapper.getIsBookmarked(bookmark);
 	}

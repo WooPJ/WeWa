@@ -26,7 +26,7 @@
 	            	<img id="modal_img" src="" alt="image">
 	            </div>
 	        </div>
-	        <div class="icon-container">
+	        <div class="bk-icon-container">
 	        <div id="editButtons" style="display: none;">
 	        <div class="update-container">
 	        	<button class="update-btn" onclick="updatePost()" title="수정하기">

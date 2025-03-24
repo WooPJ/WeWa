@@ -108,23 +108,23 @@
     background-color: lightgray;
 }
 
-.user_follow{
+.user_posting{
     padding-left: 0px;
     display: flex;
 }
-.user_follow>li{
+.user_posting>li{
     list-style: none;
     margin-right: 20px;
     cursor: pointer;
 }
-.user_follow>li>span{
+.user_posting>li>span{
     font-weight: bold;
 }
-.user_follow a{
+.user_posting a{
 	color: black;
 	text-decoration: none; /* 밑줄 제거 */
 }
-.user_follow  a:visited {
+.user_posting  a:visited {
     color: inherit;
 }
 

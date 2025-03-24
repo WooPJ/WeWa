@@ -81,6 +81,7 @@ async function openPostDetail(postId) {
         document.getElementById("modal_content").innerText = POST.content;
         document.getElementById("modal_nickname").innerText = POST.nickname;
         
+//         document.getElementById("날짜태그").innerText = POST.reg_date;
         
         //북마크
         const bookmarkStatusRes = await fetch(`/snap/getBookmarkStatus?postId=\${postId}&userId=${loginUser.id}`);

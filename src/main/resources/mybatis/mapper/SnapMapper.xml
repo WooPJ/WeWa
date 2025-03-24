@@ -155,5 +155,19 @@
 	where user_id = #{id}
 	order by post_id DESC
 </select>
+<!-- 북마크한 게시글 보기 -->
+<select id="getMyBookmarkAll" parameterType="string" resultType="com.springboot.wearwave.model.Snap_post_detail">
+	select p.imagename,
+        b.user_id,
+        b.bookmark_id,
+        b.post_id
+	from snap_post_detail p
+	LEFT JOIN snap_bookmark b on p.post_id = b.post_id
+	where b.user_id = #{userId}
+	order by b.bookmark_id desc
+<!-- 	select bookmark_id, user_id, post_id from snap_bookmark  -->
+<!-- 	where user_id = #{userId} order by bookmark_id desc -->
+</select>
+
 
 </mapper>

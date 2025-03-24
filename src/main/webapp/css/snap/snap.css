@@ -153,7 +153,7 @@ html, body {
 
 /* 게시물 페이지*/
 .posting_page {
-	margin-top: 200px; /* 네비게이션 높이로부터 여백 추가 */
+	margin-top: 250px; /* 네비게이션 높이로부터 여백 추가 */
     height: calc(100vh - 10px); /* 화면 높이에서 네비게이션 높이 제외 */
 /*     overflow-y: auto; 내용이 많아지면 스크롤 가능하게 설정 */
     padding: 10px;

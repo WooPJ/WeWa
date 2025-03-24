@@ -48,20 +48,11 @@
 		                <div class="user_name"><h2>${EditProfile.nickname}</h2></div>
 		                <a class="profile_modify" href="/snap/editProfile.html">프로필 편집</a>
 					</div>
-		            <ul class="user_follow">
+		            <ul class="user_posting">
 		               <li><a href="/snap/mysnap.html">작성한 게시물 <span>${EditProfile.countPostNum}개</span></a></li>
-<!-- 		               <li>팔로워 <span>123</span></li> -->
-<!-- 		               <li>팔로우 <span>456</span></li> -->
 		            </ul>
 		            <div class="user_detail">
 		               <span>${EditProfile.intro}</span>
-		               <c:choose>
-							<c:when test="${empty EditProfile.intro}">
-							</c:when>
-							<c:otherwise>
-							
-							</c:otherwise>
-		               </c:choose>
 		               <div class="gender_cm_kg">
      						${empty EditProfile.gender ? "성별 미입력" : EditProfile.gender} /  
      						${empty EditProfile.height ? "미입력" : EditProfile.height}cm /

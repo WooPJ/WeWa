@@ -15,6 +15,7 @@ import com.springboot.wearwave.model.Snap_profile;
 public interface SnapMapper {
 	
 	//북마크관련
+	List<Snap_post_detail> getMyBookmarkAll(String userId);
 	Integer getIsBookmarked(Snap_bookmark bookmark);
 	Integer getMaxBookmarkNo();
 	void putBookmark(Snap_bookmark bookmark);
