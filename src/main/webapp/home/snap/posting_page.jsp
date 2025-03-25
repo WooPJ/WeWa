@@ -79,9 +79,13 @@ async function openPostDetail(postId) {
             POST.profile_img ? POST.profile_img : "/imgs/snap/image.png";
         document.getElementById("modal_img").src = POST.imagename;
         document.getElementById("modal_content").innerText = POST.content;
-        document.getElementById("modal_nickname").innerText = POST.nickname;
         
-//         document.getElementById("날짜태그").innerText = POST.reg_date;
+        let cmkg = POST.height + "cm / "; 
+        cmkg += POST.weight + "kg";
+        document.getElementById("modal_cmkg").innerText = cmkg;
+        document.getElementById("modal_nickname").innerText = POST.nickname ? POST.nickname : "(알수없음)";
+        
+        document.getElementById("modal_date").innerText = POST.reg_date;
         
         //북마크
         const bookmarkStatusRes = await fetch(`/snap/getBookmarkStatus?postId=\${postId}&userId=${loginUser.id}`);

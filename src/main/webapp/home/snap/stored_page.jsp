@@ -35,9 +35,17 @@
 	</c:when>
 	<c:otherwise>
 		<div class = "stored_page">
-            <c:if test="${not empty BOOKMARKLIST}">
+            <c:if test="${not empty FeedList}">
 	        	<jsp:include page="${BOOKMARKLIST}" />
-	    	</c:if>	
+	    	</c:if>
+	    	<c:if test="${empty FeedList}">
+	    		<script type="text/javascript">
+	    			console.log("북마크 비어있음");
+	    		</script>
+	    		<div class="bookmark_empty">
+	    			<h3>북마크 저장함이 비어있습니다! </br>마음에 드는 게시물을 저장해보세요!🤗</h2>
+	    		</div>
+	    	</c:if>
 		</div>
 	</c:otherwise>
 </c:choose>      

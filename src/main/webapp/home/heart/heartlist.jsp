@@ -32,8 +32,10 @@
 	</c:when>
 	<c:otherwise>
 		<c:choose>
-			<c:when test="${sessionScope.heartList == null}">
-				<h2 align="center">♥ 찜 목록이 비어있어요</h2>
+			<c:when test="${empty sessionScope.heartList}">
+				<div class="heartlist_empty">
+					<h2 class="empty_comment">상품 찜목록이 비어있어요</h2>
+				</div>
 			</c:when>
 			<c:otherwise>
 			<div class="product-container heart-list-container">

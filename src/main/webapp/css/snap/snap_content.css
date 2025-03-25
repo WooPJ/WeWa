@@ -68,6 +68,7 @@
     margin: 0;
 }
 .user_section {
+	width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -210,6 +211,25 @@
 }
 
 
+/* 북마크저장 페이지 */
+.bookmark_empty {
+    display: flex;
+    justify-content: center;  /* 가로 가운데 정렬 */
+    align-items: center;      /* 세로 가운데 정렬 */
+    height: 100vh;            /* 화면 전체 높이 기준 */
+    position: relative;
+}
+
+.bookmark_empty h3 {
+    position: absolute;
+    top: 30%;                 /* 화면 상단에서 40% 위치 */
+    text-align: center;       /* 텍스트 가운데 정렬 */
+    font-size: 1.3rem;        /* 적당한 크기로 조정 */
+    color: #666;              /* 약간 은은한 색상 추천 */
+    line-height: 1.6;         /* 줄 간격 조정 */
+}
+
+
 
 /* ~~~~ 반응형 ~~~~  */
 /*@media (min-width: 1024px) {
@@ -221,5 +241,11 @@
 	.profile {
 /* 		height: 70%; */
 	    padding-left: 30%;
+	}
+	.user_top {
+	    padding-bottom: 10px;
+	}
+	.user_section {
+	    padding-bottom: 10px;
 	}
 }

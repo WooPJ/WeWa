@@ -108,6 +108,7 @@
     SELECT d.post_id, 
            d.user_id, 
            d.reg_date,
+<!--            to_char(d.reg_date,'YYYY/MM/DD HH24:MI:SS') as reg_date, -->
            d.imagename, 
            d.height, 
            d.weight, 
@@ -165,8 +166,6 @@
 	LEFT JOIN snap_bookmark b on p.post_id = b.post_id
 	where b.user_id = #{userId}
 	order by b.bookmark_id desc
-<!-- 	select bookmark_id, user_id, post_id from snap_bookmark  -->
-<!-- 	where user_id = #{userId} order by bookmark_id desc -->
 </select>
 
 
