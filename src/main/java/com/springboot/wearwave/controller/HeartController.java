@@ -79,9 +79,7 @@ public class HeartController {
 		    // DB에서 status를 0으로 변경
 		    heart.setUser_id(user.getId()); // 현재 로그인한 사용자 ID
 		    heart.setItem_code(item_code);  // 찜 삭제할 상품 코드
-		    heart.setStatus(0); // status = 0 설정
 
-		    this.heartService.updateFalse(heart); // DB 업데이트
 		    this.heartService.deleteHeart(heart);
 		}
         ModelAndView mav = new ModelAndView("index");

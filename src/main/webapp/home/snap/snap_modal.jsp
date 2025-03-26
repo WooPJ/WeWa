@@ -17,11 +17,12 @@
     <div class="modal_content">
         <span class="close" onclick="closeModal()">&times;</span><!-- 창닫기 -->
 		<div class="modal_feed">
-            <div class="modal_user_info">
+            <div class="modal_user_info" onclick="isMovePage(document.getElementById('modal_userId').value)">
                 <img id="modal_profile_img" src="/imgs/snap/" class="modal_profile_img">
-                <div class="modal_user_span">
+                <div class="modal_user_span" style="display: block;">
 	                <span id="modal_nickname" class="modal_nickname"></span>
 	                <span id="modal_date" class="modal_date"></span>
+                	<input id="modal_userId" type="hidden">
                 </div>
             </div>
 	    	<div class="modal_img_container">
@@ -95,6 +96,12 @@
 </div>
 
 <script type="text/javascript">
+function isMovePage(userId) {
+	if(confirm("해당 유저의 프로필로 이동하시겠습니까?")) 
+		window.location.href = (`/snap/otherUserProfile.html?userId=\${userId}`);
+	else return;
+}
+
 
 async function bookmarkCheck(isLogin) {
 	if(!isLogin) { //로그인 안된경우 `null`, `undefined`, `""` 모두 포함

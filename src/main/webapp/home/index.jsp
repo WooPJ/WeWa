@@ -184,6 +184,7 @@
                                 this.classList.toggle('filled');
                             } else {
                                 console.error("하트 상태 변경 실패");
+                                alert("하트 상태 변경 실패");
                             }
                         })
                         .catch(error => {

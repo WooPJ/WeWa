@@ -78,6 +78,7 @@ body.modal-open {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .modal_user_span {

@@ -85,11 +85,10 @@
 .heart-container {
 	z-index: 10;
     position: absolute;
-    top: 88%;
+    top: 86%;
     right: 3%;
     cursor: pointer;
 }
-
 .heart-icon {
     width: 40px;  
     height: 40px;
@@ -134,11 +133,6 @@
 
 
 /* 반응형 디자인: 화면 크기가 작은 경우 스타일 */
-@media (max-width: 1500px) {
-    .heart-container {
-	    top: 85% !important;
-	}
-}
 @media (max-width: 1300px) {
 	.heart-icon {
 	    width: 30px; height: 30px;
@@ -148,10 +142,6 @@
     .product-container {
         justify-content: flex-start; /* 마지막 줄도 왼쪽 정렬 */
     }
-
-    .heart-container {
-	    top: 85% !important;
-	}
 	.heart-icon {
 	    width: 30px; height: 30px;
 	}
@@ -165,9 +155,6 @@
     .product {
         width: calc(50% - 20px); /* 2개 아이템 가로 배치 */
     }
-    .heart-container {
-	    top: 87% !important;
-	}
 }
 @media (max-width: 480px) {
     .product-container {

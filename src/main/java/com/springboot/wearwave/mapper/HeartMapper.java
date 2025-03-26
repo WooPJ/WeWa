@@ -15,6 +15,5 @@ public interface HeartMapper {
 	List<Heart> getHeartListByUser(String user_id);
 	
 	void insertHeart(Heart heart);
-	void updateFalse(Heart heart);
 	void deleteHeart(Heart heart);
 }

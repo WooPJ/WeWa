@@ -70,6 +70,25 @@
 		</c:choose>
 	</c:otherwise>
 </c:choose>
-	
+
+<script type="text/javascript">
+const heartIcons = document.querySelectorAll('.heart-icon');
+heartIcons.forEach(heart => {
+    const itemId = heart.getAttribute("data-item-code");
+
+    heart.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (${sessionScope.loginUser == null}) {
+           redirectToLogin();		               	
+        } else {
+            this.classList.toggle('filled');
+            const isFilled = this.classList.contains('filled');
+            const inData = { itemCode: itemId, status: isFilled };
+            let param = new URLSearchParams(inData).toString();
+            fetch("/heart/toggle.html?" + param); //컨트롤러 매핑
+        }
+    });
+});
+</script>
 </body>
 </html>

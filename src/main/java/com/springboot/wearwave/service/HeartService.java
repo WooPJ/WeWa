@@ -37,9 +37,6 @@ public class HeartService {
 	public void insertHeart(Heart heart) {
 		this.heartMapper.insertHeart(heart);
 	}
-	public void updateFalse(Heart heart) {
-		this.heartMapper.updateFalse(heart);
-	}
 	public void deleteHeart(Heart heart) {
 		this.heartMapper.deleteHeart(heart);
 	}

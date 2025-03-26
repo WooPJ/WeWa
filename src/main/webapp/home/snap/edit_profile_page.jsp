@@ -50,10 +50,6 @@
             
             <label class="edit-label">성별</label>
             <div class="edit-radio-group">
-<%--             <form:select path="gender"> --%>
-<%--                 <form:option value="male">남성</form:option> --%>
-<%--                 <form:option value="female">여성</form:option> --%>
-<%--             </form:select> --%>
                 <form:radiobutton path="gender" value="male" id="gender_male" label="남성"/>
     			<form:radiobutton path="gender" value="female" id="gender_female" label="여성"/>
     			<form:radiobutton path="gender" value="private" id="gender_less" label="비공개"/>
@@ -64,88 +60,5 @@
     </div>
 </body>
 
-
-<script type="text/javascript">
-
-function introCheck() {
-
-}
-
-function nicknameCheck() {
-	const userNickname = document.getElementById("nickname");
-    if (userNickname.value.trim() === '') {
-        alert("닉네임을 입력하세요.");
-        userNickname.focus();
-        return false;
-    } else {
-        if (userNickname.value.length < 1 || userNickname.value.length > 20) {
-            alert("닉네임은 1자 이상, 20자 이하로 입력하세요.");
-            userNickname.focus();
-            return false;
-        }
-    }
-   	const url = "/snap/nicknameCheck.html?nickname=" + userNickname.value;
-    window.open(url, "_blank_", "width=500,height=300");
-}
-
-function frmCheck() {
-	if(document.postFrm.nicknameChecked.value == ""){
-		alert("닉네임 중복검사를 해야합니다.");
-		return false;
-	}
-    const isValid = validateForm(); // 성별 체크 검증
-    if (!isValid) return false; // 성별 미선택 시 제출 방지
-    
-	const userIntro = document.getElementById("intro");
-	if(userIntro.value.length < 1 || userIntro.value.length > 100) {
-            alert("자기소개 내용은 1자 이상, 100자 이하로 입력하세요.");
-            userIntro.focus();
-            return false;
-	}
-	return confirmForm(); // 성별 선택 완료 후, 저장 확인창
-}
-
-function confirmForm() {
-    return confirm("프로필을 저장하시겠습니까?"); 
-}
-
-function validateForm() {
-    const maleChecked = document.getElementById("gender_male").checked;
-    const femaleChecked = document.getElementById("gender_female").checked;
-    const genderLessChecked = document.getElementById("gender_less").checked;
-
-    if (!maleChecked && !femaleChecked && !genderLessChecked) {
-        alert("성별을 선택해주세요.");
-        return false; // 폼 제출 방지
-    } 
-    return true; // 정상 제출
-}
-
-/* 문제의 코드
-function frmCheck() {
-	const isValid = validateForm();
-	if(isValid) {
-		confirmForm();
-	}
-	else return false;
-}
-
-function confirmForm() {
-	if(confirm("프로필을 저장하시겠습니까?")) return true;
-	else return false;
-}
-
-function validateForm() {
-    const maleChecked = document.getElementById("gender_male").checked;
-    const femaleChecked = document.getElementById("gender_female").checked;
-    const genderLessChecked = document.getElementById("gender_less").checked;
-
-    if (!maleChecked && !femaleChecked && !genderLessChecked) {
-        alert("성별을 선택해주세요.");
-        return false; // 폼 제출 방지
-    }else {
-	    return true; // 정상 제출
-    }
-}*/
-</script>
+<script type="text/javascript" src="../../js/edit_profile_page_vaildateCheck.js"></script>
 </html>

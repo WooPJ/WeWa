@@ -43,21 +43,8 @@
 <!-- 📌 모달 팝업-->
 <jsp:include page="snap_modal.jsp"/>
 
-
+<script type="text/javascript" src="../../js/posting_page_modal.js"></script>
 <script type="text/javascript">
-
-//✅ 모달 닫기 함수
-window.closeModal = function() {
-    document.getElementById("modal").style.display = "none"; // 모달창 숨김
-    document.body.classList.remove("modal-open"); // 배경스크롤 허용
-}
-//✅ 모달 바깥 클릭 시 닫기
-document.getElementById("modal").addEventListener("click", function(event) {
-    if (event.target === this) {
-        closeModal();
-    }
-});
-
 //✅ 게시물 상세 정보를 불러오는 함수
 async function openPostDetail(postId) {
     const inData = { postId: postId };
@@ -81,6 +68,7 @@ async function openPostDetail(postId) {
         document.getElementById("modal_content").innerText = POST.content;
         document.getElementById("modal_nickname").innerText = POST.nickname ? POST.nickname : "(알수없음)";
         document.getElementById("modal_date").innerText = POST.reg_date;
+        document.getElementById("modal_userId").value = POST.user_id;
         
         let gender = POST.gender_style;
         if(gender == "male") gender = "남성코디";
@@ -293,46 +281,7 @@ async function openPostDetail(postId) {
         alert("게시물을 불러오지 못했습니다.");
     }
 }
-
-function deleteCheck(commentNo, txt) {
-	if(confirm("해당 댓글을 정말로 삭제하시겠습니까? \n\" "+txt+" \"")) {
-		deleteDo(commentNo);
-	} else return false;
-}
-function deleteDo(commentNo) {
-	//AJAX 비동기 처리
-    fetch('/snap/deleteComment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
-          'commentNo': commentNo
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if(data.error) {
-          alert(data.error);
-        } else {
-        	console.log("▶댓글삭제요청 서버응답: "+ data.success);
-        	alert("댓글이 삭제되었습니다.");
-        	const postId = document.getElementById("modal").getAttribute("data-post-id");
-        	openPostDetail(postId); // 모달창 다시 열기
-        }
-      })
-      .catch(error => console.error('Error:', error));
-}
-
-function confirmLogin() {
-	event.preventDefault(); // 기본 동작(폼 제출) 방지
-    if (confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?")) {
-        // '확인' 클릭 시 로그인 페이지로 이동
-        window.location.href = "/login/login.html";
-    } else {
-    	return false; //아무동작도 안함
-    }
-}
 </script>
+
 </body>
 </html>
