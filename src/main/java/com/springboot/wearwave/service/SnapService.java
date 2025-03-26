@@ -20,6 +20,9 @@ public class SnapService {
 	
 	
 	//북마크관련=====================
+	public List<Snap_post_detail> getMyBookmarkAll(String userId) {
+		return this.snapMapper.getMyBookmarkAll(userId);
+	}
 	public Integer getIsBookmarked(Snap_bookmark bookmark) {
 		return this.snapMapper.getIsBookmarked(bookmark);
 	}
@@ -81,6 +84,12 @@ public class SnapService {
 	
 	
 	//게시물관련=======================
+	public List<Snap_post_detail> getPostListByStyleTag(String styleTag) {
+		return this.snapMapper.getPostListByStyleTag(styleTag);
+	}
+	public List<Snap_post_detail> getPostListByTpoTag(String tpoTag) {
+		return this.snapMapper.getPostListByTpoTag(tpoTag);
+	}
 	public Snap_profile getNicknameByUserId(String userId) {
 		return this.snapMapper.getNicknameByUserId(userId);
 	}

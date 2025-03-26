@@ -1,5 +1,17 @@
 @charset "UTF-8";
 
+
+.empty_comment {
+    position: absolute;
+    text-align: center;      
+    width: 100%;  
+    margin-top: 20%;             
+    font-size: 1.3rem;        /* 적당한 크기로 조정 */
+    color: #666;              /* 약간 은은한 색상 추천 */
+    line-height: 1.6;         /* 줄 간격 조정 */
+}
+
+
 /* heartList 전용 스타일 (5개씩 배치) */
 .heart-list-container .product {
     width: calc(20% - 30px) !important; /* 가로 배치 */ 

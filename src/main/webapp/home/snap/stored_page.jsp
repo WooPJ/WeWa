@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,19 +35,17 @@
 	</c:when>
 	<c:otherwise>
 		<div class = "stored_page">
-	      <div id="store_top">
-	          <span>저장한 내용은 회원님만 볼 수 있습니다.</span>
-	          <div class="new_store">+새 컬렉션</div>
-	      </div>
-	      <div id = "store_main">
-	          <div id="store_main_box">
-	              <div id = "store_img_box">
-	                  <svg class="store_img" aria-label="" fill="currentColor" height="12" role="img" viewBox="0 0 24 24" width="12"><title></title><polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon></svg>
-	              </div>
-	              <span>저장</span>
-	              <span>다시보고 싶은 사진과 동영상을 저장하세요. 콘텐츠를<br> 저장해도 다른 사람에게 알림이 전송되지 않으며, 저장된<br>콘텐츠는 회원님만 볼 수 있습니다.</span>
-	          </div>
-	      </div>
+            <c:if test="${not empty FeedList}">
+	        	<jsp:include page="${BOOKMARKLIST}" />
+	    	</c:if>
+	    	<c:if test="${empty FeedList}">
+	    		<script type="text/javascript">
+	    			console.log("북마크 비어있음");
+	    		</script>
+	    		<div class="bookmark_empty">
+	    			<h3>북마크 저장함이 비어있습니다! </br>마음에 드는 게시물을 저장해보세요!🤗</h2>
+	    		</div>
+	    	</c:if>
 		</div>
 	</c:otherwise>
 </c:choose>      

@@ -80,6 +80,9 @@ body.modal-open {
     margin-bottom: 10px;
 }
 
+.modal_user_span {
+    display: block;
+}
 .modal_profile_img {
     width: 40px;
     height: 40px;
@@ -87,11 +90,22 @@ body.modal-open {
     margin-right: 10px;
 }
 
-.modal_username {
+.modal_nickname {
+	display: flex;
     font-weight: bold;
 }
+.modal_date {
+	display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12px;
+    color: gray;
+    margin-top: 3px;
+}
+
+
 /* 아이콘 컨테이너 */
-.icon-container{
+.book-icon-container{
 	display: flex;
     justify-content: flex-end; /* 오른쪽 정렬 */
     align-items: center;  /* 수직 중앙 정렬 */

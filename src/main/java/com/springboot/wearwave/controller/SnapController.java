@@ -29,6 +29,7 @@ import com.springboot.wearwave.model.LoginUser;
 import com.springboot.wearwave.model.Post_style_tags;
 import com.springboot.wearwave.model.Post_tpo_tags;
 import com.springboot.wearwave.model.Qna_bbs;
+import com.springboot.wearwave.model.Snap_bookmark;
 import com.springboot.wearwave.model.Snap_comment;
 import com.springboot.wearwave.model.Snap_post_detail;
 import com.springboot.wearwave.model.Snap_profile;
@@ -519,13 +520,13 @@ public class SnapController {
 		ModelAndView mav = new ModelAndView("index");
  
 		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
-		//로그인 풀린경우 예외처리
-	    if (loginUser == null) { 
+	    if (loginUser == null) { //로그인 안된경우 예외처리
 	    	mav.addObject("EditProfile", new Snap_profile());
 			mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
 			mav.addObject("CONTENT", "profile_page.jsp");
 	        return mav;
 	    }
+	    
 		User_info userInfo = (User_info)session.getAttribute("userInfo");
         Snap_profile profile = this.snapService.getProfileByUserId(loginUser.getId());
         
@@ -560,10 +561,22 @@ public class SnapController {
 	}
 	// 2.저장페이지
 	@GetMapping("/snap/storedContent.html") 
-	public ModelAndView stored() {
+	public ModelAndView stored(HttpSession session) {
 		ModelAndView mav = new ModelAndView("index");
+		
+		LoginUser loginUser = (LoginUser)session.getAttribute("loginUser");
+	    if (loginUser == null) { //로그인 안된경우 예외처리
+	    	mav.addObject("EditProfile", new Snap_profile());
+			mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
+			mav.addObject("CONTENT", "stored_page.jsp");
+	        return mav;
+	    }
+		
+		List<Snap_post_detail> FeedList = this.snapService.getMyBookmarkAll(loginUser.getId());
 		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
 		mav.addObject("CONTENT", "stored_page.jsp");
+		mav.addObject("FeedList", FeedList);
+		mav.addObject("BOOKMARKLIST", "posting_page.jsp");
 		return mav;
 	}
 	// 1.포스팅페이지
@@ -572,11 +585,36 @@ public class SnapController {
 		ModelAndView mav = new ModelAndView("index");
 		List<Snap_post_detail> FeedList = this.snapService.getFeedAll();
 		
-		mav.addObject("FeedList", FeedList);
 		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
+		mav.addObject("CONTENT", "posting_page.jsp");
+		mav.addObject("FeedList", FeedList);
+		return mav;
+	}
+	
+	//스타일 태그별 분류
+	@GetMapping("/snap/postListByStyleTag.html")
+	public ModelAndView styleTagList(@RequestParam("tagValue") String styleTag, HttpSession session) {
+		ModelAndView mav = new ModelAndView("index");
+		List<Snap_post_detail> FeedList = this.snapService.getPostListByStyleTag(styleTag);
+		
+		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
+		mav.addObject("FeedList", FeedList);
 		mav.addObject("CONTENT", "posting_page.jsp");
 		return mav;
 	}
+	// TPO 태그별 분류
+	@GetMapping("/snap/postListByTpoTag.html")
+	public ModelAndView tpoTagList(@RequestParam("tagValue") String tpoTag, HttpSession session) {
+		ModelAndView mav = new ModelAndView("index");
+		List<Snap_post_detail> FeedList = this.snapService.getPostListByTpoTag(tpoTag);
+		
+		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
+		mav.addObject("FeedList", FeedList);
+		mav.addObject("CONTENT", "posting_page.jsp");
+		return mav;
+	}
+	
+	
 	
 	//기본 스냅페이지 이동
 	@GetMapping("/snap/snap.html") 
@@ -599,7 +637,6 @@ public class SnapController {
 	    List<Snap_post_detail> FeedList = this.snapService.getMyFeedAll(loginUser.getId());
 	    mav.addObject("FeedList", FeedList);
 	    mav.addObject("BODY", "snap/snap.jsp"); 
-	    
 	    
 	    mav.addObject("loginUser", loginUser);
 	    return mav;

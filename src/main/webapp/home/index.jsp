@@ -113,6 +113,7 @@
 					        if (document.querySelector('#item-detail-container')) {
 					            console.log("🚀 현재 페이지는 itemDetail.jsp입니다. index.jsp의 heartIcon 스크립트 실행 안함");
 					            return; // 실행 중단
+					            
 					        } else { // itemDetail.jsp가 아니면
 					            heart.addEventListener('click', function (event) {
 					                event.preventDefault();
@@ -166,8 +167,8 @@
 		    if (document.querySelector('#item-detail-container')) {
 		        console.log("🚀 현재 페이지는 itemDetail.jsp입니다. index.jsp의 heartIcon 스크립트 실행 안함");
 		        return; // 실행 중단
+		        
 		    } else { //itemDetail.jsp가 아니면
-		    	
 		        heart.addEventListener('click', function (event) {
 		            event.preventDefault();
 		            if (${sessionScope.loginUser == null}) {
@@ -177,7 +178,17 @@
 		                const isFilled = this.classList.contains('filled');
 		                const inData = { itemCode: itemId, status: isFilled };
 		                let param = new URLSearchParams(inData).toString();
-		                fetch("/heart/toggle.html?" + param); //컨트롤러 매핑
+		                fetch("/heart/toggle.html?" + param)
+		                	.then(response => {
+                            if (response.ok) {
+                                this.classList.toggle('filled');
+                            } else {
+                                console.error("하트 상태 변경 실패");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("서버 오류 발생", error);
+                        }); //컨트롤러 매핑
 		            }
 		        });
 		    }

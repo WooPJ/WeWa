@@ -32,8 +32,10 @@
 	</c:when>
 	<c:otherwise>
 		<c:choose>
-			<c:when test="${sessionScope.heartList == null}">
-				<h2 align="center">♥ 찜 목록이 비어있어요</h2>
+			<c:when test="${empty sessionScope.heartList}">
+				<div class="heartlist_empty">
+					<h2 class="empty_comment">상품 찜목록이 비어있어요</h2>
+				</div>
 			</c:when>
 			<c:otherwise>
 			<div class="product-container heart-list-container">
@@ -69,15 +71,5 @@
 	</c:otherwise>
 </c:choose>
 	
-
-<script type="text/javascript">
-console.log("하트찜 목록입니다.");
-	<c:forEach items="${sessionScope.heartList}" var="heart">
-	    console.log("이미지이름 : ${heart.imagename}")
-	    if("${sessionScope.heartList}" == null) {
-	    	console.log("비어있음");
-	    }
-	</c:forEach>
-</script>
 </body>
 </html>
