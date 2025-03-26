@@ -42,7 +42,7 @@
             </div>
             
             <label for="intro" class="edit-label">소개말 입력</label>
-            <form:textarea path="intro" id="intro" class="edit-textarea" placeholder="소개말 내용을 입력하세요..."/>
+            <form:textarea path="intro" id="intro" class="edit-textarea" placeholder="소개말 내용을 입력하세요..." onclick="introCheck()"/>
             
             <label class="edit-label">체형 정보</label>
             <form:input path="height" type="number" value="${EditProfile.height}" id="height" class="edit-input" placeholder="키 (cm)"/>
@@ -66,6 +66,10 @@
 
 
 <script type="text/javascript">
+
+function introCheck() {
+
+}
 
 function nicknameCheck() {
 	const userNickname = document.getElementById("nickname");
@@ -91,8 +95,14 @@ function frmCheck() {
 	}
     const isValid = validateForm(); // 성별 체크 검증
     if (!isValid) return false; // 성별 미선택 시 제출 방지
-
-    return confirmForm(); // 성별 선택 완료 후, 저장 확인창
+    
+	const userIntro = document.getElementById("intro");
+	if(userIntro.value.length < 1 || userIntro.value.length > 100) {
+            alert("자기소개 내용은 1자 이상, 100자 이하로 입력하세요.");
+            userIntro.focus();
+            return false;
+	}
+	return confirmForm(); // 성별 선택 완료 후, 저장 확인창
 }
 
 function confirmForm() {

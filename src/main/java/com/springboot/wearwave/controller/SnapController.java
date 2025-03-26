@@ -591,6 +591,31 @@ public class SnapController {
 		return mav;
 	}
 	
+	//스타일 태그별 분류
+	@GetMapping("/snap/postListByStyleTag.html")
+	public ModelAndView styleTagList(@RequestParam("tagValue") String styleTag, HttpSession session) {
+		ModelAndView mav = new ModelAndView("index");
+		List<Snap_post_detail> FeedList = this.snapService.getPostListByStyleTag(styleTag);
+		
+		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
+		mav.addObject("FeedList", FeedList);
+		mav.addObject("CONTENT", "posting_page.jsp");
+		return mav;
+	}
+	// TPO 태그별 분류
+	@GetMapping("/snap/postListByTpoTag.html")
+	public ModelAndView tpoTagList(@RequestParam("tagValue") String tpoTag, HttpSession session) {
+		ModelAndView mav = new ModelAndView("index");
+		List<Snap_post_detail> FeedList = this.snapService.getPostListByTpoTag(tpoTag);
+		
+		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
+		mav.addObject("FeedList", FeedList);
+		mav.addObject("CONTENT", "posting_page.jsp");
+		return mav;
+	}
+	
+	
+	
 	//기본 스냅페이지 이동
 	@GetMapping("/snap/snap.html") 
 	public ModelAndView snap(HttpSession session) {

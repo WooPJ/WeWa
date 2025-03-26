@@ -59,8 +59,11 @@
             <p id="modal_content" class="modal_text" style="margin: 10px">
             	<!-- 서버에서 받아온 피드내용 표시 -->
             </p>
-            <div id="modal_cmkg" class="modal_cmkg" style="margin: 10px; color: gray; font-size: 12px;">
+            <div id="modal_cmkg" class="modal_cmkg" style="margin: 10px; color: gray; font-size: 13px;">
             	<!-- 서버에서 받아온 신체정보 표시 -->
+            </div>
+            <div id="modal_genderStyle" class="modal_genderStyle" style="margin: 10px; color: gray; font-size: 13px;">
+            	<!-- 서버에서 받아온 성별코디 표시 -->
             </div>
 			<div id="modal_tags" class="modal_tags">
 	            <!-- 태그가 동적으로 추가될 공간 -->

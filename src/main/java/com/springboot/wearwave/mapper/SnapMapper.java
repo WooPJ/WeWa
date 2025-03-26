@@ -38,6 +38,8 @@ public interface SnapMapper {
 	
 	
 	//게시물관련
+	List<Snap_post_detail> getPostListByStyleTag(String styleTag);
+	List<Snap_post_detail> getPostListByTpoTag(String tpoTag);
 	Snap_profile getNicknameByUserId(String userId);
 	void putNickname(Snap_profile nickname);
 	

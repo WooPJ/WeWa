@@ -71,15 +71,5 @@
 	</c:otherwise>
 </c:choose>
 	
-
-<script type="text/javascript">
-console.log("하트찜 목록입니다.");
-	<c:forEach items="${sessionScope.heartList}" var="heart">
-	    console.log("이미지이름 : ${heart.imagename}")
-	    if("${sessionScope.heartList}" == null) {
-	    	console.log("비어있음");
-	    }
-	</c:forEach>
-</script>
 </body>
 </html>

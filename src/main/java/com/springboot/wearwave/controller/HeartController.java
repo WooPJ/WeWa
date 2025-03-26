@@ -76,10 +76,6 @@ public class HeartController {
 		    heartList.removeIf(h -> h.getItem_code().equals(item_code));
 		    session.setAttribute("heartList", heartList);
 		    
-		    if (heartList != null) {
-		        // 해당 상품을 heartList에서 제거
-		    }
-
 		    // DB에서 status를 0으로 변경
 		    heart.setUser_id(user.getId()); // 현재 로그인한 사용자 ID
 		    heart.setItem_code(item_code);  // 찜 삭제할 상품 코드

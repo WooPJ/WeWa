@@ -84,6 +84,12 @@ public class SnapService {
 	
 	
 	//게시물관련=======================
+	public List<Snap_post_detail> getPostListByStyleTag(String styleTag) {
+		return this.snapMapper.getPostListByStyleTag(styleTag);
+	}
+	public List<Snap_post_detail> getPostListByTpoTag(String tpoTag) {
+		return this.snapMapper.getPostListByTpoTag(tpoTag);
+	}
 	public Snap_profile getNicknameByUserId(String userId) {
 		return this.snapMapper.getNicknameByUserId(userId);
 	}

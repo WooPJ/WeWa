@@ -180,15 +180,15 @@
 		                let param = new URLSearchParams(inData).toString();
 		                fetch("/heart/toggle.html?" + param)
 		                	.then(response => {
-	                            if (response.ok) {
-	                                this.classList.toggle('filled');
-	                            } else {
-	                                console.error("하트 상태 변경 실패");
-	                            }
-	                        })
-	                        .catch(error => {
-	                            console.error("서버 오류 발생", error);
-	                        }); //컨트롤러 매핑
+                            if (response.ok) {
+                                this.classList.toggle('filled');
+                            } else {
+                                console.error("하트 상태 변경 실패");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("서버 오류 발생", error);
+                        }); //컨트롤러 매핑
 		            }
 		        });
 		    }
