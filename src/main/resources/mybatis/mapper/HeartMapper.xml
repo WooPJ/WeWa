@@ -22,10 +22,7 @@
 	<insert id="insertHeart" parameterType="com.springboot.wearwave.model.Heart">
 		insert into heart values(#{user_id}, #{item_code}, 1)	
 	</insert>
-	<update id="updateFalse" parameterType="com.springboot.wearwave.model.Heart">
-		update heart set status = 0 where user_id =#{user_id} and item_code =#{item_code}
-	</update>
 	<delete id="deleteHeart" parameterType="com.springboot.wearwave.model.Heart">
-		delete from heart where user_id= #{user_id} and item_code= #{item_code} and status = 0
+		delete from heart where user_id= #{user_id} and item_code= #{item_code} and status = 1
 	</delete>
 </mapper>

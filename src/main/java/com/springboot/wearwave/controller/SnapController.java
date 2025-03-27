@@ -512,6 +512,39 @@ public class SnapController {
 		return mav;
 	}
 	
+	//다른 유저의 프로필페이지 보기
+	@GetMapping("/snap/otherUserProfile.html")
+	public ModelAndView otherProfile(@RequestParam("userId") String userId) {
+		ModelAndView mav = new ModelAndView("index");
+		
+		System.out.println("다른유저 프로필페이지 컨트롤러 도달");
+		
+		if(userId == null) { //예외처리
+		}
+		Snap_profile profile = this.snapService.getProfileByUserId(userId);
+        //성별정보
+        String putGenderName = "";
+        if(profile.getGender() != null) {
+        	switch (profile.getGender()){
+	        	case "male": putGenderName = "남성"; break;
+	        	case "female": putGenderName = "여성"; break;
+	        	case "private": putGenderName = "비공개"; break;
+        	}
+        	profile.setGender(putGenderName);
+        }
+        //해당ID가 작성한 게시물수 조회결과 할당
+        profile.setCountPostNum(this.snapService.getCountPostByUserId(userId)); 
+        List<Snap_post_detail> FeedList = this.snapService.getMyFeedAll(userId);
+       
+		mav.addObject("BODY", "snap/snap.jsp"); // snap.jsp 포함 (네비게이션 유지)
+		mav.addObject("CONTENT", "profile_page.jsp");
+		mav.addObject("FeedList", FeedList); //게시물정보 객체주입
+		mav.addObject("EditProfile", profile); //프로필정보 객체주입
+		mav.addObject("CONTENT2", "posting_page.jsp");
+        
+		return mav;
+	}
+	
 	
 	// ====== 스냅네비 페이지 3가지(포스팅,저장,프로필)페이지 이동 ======
 	// 3.프로필페이지
