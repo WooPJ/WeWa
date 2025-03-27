@@ -46,7 +46,9 @@
 				<section class="user_section">
 					<div class=user_info_box>
 		                <div class="user_name"><h2>${EditProfile.nickname}</h2></div>
-		                <a class="profile_modify" href="/snap/editProfile.html">프로필 편집</a>
+		                <c:if test="${loginUser.id == EditProfile.user_id}">
+		                	<a class="profile_modify" href="/snap/editProfile.html">프로필 편집</a>
+		                </c:if>
 					</div>
 		            <ul class="user_posting">
 		               <li><a href="/snap/mysnap.html">작성한 게시물 <span>${EditProfile.countPostNum}개</span></a></li>

@@ -44,6 +44,8 @@
 
 
 <script type="text/javascript">
+
+
 //현재 선택된 메뉴를 저장하는 함수
 function setActiveTab(tabName) {
     localStorage.setItem("activeTab", tabName);
@@ -58,6 +60,12 @@ function applyActiveTab() {
     if (isSnapPage) {
         activeTab = "posting"; 
         setActiveTab("posting"); // localStorage 값 덮어쓰기
+    }
+    // '/snap/otherUserProfile.html'로 접근한경우 스냅네비를 프로필로 표시
+    const isOtherUserProfilePage = window.location.pathname.includes("/snap/otherUserProfile.html");
+    if (isOtherUserProfilePage) {
+        activeTab = "profile"; 
+        setActiveTab("profile");
     }
     
     document.querySelector(".navi_posting").style.borderTop = activeTab === "posting" ? "solid 1px black" : "none";
